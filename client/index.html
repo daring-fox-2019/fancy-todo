@@ -5,24 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="google-signin-client_id" content="1028455401803-c2p2a18tiuuvhi2k2kh6d52lcrla0ddf.apps.googleusercontent.com">
-
+    <link href="https://fonts.googleapis.com/css?family=Gochi+Hand" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
 
     <title>New Fancy Todo</title>
 </head>
 <body>
     <div id="app">
-        <div id="landing">
-
+        <div id="landing" class="landingBody center-align">
+            <a href="/">
+                <span class="mainTitle">Fancy Todo</span>
+            </a>
+            <div class="row landing-subtitle">
+                Not your usual Todo App....
+            </div>
+            <div class="row">
+                <a class="waves-effect waves-light btn landingButton modal-trigger" data-target="loginModal" id="showLoginBtn">Login</a>
+                <a class="waves-effect waves-light btn landingButton" onclick="showRegister()">Register</a>
+            </div>
+            <!-- Modal Structure -->
+            <div id="loginModal" class="modal loginModal">
+                <div class="modal-content">
+                    <h2>Login</h2>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">email</i>
+                            <input id="login-email" type="email" class="validate">
+                            <label for="login-email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="input-field col s12">
+                                    <i class="material-icons prefix">security</i>
+                                    <input id="login-password" type="password" class="validate">
+                                    <label for="login-password">Password</label>
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#" id="loginBtn" class="modal-close waves-effect waves-green btn">LOGIN</a>
+                    <a href="#" id="registerBtn" class="waves-effect waves-green btn">REGISTER</a>
+                </div>
+                <div class="divider"><h5>Or sign in via</h5></div>
+                <div class="col">
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+            </div>
+        </div>
+        <div id="registerForm">
+            <div class="row">
+                <h2>Register</h2>
+            </div>
+            <div class="row" style="width: 50%;">
+                <form id="registerFormPanel">
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">email</i>
+                                <input id="register-email" type="email" class="validate">
+                                <label for="register-email">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="input-field">
+                                        <i class="material-icons prefix">security</i>
+                                        <input id="register-password" type="password" class="validate">
+                                        <label for="register-password">Password</label>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <input id="register-name" type="text">
+                                    <label for="name">Full Name</label>
+                                </div>
+                        </div>
+                        <div class="row mt-3">
+                            <a class="btn" onclick="register()">Register</a>
+                            <a class="btn" onclick="showLanding()">Home</a>
+                        </div>
+                </form>
+            </div>
         </div>
         <div id="dashboard">
-            
+            <div class="navbar-fixed ml-2">
+                <nav>
+                    <div class="nav-wrapper">
+                        <a href="#" class="brand-logo">Fancy Todo</a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="#" id="profileName"></a></li>
+                            <li><a href="#" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
         </div>
     </div>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
