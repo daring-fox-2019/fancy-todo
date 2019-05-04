@@ -253,8 +253,3 @@ function addTodo(event) {
       console.log(`request failed ${textStatus}`)
     })
 }
-
-function createTodo() {
-  $('#detail-todo').empty()
-  $('#addTodo').show()
-}

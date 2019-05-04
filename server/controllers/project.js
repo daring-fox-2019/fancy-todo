@@ -18,7 +18,13 @@ class Project {
   }
 
   static findAll(req, res) {
-    project.find({members:req.userId})
+    project.find({
+      $or: [
+        { owner: req.userId },
+        { members: req.userId }
+      ]
+    })
+      .populate('owner')
       .populate('members')
       .populate('todos')
       .then(data => {
@@ -34,6 +40,7 @@ class Project {
   static findOne(req, res) {
     project.findById(req.params.id)
       .populate("userId")
+      .populate('owner')
       .populate('members')
       .populate('todos')
       .then(data => {
@@ -60,15 +67,6 @@ class Project {
       })
   }
 
-  static changeStatus(req, res) {
-    project.findOneAndUpdate({ _id: req.params.id }, { status: true }, { new: true })
-      .then(data => {
-        res.status(200).json({ message: "Update Success", data })
-      })
-      .catch(err => {
-        res.status(500).json({ message: "get task data failed", err: err })
-      })
-  }
 
   static delete(req, res) {
     project.deleteOne({ _id: req.params.id })
@@ -81,35 +79,47 @@ class Project {
   }
 
   static addMember(req, res) {
-    project.update({
-      _id: req.params.id
-    },{
-      $push: {
-        members : req.body.userId
-      }
-    })
-    .then(data=>{
-      res.status(201).json({msg: "MASUK"})
-    })
-    .catch(err=>{
-      res.status(500).json({err})
-    })
+    project.findOne({ members: req.body.user })
+      .then(data => {
+        if (data) {
+          res.status(400).json({ msg: "Sudah terdaftar" })
+        } else {
+          return project.findOneAndUpdate({
+            _id: req.params.id
+          }, {
+              $push: {
+                members: req.body.user
+              }
+            }, { new: true })
+        }
+      })
+      .then(data => {
+        return project.findOne({ _id: data._id })
+          .populate('owner')
+          .populate('members')
+          .populate('todos')
+      }).then(data => {
+        res.status(201).json(data)
+      })
+      .catch(err => {
+        res.status(500).json({ err })
+      })
   }
 
   static deleteMember(req, res) {
     project.update({
       _id: req.params.id
-    },{
-      $pull: {
-        members : req.body.userId
-      }
-    })
-    .then(data=>{
-      res.status(201).json({msg: "Delete success"})
-    })
-    .catch(err=>{
-      res.status(500).json({err})
-    })
+    }, {
+        $pull: {
+          members: req.body.userId
+        }
+      })
+      .then(data => {
+        res.status(201).json({ msg: "Delete success" })
+      })
+      .catch(err => {
+        res.status(500).json({ err })
+      })
   }
 }
 

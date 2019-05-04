@@ -9,7 +9,7 @@
   <title>Fancy Todo</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+
   <link href="./css/style.css" type="text/css" rel="stylesheet">
 </head>
 
@@ -25,8 +25,8 @@
           <form id="form-login">
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                placeholder="Enter email" required>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                required>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
@@ -122,46 +122,27 @@
         </div>
         <div class="col-md-6">
           <div id="detail-project">
-            
-          </div>
 
-          <div id="addTodo">
-            <h1 class="justify-content-center">Add Todo</h1>
-            <form id="form-addTodo">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="nama" placeholder="Name taks">
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="The description">
-              </div>
-              <div class="form-group">
-                <label for="due_date">Due Date</label>
-                <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
           </div>
 
           <div id="addProject">
-              <h1 class="justify-content-center">Add Project</h1>
-              <form id="form-addProject">
-                <div class="form-group">
-                  <label for="nameProject">Name Project</label>
-                  <input type="text" class="form-control" id="nameProject" placeholder="Name project">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button class="btn btn-danger" onclick="backProject()">Cancel</button>
-              </form>
-            </div>
+            <h1 class="justify-content-center">Add Project</h1>
+            <form id="form-addProject">
+              <div class="form-group">
+                <label for="nameProject">Name Project</label>
+                <input type="text" class="form-control" id="nameProject" placeholder="Name project">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button class="btn btn-danger" onclick="backProject()">Cancel</button>
+            </form>
+          </div>
 
         </div>
         <div class="col-md-1"></div>
       </div>
     </div>
   </div>
-  
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -171,8 +152,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="./js/project.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="./js/project.js"></script>
   <script src="./js/user.js"></script>
 </body>
 

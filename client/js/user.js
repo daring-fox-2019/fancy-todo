@@ -1,13 +1,3 @@
-if (!localStorage.getItem('token')) {
-  $('#loginForm').show()
-  $('#registerForm').hide()
-  $('#content').hide()
-} else {
-  $('#loginForm').hide()
-  $('#registerForm').hide()
-  $('#content').show()
-}
-
 function onSignIn(googleUser) {
   let id_token = googleUser.getAuthResponse().id_token;
 
@@ -19,7 +9,6 @@ function onSignIn(googleUser) {
     }
   })
     .done((response) => {
-
       localStorage.setItem('token', response.token) //response token hasil jwt
       $('#loginForm').hide()
       $('#content').show()
@@ -34,8 +23,6 @@ function login(event) {
   if ($('#email').val() != '' && $('#password').val() != '') {
     let email = $('#email').val()
     let password = $('#password').val()
-
-    console.log(email, password);
 
     $.ajax({
       url: "http://localhost:3000/users/login",
@@ -104,31 +91,3 @@ function signOut() {
     console.log('User signed out.');
   });
 }
-
-function back() {
-  $('#loginForm').show()
-  $('#registerForm').hide()
-}
-
-function addMember(event){
-  event.preventDefault()
-  console.log("MASUK MEMBER");
-
-}
-
-
-$(document).ready(function () {
-  $('#email').val('')
-  $('#password').val('')
-  $('#form-login').submit(login)
-  $('#form-addTodo').submit(addTodo)
-  $('#form-addProject').submit(addProject)
-  $('#registerForm').submit(register)
-  $('#form-addMember').submit(addMember)
-  
-
-  listProject()
-  $('#addTodo').hide()
-  $('#addProject').hide()
-  $('#editTodo').hide()
-})

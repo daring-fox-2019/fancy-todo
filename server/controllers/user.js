@@ -5,6 +5,16 @@ const { hash, compare } = require('../helpers/bcrypt')
 const { sign } = require('../helpers/jwt')
 
 class User {
+  static findAll(req, res) {
+    user.find({})
+      .then(data => {
+        res.status(201).json(data)
+      })
+      .catch(err => {
+        console.log(err.message);
+      })
+  }
+
   static create(req, res) {
     let newUser = new user({
       name: req.body.name,
@@ -46,7 +56,7 @@ class User {
           })
           user.create(newUser)
             .then(data => {
-              const token = sign({ _id: foundUser._id,  name: payload.name, email: payload.email })
+              const token = sign({ _id: foundUser._id, name: payload.name, email: payload.email })
               res.status(200).json(token)
             })
 
@@ -71,7 +81,7 @@ class User {
               name: found.name,
               email: found.email
             })
-            res.status(200).json({token : token})
+            res.status(200).json({ token: token })
           } else {
             res.status(400).json({ message: `Wrong Username/Password` })
           }
