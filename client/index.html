@@ -1,0 +1,179 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="google-signin-client_id"
+    content="594868645829-nm4v15m5343i83klu5ngj49skm6mmqep.apps.googleusercontent.com">
+  <title>Fancy Todo</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+  <link href="./css/style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <div id="loginForm">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="border col-md-4" style="padding: 30px; border-radius: 20px;">
+          <h1 class="justify-content-center">LOGIN</h1>
+          <form id="form-login">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password" required>
+            </div>
+            <div class="p-2">
+              <span> <a href="" onclick="registerForm(event)">Not Registered?</a></span>
+            </div>
+            <div class="row" style="display: flex; flex-direction: column; margin: auto; align-items: center;">
+              <button type="submit" class="btn btn-primary" style="width: 100px;">Login</button>
+              <p>or</p>
+              <div class="g-signin2" data-onsuccess="onSignIn" id="login"></div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="registerForm">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="border col-md-4" style="padding: 30px; border-radius: 20px;">
+          <h1 class="justify-content-center">Register</h1>
+          <form id="form-register" onsubmit="register(event)">
+            <div class="form-group">
+              <label for="name">Fullname</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter Full Name" required>
+            </div>
+            <div class="form-group">
+              <label for="emailRegis">Email address</label>
+              <input type="email" class="form-control" id="emailRegis" aria-describedby="emailHelp"
+                placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="passwordRegis">Password</label>
+              <input type="password" class="form-control" id="passwordRegis" placeholder="Password" required>
+            </div>
+            <div style="text-align: center;">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button class="btn btn-danger" onclick="back()">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id='content'>
+    <div id='navbar'>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Todo List </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse my-2" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+          <!-- <form id="search" method="POST" class="form-inline my-2 my-lg-0 mr-sm-2">
+                      <input id="what" class="form-control mr-sm-2" type="search" placeholder="Keywords" aria-label="Search">
+                      <button class="btn btn-outline-secondary my-2 my-sm-2" type="submit" enabled>Search</button>
+                  </form> -->
+        </div>
+        <a href="#" onclick="signOut();" id="logout">Sign out</a>
+      </nav>
+    </div>
+
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class='col-md' id="listHeaderLeft">
+              <h6>List Project</h6>
+            </div>
+            <div class='col-md' id="listHeaderRight">
+              <button type="button" class="btn btn-primary btn-sm" onclick="createProject()">Create Project</button>
+            </div>
+          </div>
+          <div id="list-project">
+            <ul class="list-group list-group-flush">
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="detail-project">
+            
+          </div>
+
+          <div id="addTodo">
+            <h1 class="justify-content-center">Add Todo</h1>
+            <form id="form-addTodo">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="nama" placeholder="Name taks">
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" placeholder="The description">
+              </div>
+              <div class="form-group">
+                <label for="due_date">Due Date</label>
+                <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+
+          <div id="addProject">
+              <h1 class="justify-content-center">Add Project</h1>
+              <form id="form-addProject">
+                <div class="form-group">
+                  <label for="nameProject">Name Project</label>
+                  <input type="text" class="form-control" id="nameProject" placeholder="Name project">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button class="btn btn-danger" onclick="backProject()">Cancel</button>
+              </form>
+            </div>
+
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./js/project.js"></script>
+  <script src="./js/user.js"></script>
+</body>
+
+</html>
