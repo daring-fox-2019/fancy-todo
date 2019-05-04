@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const moment = require('moment');
 
 const todoSchema = new Schema({
   title: {
@@ -23,10 +22,6 @@ const todoSchema = new Schema({
     ref: 'User'
   },
 })
-
-Todo.prototype.formattedDate = function() {
-    return moment().format();
-}
 
 let Todo = mongoose.model('Todo', todoSchema);
 

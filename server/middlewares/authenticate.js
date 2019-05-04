@@ -2,7 +2,8 @@ const User = require('../models/user')
 const jwt = require('../helpers/jwt')
 
 module.exports = function(req, res, next) {
-    let token = req.headers.authorization;
+    let token = req.headers.token;
+    
     if(token) {
         let decoded = jwt.verify(token);
         User

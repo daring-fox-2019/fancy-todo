@@ -19,7 +19,8 @@ route.get('/:id', authenticate, authorizeProject, ProjectController.findOne)
 route.get('/:id/todos', authenticate, authorizeProject, ProjectController.findOne)
 route.get('/:id/todos/:todo_id', authenticate, authorizeProject, ProjectController.findOneTodo)
 route.post('/:id/todos', authenticate, authorizeProject, ProjectController.addTodo)
-route.delete('/:id/todos/:todo_id', authenticate, authorizeProject, ProjectController.removeTodo)
-route.patch('/:id/todos/:todo_id', authenticate, authorizeProject, ProjectController.updateTodo)
+
+/* route.delete('/:id/todos/:todo_id', authenticate, authorizeProject, ProjectController.removeTodo)
+route.patch('/:id/todos/:todo_id', authenticate, authorizeProject, ProjectController.updateTodo) */
 
 module.exports = route

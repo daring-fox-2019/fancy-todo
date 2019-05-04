@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const Project = require('../models/project')
+const Todo = require('../models/todo')
 
 module.exports = {
     adminOnly: function(req, res, next) {
@@ -8,6 +9,29 @@ module.exports = {
         }
 
         res.status(401).json('Must be admin')
+    },
+    authorizeTodoOwner: function(req, res, next) {
+        let user = req.user
+        let todo_id = req.params.id
+
+        if(user.role === 'admin') {
+            next()
+        }
+        else {
+            Todo
+            .findOne({_id: todo_id, owner: user._id})
+            .then(found => {
+                if(found) {
+                    next()
+                }
+                else {
+                    res.status(401).json('Not Authorized for this Todo')
+                }
+            })
+            .catch(err => [
+                res.status(500).json(err)
+            ])
+        }
     },
     authorizeProjectOwner: function(req, res, next) {
         let user = req.user

@@ -1,4 +1,5 @@
 const Project = require('../models/project')
+const Todo = require('../models/todo')
 
 class ProjectController {
     static findAll(req, res) {
@@ -95,6 +96,7 @@ class ProjectController {
             {safe: true}
             )
             .then(updated => {
+                console.log(updated);
                 res.status(200).json(updated)
             })
             .catch(err => {
