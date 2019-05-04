@@ -1,5 +1,6 @@
 body {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  height: 100vh;
 }
 a {
   color: blue;
@@ -7,4 +8,7 @@ a {
 }
 table {
   text-align: center;
+}
+#main {
+  height: 100%;
 }

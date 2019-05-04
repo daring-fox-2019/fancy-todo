@@ -7,7 +7,7 @@ module.exports = {
     if (!token) {
       res.status(401).json({ error: 'You must login to access this endpoint' })
     } else {
-      let decoded = verify(token)
+      let decoded = verify(token, res)
       User
        .findOne({
          _id: decoded.id

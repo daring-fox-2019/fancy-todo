@@ -24,6 +24,13 @@ class ControllerTodo {
       })
       .catch(err => res.status(500).json({message: err.message}))
   }
+  static findMyTodo(req, res) {
+    Todo.find({ userId: req.user._id })
+      .then(todos => {
+        res.status(200).json(todos)
+      })
+      .catch(err => { res.status(500).json({ message: err.message })})
+  }
   static findOne(req, res) {
     Todo.findOne({_id: req.params.id})
       .then(todo => {

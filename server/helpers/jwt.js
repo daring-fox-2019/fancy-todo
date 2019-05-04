@@ -6,7 +6,12 @@ module.exports = {
       expiresIn: '2h'
     })
   },
-  verify: function (token) {
-    return jwt.verify(token, process.env.JWT_SECRET)
+  verify: function (token, res) {
+    try {
+      let result = jwt.verify(token, process.env.JWT_SECRET)
+      return result
+    } catch(err) {
+      res.status(401).json({error: 'Token Expired'})
+    }
   }
 }

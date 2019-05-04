@@ -18,16 +18,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
-  <div id="formulir-masuk" class="jumbotron container">
+  <div id="formulir-masuk" class="jumbotron container" >
     <div class="row">
       <div class="col-md-2"></div>
       <div class="form-group col-md-3">
@@ -49,8 +49,8 @@
         <form method="POST" id="form-signup">
           <p>Name:</p>
           <input type="text" name="name" class="form-control" placeholder="E.g. Muhammad Yusuf">
-          <p>Username:</p>
-          <input type="text" name="username" class="form-control" placeholder="E.g. ucup12345">
+          <p>Email:</p>
+          <input type="text" name="email" class="form-control" placeholder="E.g. ucup@mail.com">
           <p>Password:</p>
           <input type="password" name="password" class="form-control">
           <br>
@@ -60,7 +60,7 @@
       <div class="col-md-2"></div>
     </div>
   </div>
-  <div id="main">
+  <div id="main" style="background-color: #e9ecef">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="/">Fancy Todo</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -81,7 +81,7 @@
         </span>
       </div>
     </nav>
-    <div class="jumbotron">
+    <div class="jumbotron" style="margin: 0">
       <div class="row">
         <div class="col-4">
           <form method="post" id="form-add-task">
@@ -90,12 +90,12 @@
             <p>Description:</p>
             <input type="text" name="description" class="form-control">
             <p>Due Date:</p>
-            <input type="text" name="dueDate" class="form-control" placeholder="📅 yyyy-mm-dd">
+            <input type="date" name="dueDate" class="form-control" placeholder="📅 yyyy-mm-dd">
             <br>
             <input type="submit" value="Create" class="btn btn-primary">
           </form>
         </div>
-        <div class="col-8">
+        <div class="col-8" style="text-align:center">
           <table class="table table-dark">
             <thead id="taskHead" class="thead-dark">
               <tr>
@@ -107,8 +107,9 @@
                 <th>Edit</th>
               </tr>
             </thead>
-            <tbody id="taskBody"></tbody>
+            <tbody id="task-body"></tbody>
           </table>
+          <img src="./resources/empty.png" alt="empty" id="empty" style="display: none">
         </div>
       </div>
     </div>
@@ -116,12 +117,12 @@
   </div>
 
   <!-- Modal Edit -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit task</h5>
+          <h5 class="modal-title" id="modalEditLabel">Edit task</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -129,17 +130,16 @@
         <form method="post" id="form-edit-task">
           <div class="modal-body">
             <p>Task name:</p>
-            <input type="text" name="name" class="form-control">
+            <input id="nameEdit" type="text" name="name" class="form-control">
             <p>Description:</p>
-            <input type="text" name="description" class="form-control">
+            <input id="descriptionEdit" type="text" name="description" class="form-control">
             <p>Due Date:</p>
-            <input type="text" name="dueDate" class="form-control" placeholder="📅 yyyy-mm-dd">
+            <input id="dateEdit" type="date" name="dueDate" class="form-control" placeholder="📅 yyyy-mm-dd">
             <br>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <input type="submit" value="Save changes" class="btn btn-primary">
-            <!-- <button type="submit" class="btn btn-primary">Save changes</button> -->
+            <input id="edit-button" type="submit" value="Save changes" class="btn btn-primary">
           </div>
         </form>
       </div>

@@ -2,6 +2,7 @@ const { User } = require('../models')
 const { hash } = require('../helpers/bcryptjs')
 const { compare } = require('../helpers/bcryptjs')
 const { sign } = require('../helpers/jwt')
+const { google } = require('../helpers/google')
 
 class ControllerUser {
   static create(req, res) {
@@ -48,7 +49,6 @@ class ControllerUser {
       })
       .catch(err => {res.status(500).json({message: err.message})})
   }
-  
   static login(req, res) {
     let { email, password } = req.body
     User.findOne({ email })
@@ -75,6 +75,42 @@ class ControllerUser {
       })
       .catch(err => {
         res.status(500).json({ err: err.message })
+      })
+  }
+  static googleLogin(req, res) {
+    let { token } = req.headers
+    let payload
+    google(token)
+      .then(ticket => {
+        payload = ticket.getPayload()
+        return User.findOne({ email: payload.email })
+      })
+      .then(user => {
+        let { name, email, picture } = payload
+        if(!user) {
+          return User.create({ name, email, password: 'password' })
+        } else {
+          return user
+        }
+      })
+      .then(user => {
+        let token = sign({
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          picture: payload.picture
+        })
+        res.status(200).json({
+          message: 'Logged In',
+          id: user._id,
+          token,
+          name: user.name,
+          email: user.email
+        })
+      })
+      .catch(error => {
+        console.log({ error })
+        res.status(500).json({ error })
       })
   }
 }

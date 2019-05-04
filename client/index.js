@@ -1,3 +1,6 @@
+let dataCentral
+let currentId
+
 function checkLog() {
   if (localStorage.token) {
     $('#formulir-masuk').hide()
@@ -12,50 +15,103 @@ function checkLog() {
 
 function onSignIn(googleUser) {
   let { id_token } = googleUser.getAuthResponse()
-  $.post('http://localhost:3000/google-sign-in', { id_token })
-    .then(jwt => {
-      window.localStorage.setItem('jwt', jwt.token)
+  $.ajax({
+    url: 'http://localhost:3000/auth/google',
+    method: 'post',
+    headers: {
+      token: id_token
+    }
+  })
+    .done(response => {
+      const { id, email, name, token } = response
+      localStorage.setItem('token', token)
+      localStorage.setItem('name', name)
+      localStorage.setItem('email', email)
+      localStorage.setItem('id', id)
+      $('#name').text(name);
+      swal(`Welcome ${name}!`, `You are now logged in.`, 'success')
+      checkLog()
     })
-    .catch(err => {
-      console.log(err.message)
-      swal('Error', err.responseJSON.message, 'error')
+    .fail((jqXHR, status) => {
+      console.log({jqXHR, status})
     })
 }
 
 function getTasks() {
   $.ajax({
     method: 'get',
-    url: 'http://localhost:3000/todos',
+    url: 'http://localhost:3000/todos/MyTodo',
     headers: {
       token: localStorage.token
     }
   })
     .done(data => {
-      // console.log({data})
+      dataCentral = data
+      if(!Array.isArray(data) || !data.length) $('#empty').show()
+      else $('#empty').hide()
+      $('#task-body').empty()
       for ([index, item] of data.entries()) {
         let { dueDate, status } = item
         let date = dueDate.slice(0,10)
         let setStatus = (status) ? '✔' : '❌'
         let templateCheck = ''
         if(status) {
-          templateCheck = `<button class="btn btn-primary" onclick="checkTask('${item._id}')" value="${item._id}">Uncheck</button>`
+          templateCheck = `<button class="btn btn-primary" onclick="checkTask('${item._id}','${item.status}')" value="${item._id}">Uncheck</button>`
         } else {
-          templateCheck = `<button class="btn btn-primary" onclick="checkTask('${item._id}')" value="${item._id}">Check</button>`
+          templateCheck = `<button class="btn btn-primary" onclick="checkTask('${item._id}','${item.status}')" value="${item._id}">Check</button>`
         }
-        $('#taskBody').empty().append(`<tr><td>${index+1}</td>
+        $('#task-body').append(`<tr><td>${index+1}</td>
         <td>${item.name}</td>
         <td>${item.description}</td>
         <td>${setStatus}</td>
         <td>${date}</td>
-        <td>${templateCheck}
-        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>
+      <td>${templateCheck}
+      <button class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" onclick="editTodo('${item._id}')">Edit</button>
         <button class="btn btn-primary" onclick="deleteTask('${item._id}')">Delete</button></td></tr>`)
         /* punya button edit -> onclick="editTask('${item._id}')" */
       }
     })
     .fail(err => {
-      console.log(err)
+      console.log({err})
       swal(`Error ${err.status}: ${err.statusText}`, err.responseJSON.error, 'error')
+    })
+}
+
+function editTodo(id) {
+  let data = dataCentral.filter(item => item._id === id)[0]
+  let date = data.dueDate.slice(0, 10)
+  currentId = id
+  $('#nameEdit').val(data.name)
+  $('#descriptionEdit').val(data.description)
+  $('#dateEdit').val(date)
+}
+
+function submitEdit() {
+  event.preventDefault()
+  console.log({currentId})
+  let data = $(this).serializeArray().reduce((acc, cur) => {
+    acc[cur.name] = cur.value
+    return acc
+  }, {})
+  console.log({data})
+  $.ajax({
+    url: `http://localhost:3000/todos/${currentId}`,
+    method: 'put',
+    data: data,
+    headers: {
+      token: localStorage.token
+    }
+  })
+    .done(task => {
+      getTasks()
+      $('#modalEdit').modal('hide')
+      swal('Success!', 'Data successfully edited.', 'success')
+      .then(() => {
+      })
+    })
+    .fail(err => {
+      let message = (err.responseJSON.message) ? err.responseJSON.message : err.responseJSON.error
+      swal('Error', message, 'error')
     })
 }
 
@@ -65,19 +121,22 @@ function createTask() {
     acc[cur.name] = cur.value
     return acc
   }, {})
-  data.id = window.localStorage.id
   $.ajax({
-    url: 'http://localhost:3000/tasks',
+    url: 'http://localhost:3000/todos',
     method: 'post',
-    data: data
+    data: data,
+    headers: {
+      token: localStorage.token
+    }
   })
-  .done(task => {
-    getTasks()
-  })
-  .fail(err => {
-    console.log({err})
-    swal('Error', err.responseJSON.message, 'error')
-  })
+    .done(task => {
+      getTasks()
+    })
+    .fail(err => {
+      console.log({err})
+      let message = (err.responseJSON.message) ? err.responseJSON.message : err.responseJSON.error
+      swal('Error', message, 'error')
+    })
 }
 
 function register(event) {
@@ -86,17 +145,19 @@ function register(event) {
     acc[cur.name] = cur.value
     return acc
   }, {})
+  console.log({data})
   $.ajax({
-    url: 'http://localhost:3000/users',
+    url: 'http://localhost:3000/register',
     method: 'post',
     data: data
   })
     .done(jwt => {
-      // ================================
       swal('Success!', 'You are now registered.', 'success')
     })
     .fail(err => {
-      swal('Error', err.responseJSON.message, 'error')
+      console.log({err})
+      let message = (err.responseJSON.message) ? err.responseJSON.message : err.responseJSON.error
+      swal('Error', message, 'error')
     })
 }
 
@@ -113,6 +174,7 @@ function login(event) {
   })
     .done(response => {
       $('#form-login-regular')[0].reset()
+      $('Task')
       window.localStorage.setItem('token', response.token)
       window.localStorage.setItem('name', response.name)
       window.localStorage.setItem('email', response.email)
@@ -122,7 +184,8 @@ function login(event) {
       checkLog()
     })
     .fail(err => {
-      swal('Error', err.responseJSON.message, 'error')
+      let message = (err.responseJSON.message) ? err.responseJSON.message : err.responseJSON.error
+      swal('Error', message, 'error')
     })
 }
 
@@ -134,7 +197,8 @@ function signOut() {
       emptyLocalStorage()
     })
     .catch(err => {
-      swal('Error', err.responseJSON.message, 'error')
+      let message = (err.responseJSON.message) ? err.responseJSON.message : err.responseJSON.error
+      swal('Error', message, 'error')
     })
   } else {
     emptyLocalStorage()
@@ -142,7 +206,7 @@ function signOut() {
 }
 
 function emptyLocalStorage() {
-  $('#taskbody').empty()
+  $('#task-body').empty()
   window.localStorage.removeItem('token')
   window.localStorage.removeItem('id')
   window.localStorage.removeItem('email')
@@ -151,39 +215,31 @@ function emptyLocalStorage() {
   checkLog()
 }
 
-function checkTask(id) {
+function checkTask(id, status) {
   // event.preventDefault()
-  console.log('jalan function')
-  console.log(id)
+  status = (status == 'true') ? false : true
   $.ajax({
-    url: `http://localhost:3000/tasks/${id}`,
+    url: `http://localhost:3000/todos/${id}`,
     method: 'put',
     data: {
-      checkStatus : true,
-      _id: window.localStorage.id
+      status,
+    },
+    headers: {
+      token: localStorage.token
     }
   })
   .done(data => {
-    console.log(data)
-    window.location.assign('/')
+    getTasks()
   })
   .fail(err => {
-    console.log('err')
-    console.log(err)
-    console.log('err')
-    swal('Error', err.responseJSON.message, 'error')
+    let message = (err.responseJSON.message) ? err.responseJSON.message : err.responseJSON.error
+    swal('Error', error, 'error')
   })
 }
-function editTask(id) {
-  // event.preventDefault()
-}
 function deleteTask(id) {
-  // event.preventDefault()
-  console.log('id')
-  console.log(id)
   swal({
-    title: 'Delete confirmation',
-    text: 'Are you sure you want to delete this task?',
+    title: 'Are you sure?',
+    text: 'Deleted todo will be permanently lost!',
     icon: 'warning',
     buttons: {
       cancel: true,
@@ -193,19 +249,21 @@ function deleteTask(id) {
   .then(yes => {
     if(yes) {
       $.ajax({
-        url: `http://localhost:3000/tasks/${id}`,
+        url: `http://localhost:3000/todos/${id}`,
         method: 'delete',
-        data: {id: window.localStorage.id}
+        headers: { token: window.localStorage.token }
       })
       .done(data => {
-        window.location.assign('/')
+        swal('Poof!', 'Todo deleted.', 'success')
+        getTasks()
       })
       .fail(err => {
-        console.log(err)
-        swal('Error', err.responseJSON.message, 'error')
+        console.log({err})
+        let message = (err.responseJSON.message) ? err.responseJSON.message : err.responseJSON.error
+        swal('Error', message, 'error')
       })
     } else {
-
+      swal('Deletion canceled.')
     }
   })
 }
@@ -216,4 +274,5 @@ $(document).ready(function () {
   $('#form-signup').submit(register)
   $('#form-login-regular').submit(login)
   $('#form-add-task').submit(createTask)
+  $('#form-edit-task').submit(submitEdit)
 })
