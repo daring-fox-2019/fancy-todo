@@ -66,6 +66,7 @@ function setUserData(data) {
 
 $(document).ready(function(){
     $('.modal').modal();
+    $('.fixed-action-btn').floatingActionButton();
     //check if there is valid token, if it is, show dashboard
     isLogin()
 })
