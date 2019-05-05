@@ -5,7 +5,7 @@ const ProjectController = require('../controllers/projectController')
 const TodoController = require('../controllers/todoController')
 
 route.post('/', authenticate, ProjectController.create)
-route.get('/', authenticate, authorizeProject, ProjectController.findValidProjects)
+route.get('/', authenticate, ProjectController.findValidProjects)
 
 route.post('/:id/addMember', authenticate, authorizeProjectOwner, ProjectController.addMember)
 route.post('/:id/removeMember', authenticate, authorizeProjectOwner, ProjectController.removeMember)

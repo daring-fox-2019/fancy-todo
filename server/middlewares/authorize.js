@@ -17,6 +17,21 @@ module.exports = {
         if(user.role === 'admin') {
             next()
         }
+        else if(!todo_id) {
+            Todo
+            .findOne({owner: user._id})
+            .then(found => {
+                if(found) {
+                    next()
+                }
+                else {
+                    
+                }
+            })
+            .catch(err => [
+                res.status(500).json(err)
+            ])
+        }
         else {
             Todo
             .findOne({_id: todo_id, owner: user._id})

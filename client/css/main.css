@@ -147,6 +147,7 @@ body {
 .left-border {
     border-left: 1px dashed rgba(128, 128, 128, 0.377);
     padding-left: 30px;
+    min-height: 530px;
 }
 
 .small-text {

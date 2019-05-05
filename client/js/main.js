@@ -54,9 +54,8 @@ function showProjectDetailPage() {
 }
 
 function generateProjectsList() {
+    $('#content-list').html('')
     if(projectList && projectList.length > 0) {
-        $('#content-list').html('')
-
         projectList.forEach( project => {
             let template = 
             `<div class="collection-item">
@@ -155,7 +154,6 @@ function showProjectDetail(elem) {
                     todosTemplate
                 + `</div>
             </div>
-            <hr>
         </div>
         `
         $('#project-detail-page').html(template)
@@ -166,6 +164,12 @@ function showProjectDetail(elem) {
         swal("Error", err.responseText, "error");
     })
 }
+
+function clearProjectForm() {
+    $('#project-name').value = '';
+    $('#project-description').value = '';
+}
+
 function createProject() {
     console.log(currentUser);
     $.ajax({
@@ -182,9 +186,11 @@ function createProject() {
     })
     .done(function(data) {
         fetchProjects();
-        swal("Success", 'Project deleted successfully!', "success");
+        swal("Success", 'Project created successfully!', "success");
+        clearProjectForm();
     })
     .catch(function(err) {
+        clearProjectForm()
         swal("Error", err.responseText, "error");
     })
 }
