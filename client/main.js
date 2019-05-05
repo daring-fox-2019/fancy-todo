@@ -69,6 +69,7 @@ function addNewTodo() {
     $.ajax({
       url: `${baseURL}/todos/create`,
       method: 'POST',
+      headers: {token: localStorage.getItem('token')},
       data: {
         title: $('#newTitle').val(),
         description: $('#newDesc').val(),
@@ -88,10 +89,12 @@ function addNewTodo() {
 }
 function showByStatus() {
   event.preventDefault()
+  console.log(localStorage.getItem('token'))
   let status = this.value
   $.ajax({
     url: `${baseURL}/todos/read`,
     method: 'GET',
+    headers: {token: localStorage.getItem('token')},
     data: {
       status
     }

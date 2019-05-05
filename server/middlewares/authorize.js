@@ -6,7 +6,8 @@ module.exports = (req, res, next) => {
   console.log(req.decoded,req.params.id)
   Todo.findOne({_id: ObjectId(req.params.id)})
   .then(row=>{
-    if(req.decoded._id == row.UserId){
+    console.log(typeof row.user)
+    if(ObjectId(req.params.id) == row.user){
       next()
     }
     else{
