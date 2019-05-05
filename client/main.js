@@ -2,6 +2,14 @@ var baseURL = `http://localhost:3000`
 var signedIn = true
 var editTodoId
 
+function showSuccessMessage(text) {
+  $('#message').css('color','rgb(0, 75, 187)').text(text)
+  $('#message').fadeIn(300).delay(3000).fadeOut(1000)
+}
+function showFailedMessage(text) {
+  $('#message').css('color','#FF0000').text(text)
+  $('#message').fadeIn(300).delay(3000).fadeOut(1000)
+}
 function dontRefresh(){
   if($('#filterByStatus').val()){
     searchTodos()
@@ -32,7 +40,7 @@ function register() {
   })
     .done((data) => {
       localStorage.setItem('token', data.token)
-      $('#message').text(`Hai ${data.name}, kamu berhasil login`)
+      showSuccessMessage(`Hai ${data.name}, kamu berhasil login`)
       console.log("success register", data)
       getAllTodos()
       $("#TodoLists").show()
@@ -40,7 +48,7 @@ function register() {
     })
     .fail((err) => {
       console.log(err)
-      $('#message').css('color','#FF0000').text(err.responseJSON.message)
+      showFailedMessage(err.responseJSON.message)
     })
 }
 
@@ -66,7 +74,7 @@ function login() {
   })
     .done((data) => {
       localStorage.setItem('token', data.token)
-      $('#message').css('color','rgb(0, 75, 187)').text(`Hai ${data.name}, kamu berhasil login`)
+      showSuccessMessage(`Hai ${data.name}, kamu berhasil login`)
       console.log("success login", data)
       // $('#namaUser').text(data.name)
       getAllTodos()
@@ -75,7 +83,7 @@ function login() {
     })
     .fail((err) => {
       console.log(err)
-      $('#message').css('color','#FF0000').text(err.responseJSON.message)
+      showFailedMessage(err.responseJSON.message)
     })
 }
 
@@ -104,15 +112,18 @@ function onSignIn(googleUser) {
   })
     .done((data) => {
       console.log(data)
-      if(data.passRandom) $('#message').css('color','rgb(0, 75, 187)').text('Hurry up change your password now, your password is', data.passRandom)
+      let msg = ''
+      if(data.passRandom) {
+        msg = 'Hurry up change your password now, your password is ' + data.passRandom + '\n'
+      }
       localStorage.setItem('token', data.token)
-      $('#message').css('color','rgb(0, 75, 187)').text(`Hai ${data.name}, kamu berhasil login`)
+      showSuccessMessage(`${msg}Hai ${data.name}, kamu berhasil login`)
       getAllTodos()
       $("#TodoLists").show()
       $("#login-register-form").hide()
     })
     .fail((err) => {
-      $('#message').css('color','#FF0000').text('response failed :', err)
+      showFailedMessage(err.responseJSON.message)
     })
 }
 
@@ -134,7 +145,7 @@ function addNewTodo() {
   let today = new Date()
 
   if (newduedate < today) {
-    $('#message').css('color','#FF0000').text("Due date cant be the past!!!")
+    showFailedMessage("Due date cant be the past!!!")
   }
   else {
     $.ajax({
@@ -163,7 +174,7 @@ function addNewTodo() {
         getAllTodos()
       })
       .fail(function (jqXHR, textStatus) {
-        $('#message').css('color','#FF0000').text('response failed :', textStatus)
+        showFailedMessage('response failed : ' + textStatus)
       })
   }
 }
@@ -191,7 +202,7 @@ function getAllTodos() {
     })
     .fail((err) => {
       console.log(err)
-      $('#message').css('color','#FF0000').text(err.responseJSON.message)
+      showFailedMessage(err.responseJSON.message)
     })
 }
 function searchTodos() {
@@ -221,7 +232,7 @@ function searchTodos() {
     })
     .fail((err) => {
       console.log(err)
-      $('#message').css('color','#FF0000').text(err.responseJSON.message)
+      showFailedMessage(err.responseJSON.message)
     })
 }
 
@@ -252,7 +263,7 @@ function editTodo(todoId) {
     })
     .fail((err) => {
       console.log(err)
-      $('#message').css('color','#FF0000').text(err.responseJSON.message)
+      showFailedMessage(err.responseJSON.message)
     })
 }
 
@@ -280,13 +291,13 @@ function updateTodo(todoId) {
       }
     })
       .done(todo => {
-        $('#message').css('color','rgb(0, 75, 187)').text(`Update ${todo.title} Berhasil`)
+        showSuccessMessage(`Update ${todo.title} Berhasil`)
         dontRefresh()
         $('#editTodoForm').attr("onsubmit",null).hide()
       })
       .fail((err) => {
         console.log(err)
-        $('#message').css('color','#FF0000').text(err.responseJSON.message)
+        showFailedMessage(err.responseJSON.message)
       })
   }
 }
@@ -307,12 +318,12 @@ function deleteTodo(todoId) {
     }
   })
     .done(result => {
-      $('#message').css('color','rgb(0, 75, 187)').text(`Delete Todo Berhasil`)
+      showSuccessMessage(`Delete Todo Berhasil`)
       dontRefresh()
     })
     .fail((err) => {
       console.log(err)
-      $('#message').css('color','#FF0000').text(err.responseJSON.message)
+      showFailedMessage(err.responseJSON.message)
     })
 }
 
