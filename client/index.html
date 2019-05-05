@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="919900511246-7m5qciaue7fobtr6p66btsf0cfi3j3jt.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous">
+    <title>Fancy Todo</title>
+</head>
+
+<body id="body">
+
+    <!-- login page -->
+    <div class="container" id="login-page">
+        <!-- register modal -->
+        <div id="register-modal" class="modal" style="border-radius:15px; width: 30em">
+            <div class="modal-content">
+                <div class="row center-align">
+                    <h5>Hey , you!</h5>
+                </div>
+                <!-- register form -->
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="What's your name?" id="register-name" type="text" class="validate">
+                                <label for="register-name">Full Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="It's actually useless" id="register-username" type="text" class="validate">
+                                <label for="register-username">Username</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="Make it fancy!" id="register-password" type="password" class="validate">
+                                <label for="register-password">Password</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input placeholder="What's your email?" id="register-email" type="email" class="validate">
+                                <label for="register-email">Email</label>
+                            </div>
+                        </div>
+                        <div class="row center-align">
+                            <button class="waves-effect waves-teal btn-flat" onclick="register()">register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row center-align" style="padding-top:3em">
+            <div class="col s3">
+
+            </div>
+            <div class="col s6">
+                <div class="row">
+                    <h1>Hello, welcome!</h1>
+                    <h3>Let's login first!</h3>
+                </div>
+                <!-- login form -->
+                <div class="row">
+                    <div class="col s2">
+
+                    </div>
+                    <form class="col s8">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="email" class="validate" id="email" name="email">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="password" type="password" class="validate" name="password">
+                                <label for="password">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn waves-effect waves-light" type="submit" name="action" style="height:36px;width:120px;"
+                                onclick="login()">Login</button>
+                        </div>
+                    </form>
+                    <div class="col s2">
+
+                    </div>
+                </div>
+                <div class="row center-align">
+                    <p style="font-size: 12px">Don't have an account?</p>
+                </div>
+                <div class="row">
+                    <div class='col s6' style="padding-left:5em">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    </div>
+                    <div class="col s6">
+                        <a class="waves-effect waves-light btn modal-trigger" href="#register-modal" style="height:36px;width:120px;">register</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col s3">
+
+            </div>
+        </div>
+    </div>
+    <!-- home page -->
+    <div class="container" id="home">
+        <!-- todo form -->
+        <div id="todo-form" class="modal" style="border-radius: 20px">
+            <div class="modal-content">
+                <div class="row center-align">
+                    <h5>What is your task?</h5>
+                </div>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="What do you want to be reminded of?" id="title" type="text" class="validate">
+                                <label for="title">Title</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <textarea id="description" class="materialize-textarea" data-length="100" placeholder=""></textarea>
+                                <label for="description">Description</label>
+                                <span class="helper-text">Optional</span>
+                            </div>
+                            <div class="input-field col s6">
+                                <input type="text" class="datepicker" placeholder="When is it due?" id="due_date">
+                            </div>
+                        </div>
+                        <div class="row center-align">
+                            <button class="modal-close waves-effect waves-teal btn-flat" onclick="createTodo()">put it on the list!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue pulse">
+                <i class="fas fa-clipboard-list"></i>
+            </a>
+            <ul>
+                <li><a class="btn-floating red" onclick="signOut()"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a class="btn-floating green modal-trigger" href="#todo-form"><i class="fas fa-plus"></i></a></li>
+            </ul>
+        </div>
+        <div class="row center-align">
+            <div class="col s6" id="profile" style="margin-top: 6em">
+                <div class="row center-align" id="welcome">
+
+                </div>
+                <div id="weather" class="row">
+
+                </div>
+                <div id="quote" class="row center-align">
+
+                </div>
+
+            </div>
+            <div class="col s6" style="overflow: scroll;height: 40em;margin-top: 6em; border-radius: 10px">
+                <ul class="collection" id="todo-list">
+
+                </ul>
+            </div>
+        </div>
+        <div id="edit-forms">
+
+        </div>
+    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src='assets/js/todo.js'></script>
+</body>
+
+</html>
