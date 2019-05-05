@@ -8,7 +8,7 @@ class Todo {
       description: req.body.description,
       status: false,
       due_date: req.body.due_date,
-      projectId: req.body.projectId
+      userId: req.userId
     })
     todo.create(newTodo)
       .then(dataTodo => {
@@ -78,9 +78,18 @@ class Todo {
   }
 
   static delete(req, res) {
-    todo.deleteOne({ _id: req.params.id })
+    project.update({
+      _id: req.body.projectId
+      },{
+        $pull: {
+          todos : req.params.id
+        }
+      })
       .then(data => {
-        res.status(200).json({ message: "Delete Success" })
+        return todo.deleteOne({ _id: req.params.id })
+      })
+      .then(data => {
+        res.status(201).json(data)
       })
       .catch(err => {
         res.status(500).json({ message: "delete task failed", err: err })

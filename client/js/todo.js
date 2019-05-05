@@ -161,9 +161,13 @@ function edit(id) {
 }
 
 function deleteTodo(id) {
+  let projectId = idProjectSelected
   $.ajax({
     url: `http://localhost:3000/todos/${id}`,
     method: 'DELETE',
+    data:{
+      projectId
+    },
     headers: {
       token: localStorage.getItem('token')
     }
@@ -208,7 +212,7 @@ function listTodo() {
     }
   })
     .done(function (response) {
-      for (todo of response.data) {
+      for ([index,todo] of response.data) {
         let info = null
         let difference = Math.ceil((new Date(todo.due_date) - new Date()) / (24 * 60 * 60 * 1000))
         if (todo.status == true) {
@@ -219,25 +223,36 @@ function listTodo() {
           info = "list-group-item-warning"
         }
 
-        $('#list-todo').append(`<li class="list-group-item list-group-item-action ${info}" onclick='detailTodo("${todo._id}")'>${todo.name}</li>`)
+        $('#list-todo').append(`<tr>
+            <th scope="row">${index+1}</th>
+            <td>${todo.name}</td>
+            <td>${todo.description}</td>
+            <td>${todo.status}</td>
+            <td>${todo.due_date}</td>
+            <td>
+              <i class="fas fa-info-circle"></i>
+              <i class="fas fa-edit" data-toggle="modal" data-target="#modalEditTodo"></i>              
+              <i class="fas fa-trash-alt" onclick='deleteTodo("${todo._id}")'></i>
+            </td>
+          </tr>`
+      )
       }
 
     })
 }
 
-function addTodo(event) {
-  event.preventDefault()
-
+function addTodo() {
   let name = $('#nama').val()
   let description = $('#description').val()
   let due_date = $('#due_date').val()
   let status = false
+  let projectId = idProjectSelected
 
   $.ajax({
     url: "http://localhost:3000/todos",
     method: 'POST',
     data: {
-      name, description, due_date, status
+      name, description, due_date, status, projectId
     },
     headers: {
       token: localStorage.getItem('token')
@@ -247,7 +262,7 @@ function addTodo(event) {
       $('#nama').val('')
       $('#description').val('')
       $('#due_date').val('')
-      listTodo()
+      detailProject(projectId)
     })
     .fail((jqXHR, textStatus) => {
       console.log(`request failed ${textStatus}`)

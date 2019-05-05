@@ -47,7 +47,7 @@ class User {
       .then((foundUser) => {
         if (foundUser) {
           const token = sign({ _id: foundUser._id, name: foundUser.name, email: foundUser.email })
-          res.status(200).json(token)
+          res.status(200).json({ token, userId : foundUser._id })
         } else {
           let newUser = new user({
             name: payload.name,
@@ -56,8 +56,8 @@ class User {
           })
           user.create(newUser)
             .then(data => {
-              const token = sign({ _id: foundUser._id, name: payload.name, email: payload.email })
-              res.status(200).json(token)
+              const token = sign({ _id: data._id, name: data.name, email: data.email })
+              res.status(200).json({ token, userId : data._id })
             })
 
         }
@@ -81,7 +81,7 @@ class User {
               name: found.name,
               email: found.email
             })
-            res.status(200).json({ token: token })
+            res.status(200).json({ token, userId : found._id  })
           } else {
             res.status(400).json({ message: `Wrong Username/Password` })
           }

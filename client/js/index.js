@@ -1,3 +1,5 @@
+var idProjectSelected = null
+
 if (!localStorage.getItem('token')) {
   $('#loginForm').show()
   $('#registerForm').hide()
@@ -19,15 +21,14 @@ function createTodo() {
 }
 
 $(document).ready(function () {
+  listProject()
   $('#email').val('')
   $('#password').val('')
   $('#form-login').submit(login)
-  // $('#form-addTodo').submit(addTodo)
   $('#form-addProject').submit(addProject)
   $('#registerForm').submit(register)
   $('#form-addMember').submit(addMember)
 
-  listProject()
   // $('#addTodo').hide()
   $('#addProject').hide()
   $('#editTodo').hide()

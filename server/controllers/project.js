@@ -2,6 +2,8 @@ const project = require('../models/project')
 
 class Project {
   static create(req, res) {
+    console.log(req.userId);
+    
     let newProject = new project({
       name: req.body.name,
       owner: req.userId,
@@ -69,6 +71,8 @@ class Project {
 
 
   static delete(req, res) {
+    console.log(req.params.id, "server");
+    
     project.deleteOne({ _id: req.params.id })
       .then(data => {
         res.status(200).json({ message: "Delete Success" })
@@ -79,7 +83,12 @@ class Project {
   }
 
   static addMember(req, res) {
-    project.findOne({ members: req.body.user })
+    project.findOne({
+      $and: [
+        { _id: req.params.id },
+        { members: req.body.user }
+      ]
+    })
       .then(data => {
         if (data) {
           res.status(400).json({ msg: "Sudah terdaftar" })
@@ -98,7 +107,8 @@ class Project {
           .populate('owner')
           .populate('members')
           .populate('todos')
-      }).then(data => {
+      })
+      .then(data => {
         res.status(201).json(data)
       })
       .catch(err => {

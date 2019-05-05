@@ -9,7 +9,8 @@
   <title>Fancy Todo</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link href="./css/style.css" type="text/css" rel="stylesheet">
 </head>
 
@@ -106,7 +107,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="row">
             <div class='col-md' id="listHeaderLeft">
               <h6>List Project</h6>
@@ -120,7 +121,7 @@
             </ul>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
           <div id="detail-project">
 
           </div>
@@ -143,6 +144,86 @@
     </div>
   </div>
 
+  <!-- MODAL ADD MEMBER-->
+  <div class="modal fade" id="modalMember" tabindex="-1" role="dialog" aria-labelledby="modalMemberLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalMemberLabel">Add Member</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="text-align: center">
+          <select id="listUser" class="combobox">
+            <option disabled selected>-- Choose --</option>
+          </select>
+          <br/><br/>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" onClick="addMember()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ADD TODO-->
+  <div class="modal fade" id="modalTodo" tabindex="-1" role="dialog" aria-labelledby="modalTodoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTodoLabel" class="titleAddTodo">Add Todo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="nama" placeholder="Name taks">
+        
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="description" placeholder="The description">
+        
+          <label for="due_date">Due Date</label>
+          <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
+                          
+          <br/>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" onClick="addTodo()" id="buttonAddTodo">Save</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EDIT TODO-->
+  <div class="modal fade" id="modalEditTodo" tabindex="-1" role="dialog" aria-labelledby="modalEditTodoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalEditTodoLabel" class="titleEditTodo">Edit Todo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="nama" placeholder="Name taks">
+        
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="description" placeholder="The description">
+        
+          <label for="due_date">Due Date</label>
+          <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
+                          
+          <br/>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" onClick="editTodo()">Edit</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -153,9 +234,10 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="./js/index.js"></script>
   <script src="./js/project.js"></script>
   <script src="./js/user.js"></script>
+  <script src="./js/todo.js"></script>
+  <script src="./js/index.js"></script>
 </body>
 
 </html>

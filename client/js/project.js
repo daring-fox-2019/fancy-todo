@@ -1,7 +1,7 @@
-let idProjectSelected = null
 
 function detailProject(id) {
   idProjectSelected = id
+  let statusOwner = null
 
   $('#addProject').hide()
   $('#detail-project').empty()
@@ -13,91 +13,80 @@ function detailProject(id) {
     }
   })
     .done(function ({ data }) {
-      console.log(data);
-      
       $('#detail-project').append(`<div class="card ">
-                          <h5 class="card-header">Detail Project</h5>
-                          <div class="card-body">
-                            <h5 class="card-title"> Name : ${data.name}</h5>
-                            <h5>Owner : ${data.owner.name}</h5>
+            <h5 class="card-header">Detail Project</h5>
+            <div class="card-body">
+              <h5 class="card-title"> Name : ${data.name}</h5>
+              <h5>Owner : ${data.owner.name}</h5>
 
-                            <h5>Members</h5>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMember">
-                            Add Member
-                              </button>
-                            <ul id='list-members'>
-                            </ul>
+              <h5>Members</h5>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMember">
+              Add Member
+                </button>
+              <ul id='list-members'>
+              </ul>
 
-                            <h5>Todos</h5>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTodo">
-                            Add Todo
-                              </button>
-                            <ul id='list-todo'>
-                            </ul>
-
-                          </div>
-                        </div>
-                        
-                        <div class="modal fade" id="modalMember" tabindex="-1" role="dialog" aria-labelledby="modalMemberLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="modalMemberLabel">Add Member</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body" style="text-align: center">
-                                <select id="listUser" class="combobox">
-                                  <option disabled selected>-- Choose --</option>
-                                </select>
-                                <br/><br/>
-                                <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary" onClick="addMember()">Save</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="modal fade" id="modalTodo" tabindex="-1" role="dialog" aria-labelledby="modalTodoLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="modalTodoLabel">Add Todo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <select id="listUser" class="combobox">
-                                  <option disabled selected>-- Choose --</option>
-                                </select>
-                                <br/>
-                                <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary" onClick="addMember()">Save</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+              <h5>Todos</h5>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTodo">
+              Add Todo
+                </button>
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody id='list-todo'>
+                  
+                </tbody>
+              </table>
+            </div>
+            <div id="buttonDeleteProject">
+            </div>
+          </div>
+          
       `)
+
+      if (data.owner._id == localStorage.userId) {
+        console.log("OWNER");
+        console.log(data._id);
+        
+        $('#buttonDeleteProject').append(`<button type="button" class="btn btn-danger" onClick="deleteProject('${data._id}')">
+            Delete Project
+          </button>`)
+      }
 
       for (members of data.members) {
         $('#list-members').append(`<li>${members.name}</li>`)
       }
 
-      for (todo of data.todos) {
-        $('#list-members').append(`<li>${todo.name}</li>`)
+      for ([index, todo] of data.todos.entries()) {
+        $('#list-todo').append(`<tr>
+              <th scope="row">${index + 1}</th>
+              <td>${todo.name}</td>
+              <td>${todo.description}</td>
+              <td>${todo.status}</td>
+              <td>${todo.due_date}</td>
+              <td>
+                <i class="fas fa-info-circle"></i>
+                <i class="fas fa-edit" data-toggle="modal" data-target="#modalEditTodo"></i>
+                <i class="fas fa-trash-alt" onClick='deleteTodo("${todo._id}")'></i>
+              </td>
+            </tr>`
+        )
       }
 
       $.ajax({
         url: `http://localhost:3000/users`,
         method: 'GET'
       })
-        .done(function ( data ) {
-          console.log(data);
-          for(user of data){
+        .done(function (data) {
+          for (user of data) {
             $('#listUser').append(`<option value="${user._id}">${user.name}</option>`)
           }
         })
@@ -164,21 +153,36 @@ function edit(id) {
 }
 
 function deleteProject(id) {
-  $.ajax({
-    url: `http://localhost:3000/todos/${id}`,
-    method: 'DELETE',
-    headers: {
-      token: localStorage.getItem('token')
-    }
+  swal({
+    title: "Are you sure want to delete this project?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
   })
-    .done(function (response) {
-      swal("Delete Task Success", "", "success");
-      $('#detail-todo').empty()
-      listTodo()
-    })
-    .fail(err => {
-      swal("This not yours!", "", "error");
-    })
+  .then((willDelete) => {
+    if (willDelete) {
+      $.ajax({
+        url: `http://localhost:3000/projects/${id}`,
+        method: 'DELETE',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .done(function (response) {
+          swal("Delete Project Success", "", "success");
+          $('#detail-project').empty()
+          listProject()
+        })
+        .fail(err => {
+          console.log(err);
+          
+          swal("This not yours!", "", "error");
+        })
+    }
+  });
+
+  
+  
 }
 
 function listProject() {
@@ -211,6 +215,7 @@ function listProject() {
 
 function addProject(event) {
   event.preventDefault()
+  console.log("MASUK");
 
   if ($('#nameProject').val()) {
     let name = $('#nameProject').val()
@@ -259,15 +264,15 @@ function addMember() {
           $('#list-members').append(`<li>${members.name}</li>`)
         }
         console.log("ADD member success");
-        
+
         listProject()
       })
       .fail((jqXHR, textStatus) => {
         console.log(jqXHR.status);
-        if(jqXHR.status===400){
-          
+        if (jqXHR.status === 400) {
+
         }
-        
+
         console.log(`request failed ${textStatus}`)
       })
   }
@@ -282,22 +287,3 @@ function backProject() {
   $('#addProject').hide()
 }
 
-
-{/* <div id="addTodo">
-            <h1 class="justify-content-center">Add Todo</h1>
-            <form id="form-addTodo">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="nama" placeholder="Name taks">
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="The description">
-              </div>
-              <div class="form-group">
-                <label for="due_date">Due Date</label>
-                <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div> */}

@@ -26,10 +26,13 @@ function authentication(req, res, next) {
 }
 
 function authorization(req, res, next) {
+  console.log(req.params.id);
+  
   Todo.findOne({ _id: req.params.id })
     .then(data => {
-
-      if (String(data.userId) === String(req.body.userId)) {
+      console.log(data);
+      
+      if (String(data.userId) === String(req.userId)) {
         next()
       } else {
         res.status(401).json({ message: 'Unauthorized' })
