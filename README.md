@@ -1,6 +1,4 @@
 # fancy-todo
-
-# Simple Todo List
 ##### oleh : [Novi Irnawati]
 
 Aplikasi ini adalah tugas portofolio. Fitur utamanya adalah :
