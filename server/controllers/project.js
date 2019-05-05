@@ -54,7 +54,7 @@ class ProjectController {
     };
 
     for(let key in updates) {
-      if(String(updates[key]) == 'null' ) {
+      if(String(updates[key]) == 'undefined' ) {
         delete updates[key];
       };
     }

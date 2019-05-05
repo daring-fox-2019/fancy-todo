@@ -2,3 +2,200 @@
   margin: 0;
   padding: 0;
 }
+
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]){
+  border-bottom: 0.5px solid #202020;
+  box-shadow: 0 1px 0 0 #202020;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label {
+  color: black;
+}
+
+/* Nav */
+
+nav {
+  background-color: inherit;
+  border: none;
+  box-shadow: none;
+
+}
+
+.nav-wrapper {
+  margin: 0 5px;
+  border-radius: 3px;
+}
+
+.nav-wrapper > a, li {
+  margin: 0 20px;
+}
+
+#signout {
+  margin-top: 15px;
+  margin-right: 15px;
+  background: #212121;
+  border: 1px solid white;
+  border-radius: 3px;
+ }
+ 
+ /* End */
+
+/* Main */
+.section {
+  flex: 1;
+  /* border: 0.5px solid black; */
+  border-radius: 3px;
+  padding: 5px;
+  box-shadow: 0 1px 0.5px 0 #202020
+}
+
+.menu-section {
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.main-section{
+  flex-basis: 80%;
+}
+
+#main-container {
+  display: flex;
+  margin: 0 5px 5px 5px;
+  flex-flow: row wrap;
+  align-items: stretch;
+  min-height: 92vh;
+}
+
+/* End */
+
+
+/* Form register/login */
+#customBtn {
+  display: inline-block;
+  background: white;
+  color: #444;
+  width: 100%;
+  border-radius: 3px;
+  border: thin solid #888;
+  box-shadow: 0px 1px 1px grey;
+  white-space: nowrap;
+}
+#customBtn:hover {
+  cursor: pointer;
+}
+
+#google-icon {
+  padding: 5px 0;
+  margin: 2px 0;
+}
+
+#google-text {
+  margin-left: 10px;
+}
+
+#go-register, #go-login {
+  cursor: pointer;
+}
+/* End */
+
+/* Tabs */
+.tabs .tab a {
+  border-radius: 3px;
+  color: #202020;
+}
+
+.tabs .tab a.active {
+  color: #202020;
+}
+
+.tabs .tab a:hover {
+  background-color: #202020;
+  color: white;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+  background-color: whitesmoke;
+  color: #202020;
+}
+
+.tabs .indicator {
+  background-color: #202020;
+}
+/* End */
+
+/* Menu Section */
+
+#project-form, #todo-form {  
+  border-top: 0;
+  border-bottom: 4px solid darkgrey;
+  padding: 5px;
+  border-radius: 3px;
+}
+#project-form {
+  flex-basis: 40%;
+}
+
+#todo-form {
+  flex-basis: 60%;
+}
+
+#project-header, #todo-header {
+  border-radius: 3px;
+  box-shadow: 1px 0 0 0 darkgray;
+  border-bottom: none;
+  text-transform: uppercase;
+  padding: 3px;
+}
+
+.material-icons.md-36 { 
+  font-size: 36px; 
+}
+
+.material-icons.md-light { 
+  color: rgba(255, 255, 255, 1); 
+}
+
+.material-icons.md-light.md-inactive {
+  color: rgba(255, 255, 255, 0.3); 
+}
+
+/* DatePicker */
+
+.datepicker-date-display {
+  background-color: #202020;
+}
+
+.datepicker-table td.is-today {
+  color: darkgrey;
+}
+
+.datepicker-table td.is-selected {
+  background-color: darkgray;
+  color: rgb(255, 255, 255);
+}
+
+.datepicker-table td.is-selected {
+  background-color: gray;
+  color: #fff;
+}
+
+.datepicker-cancel, .datepicker-clear, .datepicker-today, .datepicker-done {
+  color: #202020;
+  padding: 0 1rem;
+}
+
+.delete-todo:hover {
+  background-color: #ff6961;
+}
+
+.edit-todo:hover {
+  background-color: #ff7e47;
+}
+
+/* End */

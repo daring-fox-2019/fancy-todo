@@ -8,6 +8,7 @@ const todoSchema = new Schema({
     required: [true, 'Todo name cannot be empty'],
   },
   description: String,
+  date: Date,
   status: {
     type: Boolean,
     default: false,

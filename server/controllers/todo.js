@@ -1,3 +1,4 @@
+const moment = require('moment');
 const Todo = require('../models/Todo');
 
 class TodoController {
@@ -36,13 +37,19 @@ class TodoController {
     const {
       name,
       description,
+      date,
     } = req.body;
+
+    console.log(date);
 
     const newTodo = new Todo({
       name,
       description,
+      date: moment(date, 'MM-DD-YYYY'),
       userId,
     });
+
+    console.log(newTodo.date)
 
     newTodo.save()
       .then((todo) => {
@@ -62,20 +69,25 @@ class TodoController {
     const {
       name,
       description,
+      date,
       status,
     } = req.body;
 
     const updates = {
       name,
       description,
+      date,
       status,
     }
 
+    console.log(updates)
+
     for(let key in updates) {
-      if(String(updates[key]) == 'null') {
+      if(String(updates[key]) == 'undefined') {
         delete updates[key];
       };
     };
+    console.log(updates)
 
     Todo.findByIdAndUpdate(id, updates, { new: true })
       .then((updated) => {

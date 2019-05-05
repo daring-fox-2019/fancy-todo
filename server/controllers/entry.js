@@ -33,6 +33,7 @@ class EntryController {
         res.status(201).json({
           message: 'REGISTERED',
           accessToken: token,
+          userId: user._id,
         });
       })
       .catch((error) => {
@@ -58,6 +59,7 @@ class EntryController {
             res.status(200).json({
               message: 'LOGGED IN',
               accessToken: token,
+              userId: user._id,
             });
           } else {
               const username = name;
@@ -78,6 +80,7 @@ class EntryController {
                 res.status(200).json({
                   message: 'LOGGED IN',
                   accessToken: token,
+                  userId: user._id,
                 });
               });
           };
@@ -102,6 +105,7 @@ class EntryController {
             res.status(200).json({
               message: 'LOGGED IN',
               accessToken: token,
+              userId: user._id,
             });
           } else {
             throw new Error('Wrong email/password');
@@ -124,13 +128,25 @@ class EntryController {
       .populate(
         {
           path: 'todos',
-          select: ['name', 'description'],
+          select: ['name', 'description', 'status', 'date'],
         }
       )
       .then((user) => {
+        const {
+          username,
+          email,
+          projects,
+          todos,
+        } = user;
+
         res.status(200).json({
           message: 'FETCHED',
-          user,
+          user:{
+            username,
+            email,
+            projects,
+            todos,
+          },
         });
       })
       .catch((error) => {

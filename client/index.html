@@ -1,28 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="google-signin-client_id" content="1028457723804-5411pjuhcivj92hh4km6nkrgkhk4aaej.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="1028457723804-5411pjuhcivj92hh4km6nkrgkhk4aaej.apps.googleusercontent.com">
+  <link rel="icon" href="assets/img/h8bw.jpeg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/api:client.js"></script>
+  <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
 
-  
+
   <title>Fancy Todo</title>
 </head>
-<body>
-  FANCY TO DO
-  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  <button onclick="signOut()">signout</button>
 
+<body>
+  <nav>
+    <div class="nav-wrapper grey darken-4">
+      <a href="#" id="home" class="brand-logo px-3">FTD</a>
+      <button id="signout" class="btn btn-small right">Sign Out</button>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li id="username">User</li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="entry">
+    <div id="entry-container">
+      <div id="login">
+        <div class="valign-wrapper row login-box">
+          <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+            <form>
+              <div class="card-content">
+                <span class="card-title">Sign In</span>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <label for="email">Email address</label>
+                    <input type="email" name="email-login" id="email-login" autocomplete="off" autofocus />
+                  </div>
+                  <div class="input-field col s12">
+                    <label for="password">Password </label>
+                    <input type="password" name="password-login" id="password-login" autocomplete="off" autofocus />
+                  </div>
+                </div>
+                <span>Don't have an account ? <a id="go-register">Register here</a></span>
+              </div>
+              <div class="card-action right-align">
+                <button id="login-button" type="submit" class="black-text btn white waves-effect waves-light"
+                  value="Login" style="width:100%">Login</button>
+                <div class="center-align">Or</div>
+                <div id="gSignInWrapper">
+                  <div id="customBtn" class="customGPlusSignIn">
+                    <div id="google-icon" class=" center-align center-block"><i class="fab fa-lg fa-google"></i><span
+                        id="google-text">Sign in with Google</span> </div>
+                  </div>
+                </div>
+                <!-- <input type="submit" class="btn green waves-effect waves-light" value="Login" style="width:100%"> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="register">
+        <div class="valign-wrapper row login-box">
+          <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+            <form>
+              <div class="card-content">
+                <span class="card-title">Sign Up</span>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <label for="email">Username</label>
+                    <input type="text" name="username-register" id="username-register" autocomplete="off" autofocus />
+                  </div>
+                  <div class="input-field col s12">
+                    <label for="email">Email address</label>
+                    <input type="email" name="email-register" id="email-register" autocomplete="off" autofocus />
+                  </div>
+                  <div class="input-field col s12">
+                    <label for="password">Password </label>
+                    <input type="password" name="password-register" id="password-register" autocomplete="off"
+                      autofocus />
+                  </div>
+                </div>
+                <span>Already have an account ? <a id="go-login">Login here</a></span>
+              </div>
+              <div class="card-action right-align">
+
+                <button type="submit" id="register-button" class="black-text btn white waves-effect waves-light"
+                  style="width: 100%;">Sign Up</button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-container">
+
+    <!-- Modal Structure -->
+    <div id="edit-todo-modal" class="modal small">
+      <div class="modal-content">
+        <h4>Edit Todo</h4>
+        <div id="edit-todo-form">
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="todo-edit-name" name="todo-edit-name" type="text" autocomplete="off">
+                    <label for="name">Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="todo-edit-desc" name="todo-edit-desc" type="text" autocomplete="off">
+                    <label for="description">Description</label>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12" style="width:100%;">
+                      <input id="todo-edit-date" name="todo-edit-date" type="text" class="datepicker">
+                      <label for="description">Set date</label>
+                    </div>
+                  </div>
+                <div class="row" style="margin-left: 5px;">
+                    <div id="todo-edit-status" class="switch cols12">
+                      <label for="status">
+                        <p style="font-size:1rem; margin-bottom: 10px;">Finished this task ?</p>
+                      </label>
+                      <label>
+                        No
+                        <input type="checkbox" name="todo-edit-status">
+                        <span class="lever"></span>
+                        Yes
+                      </label>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <a id="todo-edit-button" class="modal-close waves-effect waves-green btn-flat">Edit Todo</a>
+      </div>
+    </div>
+    <!-- End Modal -->
+
+    <div class="section menu-section">
+
+      <div id="project-form">
+        <div id="project-header" class="grey darken-4">
+          <p class="center-align white-text">Add Project</p>
+        </div>
+        <div class="row">
+          <form class="col s12">
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="project-name" name="project-name" type="text" autocomplete="off">
+                <label for="name">Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="project-desc" name="project-desc" type="text" autocomplete="off">
+                <label for="description">Description</label>
+              </div>
+            </div>
+            <button id="add-project-button" type="submit" class="grey btn flat" style="width:100%"><i
+                class="material-icons md-36 md-light ">
+                library_add
+              </i></button>
+          </form>
+        </div>
+      </div>
+
+      <div id="todo-form">
+        <div class="row">
+          <div id="todo-header" class="grey darken-4">
+            <p class="center-align white-text">Add Todo</p>
+          </div>
+          <form class="col s12">
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="todo-name" name="todo-name" type="text" autocomplete="off">
+                <label for="name">Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="todo-desc" name="todo-desc" type="text" autocomplete="off">
+                <label for="description">Description</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="todo-date" name="todo-date" type="text" class="datepicker">
+                <label for="description">Set date</label>
+              </div>
+            </div>
+            <button id="add-todo-button" type="submit" class="grey btn flat" style="width:100%"><i
+                class="material-icons md-36 md-light ">
+                note_add
+              </i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="section main-section">
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s6"><a class="active" href="#todos">My Todos</a></li>
+            <li class="tab col s6"><a href="#projects">My Projects</a></li>
+          </ul>
+        </div>
+        <div id="todos" class="col s12">
+          <h3>Todos</h3>
+          <hr>
+          <table class="striped bordered">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Due</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="todo-table">
+
+            </tbody>
+          </table>
+
+        </div>
+
+        <div id="projects" class="col s12">
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.0.min.js"
     integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="assets/js/sign.js"></script>
+  <script src="assets/js/google.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
+
 </html>

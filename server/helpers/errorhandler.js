@@ -1,4 +1,4 @@
-const nodeError = ['Error','EvalError','InternalError','RangeError','ReferenceError','SyntaxError','TypeError','URIError']
+const nodeError = ['Error','EvalError','InternalError','RangeError','ReferenceError','SyntaxError','TypeError','URIError'];
 const mongooseClientError = ['CastError','ValidatorError','ValidationError'];
 
 const errorCode = (errorMessage) => {

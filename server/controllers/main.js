@@ -58,10 +58,10 @@ class MainController {
           { $push: { todos: todo._id } },
         )
           .exec();
-          res.status(201).json({
-            message: 'CREATED',
-            todo,
-          });
+        res.status(201).json({
+          message: 'CREATED',
+          todo,
+        });
       })
       .catch((error) => {
         next(error);
@@ -83,7 +83,7 @@ class MainController {
     };
 
     for(let key in updates) {
-      if(String(updates[key]) == 'null') {
+      if(String(updates[key]) == 'undefined') {
         delete updates[key];
       };
     };
