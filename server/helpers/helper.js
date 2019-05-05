@@ -12,6 +12,6 @@ module.exports = {
         return jwt.sign(userPayload, process.env.JWT_SECRET, {expiresIn: '1d'})
     },
     verifyJWT(token){
-        return jwt.decode(token, process.env.JWT_SECRET)
+        return jwt.verify(token, process.env.JWT_SECRET)
     }
 }
