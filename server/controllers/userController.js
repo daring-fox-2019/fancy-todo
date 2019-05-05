@@ -114,6 +114,45 @@ class UserController {
       });
     }
 
+    static fbLogin(req, res) {
+      const email = req.body.email
+      const name = req.body.name
+
+      User
+        .findOne({email: email})
+        .then(user => {
+          if(user) {
+            let token = jwt.sign({
+              email: user.email,
+              name: user.name,
+              role: user.role
+            }, process.env.JWT_SECRET)
+
+            res.status(200).json({token: token, _id: user._id, email: user.email, name: user.name})
+          }
+          else {
+            User.create({
+              email: email,
+              name: name,
+              password: crypt.hashPassword(process.env.DEFAULT_PASSWORD),
+            })
+            .then(user => {
+              let token = jwt.sign({
+                email: user.email,
+                name: user.name,
+                role: user.role
+              }, process.env.JWT_SECRET)
+  
+              res.status(200).json({token: token, _id: user._id, email: user.email, name: user.name})
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json(err)
+        })
+    }
+
     static findAll(req, res) {
       User.find()
           .then(list => {

@@ -40,7 +40,11 @@ body {
 .socialDiv {
     display: flex;
     justify-content: center;
-    margin: 10px auto;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.fb-login-button {
+    margin-left: 20px;
 }
 
 #registerForm {
