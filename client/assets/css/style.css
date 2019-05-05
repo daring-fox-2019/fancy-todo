@@ -1,5 +1,8 @@
 .homepage {margin-top: 100px;}
 .pos-relative {position: relative;}
+.fs-15{font-size: 15px}
+.color-grey4{color: #616161}
+.color-red{color: #dc3545}
 .w25 {width: 24.5%  ;}
 .w75 { width: 74.5%; }
 .w85 { width: 85%; }
@@ -14,6 +17,14 @@
 }
 .inline-block { display: inline-block }
 .navbar__submenu > .icon { 
+    color: #dc3545;
+    cursor: pointer;
+}
+.edit-btn {
+    color: darkcyan;
+    cursor: pointer;
+}
+.delete-btn {
     color: #dc3545;
     cursor: pointer;
 }
@@ -120,6 +131,9 @@
 
 #member__card-container {
     padding: 0em 20em;
+}
+#searchTodo {
+    padding: 0em 19em;
 }
 
 #member__card-container > .card {

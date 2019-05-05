@@ -8,5 +8,6 @@ routes.post('/signin', UserController.signin)
 // routes.post('/todo-create', UserController.createToto)
 
 routes.get('/todos', UserController.findUserTodo)
+routes.post('/googlesignin', UserController.signInGoogle)
 
 module.exports = routes

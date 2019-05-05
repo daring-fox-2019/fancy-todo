@@ -2,16 +2,17 @@ const User = require('../models/user')
 const Todo = require('../models/todo')
 const Helper = require('../helpers/helper')
 const ObjectId = require('objectid')
+const calculateDate = require('../helpers/calculateDate')
 
 class TodoController {
     static list(req, res) {
         Todo.find({owner: req.headers.id})
         .populate('owner', 'email')
-        .then(user=> {
-            res.status(200).json(user)
+        .then(todos=> {
+            res.status(201).json(todos)
         })
         .catch(err => {
-            res.status(400).json(err)
+            res.status(500).json(err)
         })
     }
 
@@ -20,6 +21,9 @@ class TodoController {
             name: req.params.todoName
         })
         .then(todo => {
+            console.log(todo);
+            todo.deadline = calculateDate.inDays(todo.due_date, new Date() )
+
             res.status(200).json(todo)
         })
         .catch(err => {
@@ -78,10 +82,19 @@ class TodoController {
 
     static search(req, res) {
         let nameREGEX = `^${req.query.name}`
-
+        console.log(req.headers.id);
         Todo.
-        find(
-            {name: { $regex: `${nameREGEX}`, $options: 'i' } }
+        // find(
+        //     {name: { $regex: `${nameREGEX}`, $options: 'i' } }
+        // ).
+        find( 
+            {
+                $and:[
+                    {name: { $regex: `${nameREGEX}`, $options: 'i' } }, 
+                    {owner: req.headers.id  }
+                ]
+            }
+
         ).
         then(search=>{
             res.status(200).json(search);

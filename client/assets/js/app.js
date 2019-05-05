@@ -49,8 +49,8 @@ function fetchTodo() {
     })
     .done(function(response) {
         $("#member__card-container > div").remove()
-
         response.forEach(todo => {
+            let dateDiff = parseInt((new Date(todo.due_date) - new Date)/(24*3600*1000))+1
             $("#member__card-container").append(
                 `
                 <div class="card">
@@ -58,10 +58,22 @@ function fetchTodo() {
                         <div>
                             <h6 data-name="${todo.name}">${todo.name}</h6>
                             <p data-description="${todo.description}">${todo.description}</p>
+                            <span class="fs-15 color-red">${dateDiff} days remaining</span>
+
                         </div>
                         <div>
-                            <div data-id="${todo._id}" data-toggle="modal" data-target="#editTodoModal" onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', ${todo.status}, '${todo.due_date}')">Edit</div>
-                            <div data-id="${todo._id}" onclick="deleteTodo('${todo._id}')">Delete</div>
+                            <div 
+                                class="edit-btn" 
+                                data-id="${todo._id}" 
+                                data-toggle="modal" 
+                                data-target="#editTodoModal" 
+                                onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', ${todo.status}, '${todo.due_date}')"
+                            ><i class="far fa-edit"></i> Edit</div>
+                            <div 
+                                class="delete-btn"
+                                data-id="${todo._id}" 
+                                onclick="deleteTodo('${todo._id}')"
+                            ><i class="far fa-trash-alt"></i> Delete</div>
                         </div>
                     </div>
                 </div>
@@ -132,6 +144,43 @@ function renderLoggedInPage() {
     }
 }
 
+function onSignIn(googleUser) {
+    // var profile = googleUser.getBasicProfile();
+    // var profile = googleUser.getAuthResponse();
+    const token = googleUser.getAuthResponse().id_token;
+
+    $.ajax({
+        url: `http://localhost:3000/api/users/googlesignin`,
+        method: `POST`,
+        headers: {
+            token
+        }
+    })
+    .done(function(response) {
+        localStorage.setItem('token', response.token)
+        localStorage.setItem('name', response.name)
+        renderLoggedInPage()
+    })
+    .fail(function(jqXHR, textStatus) {
+        console.log(textStatus);
+    })
+
+
+    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    // console.log('Name: ' + profile.getName());
+    // console.log('Image URL: ' + profile.getImageUrl());
+    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+
+    auth2.signOut().then(function () {
+        localStorage.removeItem('token')
+        renderLoggedInPage()
+    });
+}
+
 $(document).ready(function() {  
     renderLoggedInPage()
 
@@ -157,7 +206,7 @@ $(document).ready(function() {
         const id = localStorage.id
         const name = $("#todo__name").val()
         const description = $("#todo__description").val()
-        const due_date = $("#todo__due_date").val()
+        const due_date = new Date($("#todo__due_date").val())
 
         $.ajax({
             url: `http://localhost:3000/api/todos`,
@@ -216,7 +265,8 @@ $(document).ready(function() {
             url: `http://localhost:3000/api/todos/search?name=${searchTodo}`,
             type: `GET`,
             headers: {
-                token: localStorage.token
+                token: localStorage.token,
+                id: localStorage.id
             }
         })
         .done(function(todos) {
@@ -226,6 +276,8 @@ $(document).ready(function() {
             $("#member__card-container > div").remove()
 
             todos.forEach(todo=> {
+                let dateDiff = parseInt((new Date(todo.due_date) - new Date)/(24*3600*1000))+1
+
                 $("#member__card-container").append(
                     `
                     <div class="card">
@@ -233,10 +285,22 @@ $(document).ready(function() {
                             <div>
                                 <h6 data-name="${todo.name}">${todo.name}</h6>
                                 <p data-description="${todo.description}">${todo.description}</p>
+                                <span class="fs-15 color-red">${dateDiff} days remaining</span>
+
                             </div>
                             <div>
-                                <div data-id="${todo._id}" data-toggle="modal" data-target="#editTodoModal" onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', ${todo.status}, '${todo.due_date}')">Edit</div>
-                                <div data-id="${todo._id}" onclick="deleteTodo('${todo._id}')">Delete</div>
+                                <div 
+                                    class="edit-btn" 
+                                    data-id="${todo._id}" 
+                                    data-toggle="modal" 
+                                    data-target="#editTodoModal" 
+                                    onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', ${todo.status}, '${todo.due_date}')"
+                                ><i class="far fa-edit"></i> Edit</div>
+                                <div 
+                                    class="delete-btn"
+                                    data-id="${todo._id}" 
+                                    onclick="deleteTodo('${todo._id}')"
+                                ><i class="far fa-trash-alt"></i> Delete</div>
                             </div>
                         </div>
                     </div>
@@ -273,4 +337,8 @@ $(document).ready(function() {
         localStorage.removeItem('token')
         renderLoggedInPage()
     })
+
+    $('[type="date"]').prop('min', function(){
+        return new Date().toJSON().split('T')[0];
+    });
 })
