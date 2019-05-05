@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="./src/favicon.ico" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title style="font-family: 'Tangerine', serif">TodoQue</title>
+    <meta name="google-signin-client_id"
+        content="610994307975-84kgpckdmm5lug7jq54t7acuurqcgi8k.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/index.css">
+
+</head>
+
+<body>
+    <nav class="navbar" style="background-color: #f8fcff;">
+        <div class="d-flex">
+            <div style="margin-right:15px; font-family: 'Tangerine', serif; font-size: 30px"><img
+                    src="https://storage.cloud.google.com/jualeun-qfs/TQDefault_300_300.png?_ga=2.138409845.-415458887.1554453586"
+                    class="align-middle" style="height:40px; margin-bottom:8px" alt="" srcset=""><span
+                    style="margin-left:5px">TodoQue</span> </div>
+            <div id="agenda" style="margin-top:7px">
+                <button type="button" class="btn" style="background-color: transparent; border:none; outline:none;"
+                    onclick="showMyTodos(),openYa()"><i class="fas fa-calendar-week"></i> My
+                    Agenda</button>
+                <button type="button" style="background-color: transparent; border:none; outline:none" id="add"
+                    class="btn btn-light" onclick="addForm()"><i class="fas fa-calendar-plus"></i> Add Agenda</button>
+                <button type="button" style="background-color: transparent; border:none; outline:none" id="add"
+                    class="btn btn-light" onclick="showMyProjects(),openProject()"><i class="fas fa-sitemap"></i>
+                    My Projects</button>
+                <button type="button" style="background-color: transparent; border:none; outline:none" id="add"
+                    class="btn btn-light" onclick="addProjectForm()"><i class=" fas fa-project-diagram"></i>
+                    Add Project</button>
+            </div>
+        </div>
+        <div>
+            <button type="button" style="background-color: transparent; border:none; outline:none" id="add"
+                class="btn btn-light signout" onclick="signOut()"><i class="fas fa-calendar-plus"></i><i
+                    class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+        <!-- Navbar content -->
+    </nav>
+    <div class="myTodos" id="myTodos"></div>
+    <div class="myProjects "></div>
+    <div class="addTodo">
+        <div class="formz">
+            <h3 style="font-family: 'Tangerine', serif; font-size: 60px"><strong> Add New Task</strong></h3>
+            <label for todoadd>To Do </label><br>
+            <input class="form-control" style="width: 500px" type="text" name="todo" id="todoadd"><br><br>
+            <label for startadd>Start </label><br>
+            <input type="date" name="" id="startadddate"><input style="margin-left:10px" type="time" name=""
+                id="startaddtime"><br><br>
+            <label for endadd>End </label><br>
+            <input type="date" name="" id="endadddate"><input style="margin-left:10px" type="time" name=""
+                id="endaddtime"><br><br>
+            <label for locationadd>Location </label><br>
+            <input class="form-control" style="width: 500px" type="text" name="location" id="locationadd"><br><br>
+            <label for descriptionadd>Description </label><br>
+            <textarea class="form-control" style="width: 500px; height: 200px" name="description"
+                id="descriptionadd"></textarea><br><br>
+            <label for statusadd>Status </label><br>
+            <select class="custom-select" id="statusadd" style="width: 500px" type="text" name="status">
+                <option selected>Choose...</option>
+                <option value="Done">Done</option>
+                <option value="Not Done">Not Done</option>
+            </select><br><br>
+            <button type="button" class="btn btn-success" id="todoadd" onclick="addToDo()">add</button>
+            <button type="button" style="font-size:25px; position:fixed; right:17%; top: 9.5%" class="btn btn-danger"
+                id="close" onclick="closeYa()"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    <div class="addProject">
+        <div class="formz">
+            <h3 style="font-family: 'Tangerine', serif; font-size: 60px"><strong> Add New Project</strong></h3>
+            <label for projectTitle>Project </label><br>
+            <input class="form-control" style="width: 500px" type="text" name="todo" id="projectTitle"><br><br>
+            <label for descriptionProjectAdd>Description </label><br>
+            <textarea class="form-control" style="width: 500px; height: 200px" name="description"
+                id="descriptionProjectAdd"></textarea><br><br>
+            <label for listUsers>Please choose project's members</label><br>
+
+            <div id="listUsers" style="font-weight: 400"></div>
+            <button type="button" class="btn btn-success" id="projectADD" style="margin-top:40px"
+                onclick="addProject()">add</button>
+            <button type="button" style="font-size:25px; position:fixed; right:17%; top: 9.5%" class="btn btn-danger"
+                onclick="closeYa()"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    <div class="editTodo">
+        <div class="formz">
+            <label for todoadd>To Do </label><br>
+            <input type="text" name="todo" id="todoedit"><br><br>
+            <label for startedit>Start </label><br>
+            <input type="text" name="start" id="startedit" placeholder="yyyy-mm-dd hh:mm"><br><br>
+            <label for endedit>End </label><br>
+            <input type="text" name="end" id="endedit" placeholder="yyyy-mm-dd hh:mm"><br><br>
+            <label for locationedit>Location </label><br>
+            <input type="text" name="location" id="locationedit"><br><br>
+            <label for descriptionedit>Description </label><br>
+            <textarea name="description" id="descriptionedit"></textarea><br><br>
+            <label for statusedit>Status </label><br>
+            <select class="custom-select" id="statusedit" style="width: 500px" type="text" name="status">
+                <option selected>Choose...</option>
+                <option value="Done">Done</option>
+                <option value="Not Done">Not Done</option>
+            </select><br><br>
+            <button type="button" class="btn btn-success" id="todoedit2" onclick="editToDo()">edit</button>
+            <button type="button" style="font-size:25px; position:fixed; right:17%; top: 9.5%" class="btn btn-danger"
+                id="close" onclick="closeYa()"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    <div class="editProject">
+        <div class="formz">
+            <h3 style="font-family: 'Tangerine', serif; font-size: 60px"><strong> Update Project</strong></h3>
+            <label for projectTitle>Project </label><br>
+            <input class="form-control" style="width: 500px" type="text" name="todo" id="projectTitleEdit"><br><br>
+            <label for descriptionProjectAdd>Description </label><br>
+            <textarea class="form-control" style="width: 500px; height: 200px" name="description"
+                id="descriptionProjectEdit"></textarea><br><br>
+            <label for listUsers>Please choose project's members</label><br>
+
+            <div id="listUsersEdit" style="font-weight: 400"></div>
+            <button type="button" class="btn btn-success" id="projectEditBut" style="margin-top:40px"
+                onclick="editProject()">Update</button>
+            <button type="button" style="font-size:25px; position:fixed; right:17%; top: 9.5%" class="btn btn-danger"
+                onclick="closeYa()"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    <div class="allland">
+        <h1>My To Do List</h1>
+        <div class="loginstd" style="font-family: 'ZCOOL XiaoWei', serif;">
+            <button type="button" style="width:120px" class="btn btn-outline-secondary" data-toggle="modal"
+                data-target="#exampleModal" data-whatever="@getbootstrap">Log In</button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="background-color: #f8fcffe8">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Log In into TodoQue</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="background-color: transparent">
+                            <form>
+                                <div class="form-group">
+                                    <label for="loginemail" class="col-form-label">Email :</label>
+                                    <input type="text" class="form-control" id="loginemail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginpassword" class="col-form-label">Password :</label>
+                                    <input class="form-control" type="password" id="loginpassword">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" id="logButton" onclick="logIn()"
+                                data-dismiss="modal">Sign
+                                In</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br>
+        <div class="registerstd" style="font-family: 'ZCOOL XiaoWei', serif;">
+            <button type="button" style="width:120px" class="register-btn btn btn-outline-secondary" data-toggle="modal"
+                data-target="#exampleModal2" data-whatever="@getbootstrap">Register</button>
+
+            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="background-color: #f8fcffe8">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">Name :</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-form-label">Email :</label>
+                                    <input class="form-control" id="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-form-label">Password :</label>
+                                    <input class="form-control" type="password" id="password">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" id="regButton" onclick="register()"
+                                data-dismiss="modal">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br>
+        <div class="row justify-content-center">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </div><br>
+
+        <footer class="align-middle"
+            style="text-align:center;background-color: #f8fcff; height: 100px; width: 100%;position:fixed;bottom:0; left:0">
+            <h6 style="margin-top: 30px;    font-family: 'ZCOOL XiaoWei', serif;">
+                © TodoQue, 2019
+            </h6>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+        <script src="./js/index.js"></script>
+</body>
+
+</html>

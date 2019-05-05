@@ -1,0 +1,83 @@
+body {
+    background-image: url('../img/landingpage.jpg');
+}
+
+#myTodos,
+.myProjects {
+    padding-left: 10%;
+    color: black;
+    left: 15%;
+    position: absolute;
+    top: 15%;
+    width: 70%;
+    height: 70%;
+    background-color: #f7fcfff8;
+    border: 1px solid rgb(255, 240, 211);
+    padding: 2% 5%;
+    border-radius: 20px;
+    overflow: auto;
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+
+h1 {
+    text-align: center;
+    font-family: 'Tangerine', serif;
+    font-size: 150px;
+    font-weight: bolder;
+    /* background-color: rgba(255, 255, 255, 0.9) */
+}
+
+.allland {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+.loginstd .register-btn .register-form .g-signin2 {
+    display: inline-block;
+
+}
+
+.addTodo,
+.addProject {
+    overflow: auto;
+    border-radius: 20px;
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-weight: bolder;
+    color: black;
+    font-size: 20px;
+    left: 15%;
+    top: 15%;
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    background-color: #f7fcfff8;
+    border: 1px solid rgb(255, 240, 211);
+    padding: 2% 5%
+}
+
+.editTodo,
+.editProject {
+    padding-left: 10%;
+    overflow: auto;
+    color: black;
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-weight: bolder;
+    font-size: 20px;
+    left: 15%;
+    top: 15%;
+    border-radius: 20px;
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    background-color: #f7fcfff8;
+    border: 1px solid rgb(255, 240, 211);
+    padding: 2% 5%
+}
+
+.formz {
+    margin: auto;
+}
