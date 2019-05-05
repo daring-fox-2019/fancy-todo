@@ -12,6 +12,9 @@ function onSignIn(googleUser) {
       localStorage.setItem('token', response.token) //response token hasil jwt
       localStorage.setItem('userId', response.userId)
       localStorage.setItem('userName', response.name)
+      $('#navbarDropdown').append(localStorage.getItem('userName'))
+      listTodo()
+      listProject()
       $('#loginForm').hide()
       $('#content').show()
     })
@@ -41,6 +44,9 @@ function login(event) {
         localStorage.setItem('token', response.token)
         localStorage.setItem('userId', response.userId)
         localStorage.setItem('userName', response.name)
+        $('#navbarDropdown').append(localStorage.getItem('userName'))
+        listTodo()
+        listProject()
       })
       .fail((jqXHR, textStatus) => {
         console.log(jqXHR);

@@ -6,7 +6,8 @@ let todoSchema = new Schema({
     description: String,
     status: Boolean,
     due_date: Date,
-    userId: {type: Schema.Types.ObjectId, ref:"User"}
+    userId: {type: Schema.Types.ObjectId, ref:"User"},
+    project: Boolean
 })
 
 let Todo = mongoose.model("Todo", todoSchema)

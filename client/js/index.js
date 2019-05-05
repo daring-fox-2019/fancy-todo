@@ -1,4 +1,5 @@
 var idProjectSelected = null
+let idTodoSelected = null
 
 if (!localStorage.getItem('token')) {
   $('#loginForm').show()
@@ -9,18 +10,16 @@ if (!localStorage.getItem('token')) {
   $('#registerForm').hide()
   $('#content').show()
   $('#navbarDropdown').append(localStorage.getItem('userName'))
+  listTodo()
+  listProject()
 }
 
 function myTodo(){
-  console.log("MASUK TODO");
-  
   $('#todo').show()
   $('#project').hide()
 }
 
 function myProject(){
-  console.log("MASUK Project");
-
   $('#project').show()
   $('#todo').hide()
 }
@@ -32,7 +31,7 @@ function back() {
 
 function createTodo() {
   $('#detail-todo').empty()
-  // $('#addTodo').show()
+  $('#addTodo').show()
 }
 
 $(document).ready(function () {
@@ -40,11 +39,13 @@ $(document).ready(function () {
   $('#email').val('')
   $('#password').val('')
   $('#form-login').submit(login)
+  $('#form-addTodo').submit(addMyTodo)
   $('#form-addProject').submit(addProject)
   $('#registerForm').submit(register)
   $('#form-addMember').submit(addMember)
-
-  // $('#addTodo').hide()
+  
+  listTodo()
+  $('#addTodo').hide()
   $('#todo').hide()
   $('#project').hide()
   $('#addProject').hide()

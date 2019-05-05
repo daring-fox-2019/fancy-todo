@@ -3,12 +3,12 @@ const Todo = require('../models/todo')
 const { verify } = require('../helpers/jwt')
 
 function authentication(req, res, next) {
-  
-  if (req.headers.token=="null") {
+
+  if (req.headers.token == "null") {
     console.log("Token Not Found!")
   } else {
     let decoded = verify(req.headers.token);
-
+    
     User.findOne({ email: decoded.email })
       .then(userFound => {
         if (userFound) {
@@ -26,12 +26,8 @@ function authentication(req, res, next) {
 }
 
 function authorization(req, res, next) {
-  console.log(req.params.id);
-  
   Todo.findOne({ _id: req.params.id })
     .then(data => {
-      console.log(data);
-      
       if (String(data.userId) === String(req.userId)) {
         next()
       } else {

@@ -1,5 +1,5 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,10 +81,6 @@
   </div>
 
 
-
-
-
-
   <div id='content'>
     <div id='navbar'>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -103,7 +99,7 @@
               Hello,
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" onClick='myTodo()'>My Todo</a>
+              <a class="dropdown-item" onClick='myTodo()'>My Private Todo</a>
               <a class="dropdown-item" onClick='myProject()'>My Project</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="" onclick="signOut();" id="logout">Sign out</a>
@@ -114,7 +110,51 @@
     </div>
 
     <div id="todo">
-      TES TODO
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class='col-md' id="listHeaderLeft">
+                <h6>List Todo</h6>
+              </div>
+              <div class='col-md' id="listHeaderRight">
+                <button type="button" class="btn btn-primary btn-sm" onclick="createTodo()">Create Todo</button>
+              </div>
+            </div>
+            <div id="list-myTodo">
+              <ul class="list-group list-group-flush">
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div id="detail-todo">
+
+            </div>
+
+            <div id="addTodo">
+              <h1 class="justify-content-center">Add Todo</h1>
+              <form id="form-addTodo">
+                <div class="form-group">
+                  <label for="nama">Name</label>
+                  <input type="text" class="form-control" id="nama" placeholder="Name taks">
+                </div>
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <input type="text" class="form-control" id="description" placeholder="The description">
+                </div>
+                <div class="form-group">
+                  <label for="due_date">Due Date</label>
+                  <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </div>
     </div>
 
     <div id="project">
@@ -184,7 +224,7 @@
     </div>
   </div>
 
-  <!-- MODAL ADD TODO-->
+  <!-- MODAL ADD TODO PROJECT-->
   <div class="modal fade" id="modalTodo" tabindex="-1" role="dialog" aria-labelledby="modalTodoLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -196,8 +236,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <label for="title">Name</label>
-          <input type="text" class="form-control" id="title" placeholder="Name taks">
+          <label for="titleTodo">Name</label>
+          <input type="text" class="form-control" id="titleTodo" placeholder="Name taks">
 
           <label for="desc">Description</label>
           <input type="text" class="form-control" id="desc" placeholder="The description">
@@ -212,6 +252,7 @@
         </div>
       </div>
     </div>
+  </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

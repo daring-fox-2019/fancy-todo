@@ -1,4 +1,3 @@
-
 function detailProject(id) {
   idProjectSelected = id
 
@@ -49,6 +48,8 @@ function detailProject(id) {
               </div>
             </div>
           </div>
+
+          
           <div class="modal fade" id="modalEditTodo" tabindex="-1" role="dialog" aria-labelledby="modalEditTodoLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -59,18 +60,18 @@ function detailProject(id) {
                   </button>
                 </div>
                 <div class="modal-body">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" id="nama" placeholder="Name taks">
+                  <label for="titleTodoProject">Name</label>
+                  <input type="text" class="form-control" id="titleTodoProject" placeholder="Name taks">
                 
-                  <label for="description">Description</label>
-                  <input type="text" class="form-control" id="description" placeholder="The description">
+                  <label for="descriptionTodoProject">Description</label>
+                  <input type="text" class="form-control" id="descriptionTodoProject" placeholder="The description">
                 
-                  <label for="due_date">Due Date</label>
-                  <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
+                  <label for="due_dateTodoProject">Due Date</label>
+                  <input type="text" class="form-control" id="due_dateTodoProject" placeholder="YYYY-MM-DD">
                                   
                   <br/>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onClick="editTodo()">Edit</button>
+                    <button type="submit" class="btn btn-primary" onClick="editTodo('project')">Edit</button>
                   </div>
               </div>
             </div>
@@ -94,6 +95,7 @@ function detailProject(id) {
       for ([index, todo] of data.todos.entries()) {
         let status = ''
         let buttonStatus = ''
+        let info = ''
 
         if (todo.status === false) {
           status = 'Not yet'
@@ -117,7 +119,15 @@ function detailProject(id) {
           month = `0${month}`
         }
         
-        $('#list-todo').append(`<tr>
+        if (todo.status == true) {
+          info = "table-success"
+        } else if (difference < 0 && todo.status == false) {
+          info = "table-danger"
+        } else if ((difference == 1 || difference == 0) && todo.status == false) {
+          info = "table-warning"
+        }
+        
+        $('#list-todo').append(`<tr class="${info}" >
               <th scope="row">${index + 1}</th>
               <td>${todo.name}</td>
               <td>${todo.description}</td>
@@ -263,8 +273,6 @@ function listProject() {
 
 function addProject(event) {
   event.preventDefault()
-  console.log("MASUK");
-
   if ($('#nameProject').val()) {
     let name = $('#nameProject').val()
 

@@ -8,24 +8,25 @@ class Todo {
       description: req.body.description,
       status: false,
       due_date: req.body.due_date,
-      userId: req.userId
+      userId: req.userId,
+      project: req.body.project
     })
     todo.create(newTodo)
       .then(dataTodo => {
-        return project.update({
-          _id: req.body.projectId
-        }, {
-            $push: {
-              todos: dataTodo._id
-            }
+        if (req.body.projectId) {
+          return project.update({
+            _id: req.body.projectId
           }, {
-            sort: {
-              due_date: -1 //Sort by Date Added DESC
-            }
-          })
-      })
-      .then(data => {
-        res.status(201).json(data)
+              $push: {
+                todos: dataTodo._id
+              }
+            })
+            .then(data => {
+              res.status(201).json(data)
+            })
+        } else {
+          res.status(201).json(dataTodo)
+        }
       })
       .catch(err => {
         res.status(500).json({ message: "create task failed", err: err })
@@ -33,7 +34,12 @@ class Todo {
   }
 
   static findAll(req, res) {
-    todo.find()
+    todo.find({
+      $and: [
+        { project: false },
+        { userId: req.userId }
+      ]
+    })
       .populate("userId")
       .then(data => {
         res.status(200).json({ message: "get task data success", data: data })
@@ -82,26 +88,32 @@ class Todo {
   }
 
   static delete(req, res) {
-    project.update({
-      _id: req.body.projectId
-    }, {
-        $pull: {
-          todos: req.params.id
-        }
+    if (req.body.projectId) {
+      project.update({
+        _id: req.body.projectId
       }, {
-        sort: {
-          due_date: -1 //Sort by Date Added DESC
-        }
-      })
-      .then(data => {
-        return todo.deleteOne({ _id: req.params.id })
-      })
-      .then(data => {
-        res.status(201).json(data)
-      })
-      .catch(err => {
-        res.status(500).json({ message: "delete task failed", err: err })
-      })
+          $pull: {
+            todos: req.params.id
+          }
+        })
+        .then(data => {
+          return todo.deleteOne({ _id: req.params.id })
+        })
+        .then(data => {
+          res.status(201).json(data)
+        })
+        .catch(err => {
+          res.status(500).json({ message: "delete task failed", err: err })
+        })
+    } else {
+      todo.deleteOne({ _id: req.params.id })
+        .then(data => {
+          res.status(201).json(data)
+        })
+        .catch(err => {
+          res.status(500).json({ message: "delete task failed", err: err })
+        })
+    }
   }
 }
 

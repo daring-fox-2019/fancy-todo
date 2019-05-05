@@ -1,7 +1,5 @@
-let idTodoSelected
-
 function detailTodo(id) {
-
+  idTodoSelected = id
   $('#addTodo').hide()
   $('#detail-todo').empty()
   $.ajax({
@@ -16,7 +14,6 @@ function detailTodo(id) {
 
       let info = null
       let status = todo.status
-      let buttonStatus = ''
       let due_date = new Date(data.due_date)
       let date = due_date.getDate()
       let month = due_date.getMonth() + 1
@@ -43,7 +40,6 @@ function detailTodo(id) {
         status = "Done"
       } else {
         status = "Not yet"
-        buttonStatus = `<button type="button" class="btn btn-secondary btn-sm" onclick="changeStatus('${todo._id}')">Change Status</button>`
       }
 
       $('#detail-todo').append(`<div class="card ${info}">
@@ -53,21 +49,21 @@ function detailTodo(id) {
                               <p class="card-text">Description : ${todo.description}</p>
                               <p class="card-text">Due Date : ${year}-${month}-${date}</p>
                               <p class="card-text">Status : ${status}
-                              ${buttonStatus}
                                 </p>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick='edit("${todo._id}")'>
+                                <button type="button" class="btn btn-secondary btn-sm" onClick="changeStatus('${todo._id}','${todo.status}')">Change Status</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick='edit("${todo._id}")'>
                                 Edit
                                 </button>
-                                <a class="btn btn-danger" onclick='deleteTodo("${todo._id}")'>Delete</a>
+                                <a class="btn btn-danger" onClick='deleteTodo("${todo._id}")'>Delete</a>
                           </div>
                       </div>
 
-                      <!-- Modal -->
+                      <!-- Modal Edit Private Todo -->
                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Edit Todo</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Private Todo</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -75,7 +71,7 @@ function detailTodo(id) {
                             <div class="modal-body">
                             <form id="form-register">
                               <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="title">Name</label>
                                 <input type="text" class="form-control" id="title" placeholder="Name taks">
                               </div>
                               <div class="form-group">
@@ -90,7 +86,7 @@ function detailTodo(id) {
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary" onclick='editTodo("${todo._id}")'>Save changes</button>
+                              <button type="button" class="btn btn-primary" onClick="editTodo('private')">Save changes</button>
                             </div>
                           </div>
                         </div>
@@ -102,11 +98,20 @@ function detailTodo(id) {
     })
 }
 
-function editTodo() {
+function editTodo(arg) {
+  console.log(arg);
 
-  let name = $('#nama').val()
-  let description = $('#description').val()
-  let due_date = $('#due_date').val()
+  let name, description, due_date
+
+  if (arg == 'project') {
+    name = $('#titleTodoProject').val()
+    description = $('#descriptionTodoProject').val()
+    due_date = $('#due_dateTodoProject').val()
+  } else {
+    name = $('#title').val()
+    description = $('#description').val()
+    due_date = $('#due_date').val()
+  }
 
   $.ajax({
     url: `http://localhost:3000/todos/${idTodoSelected}`,
@@ -126,6 +131,7 @@ function editTodo() {
       $('#description').val('')
       $('#due_date').val('')
       detailProject(idProjectSelected)
+      listTodo()
       swal("Update Task Success", "", "success");
     })
     .fail(err => {
@@ -134,43 +140,60 @@ function editTodo() {
 }
 
 function deleteTodo(id) {
-  let projectId = idProjectSelected
-  $.ajax({
-    url: `http://localhost:3000/todos/${id}`,
-    method: 'DELETE',
-    data:{
-      projectId
-    },
-    headers: {
-      token: localStorage.getItem('token')
-    }
+
+  swal({
+    title: "Are you sure want to delete this task?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
   })
-    .done(function (response) {
-      swal("Delete Task Success", "", "success");
-      $('#detail-project').empty()
-      detailProject(idProjectSelected)
-    })
-    .fail(err => {
-      swal("This not yours!", "", "error");
-    })
+    .then((willDelete) => {
+      if (willDelete) {
+        let projectId = idProjectSelected
+        $.ajax({
+          url: `http://localhost:3000/todos/${id}`,
+          method: 'DELETE',
+          data: {
+            projectId
+          },
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+          .done(function (response) {
+            swal("Delete Task Success", "", "success");
+            $('#detail-project').empty()
+            $('#detail-todo').empty()
+            listTodo()
+            detailProject(idProjectSelected)
+          })
+          .fail(err => {
+            swal("This not yours!", "", "error");
+          })
+      }
+    });
+
+
 }
 
 function changeStatus(id, status) {
   let newStatus = status == 'false' ? true : false
-  
+
   $.ajax({
     url: `http://localhost:3000/todos/${id}`,
     method: 'PATCH',
-    data:{
-      status : newStatus
+    data: {
+      status: newStatus
     },
     headers: {
       token: localStorage.getItem('token')
     }
   })
     .done(function (response) {
+      detailTodo(id)
       swal("Success update status!", "", "success");
       detailProject(idProjectSelected)
+      listTodo()
     })
     .fail(err => {
       swal("This not yours!", "", "error");
@@ -178,19 +201,17 @@ function changeStatus(id, status) {
 }
 
 function listTodo() {
-  $('#list-todo').empty()
+  $('#list-myTodo').empty()
 
   $.ajax({
     url: 'http://localhost:3000/todos',
     method: 'GET',
     headers: {
-      headers: {
-        token: localStorage.getItem('token')
-      }
+      token: localStorage.getItem('token')
     }
   })
     .done(function (response) {
-      for ([index,todo] of response.data) {
+      for ([index, todo] of response.data.entries()) {
         let info = null
         let difference = Math.ceil((new Date(todo.due_date) - new Date()) / (24 * 60 * 60 * 1000))
         if (todo.status == true) {
@@ -201,36 +222,26 @@ function listTodo() {
           info = "list-group-item-warning"
         }
 
-        $('#list-todo').append(`<tr>
-            <th scope="row">${index+1}</th>
-            <td>${todo.name}</td>
-            <td>${todo.description}</td>
-            <td>${todo.status}</td>
-            <td>${todo.due_date}</td>
-            <td>
-              <i class="fas fa-info-circle"></i>
-              <i class="fas fa-edit" data-toggle="modal" data-target="#modalEditTodo"></i>              
-              <i class="fas fa-trash-alt" onclick='deleteTodo("${todo._id}")'></i>
-            </td>
-          </tr>`
-      )
+        $('#list-myTodo').append(`<li class="list-group-item list-group-item-action ${info}" onclick='detailTodo("${todo._id}")'>${todo.name}</li>`)
+
       }
 
     })
 }
 
 function addTodo() {
-  let name = $('#title').val()
+  let name = $('#titleTodo').val()
   let description = $('#desc').val()
   let due_date = $('#due-date').val()
   let status = false
   let projectId = idProjectSelected
-
+  let project = true
+  
   $.ajax({
     url: "http://localhost:3000/todos",
     method: 'POST',
     data: {
-      name, description, due_date, status, projectId
+      name, description, due_date, status, projectId, project
     },
     headers: {
       token: localStorage.getItem('token')
@@ -238,7 +249,7 @@ function addTodo() {
   })
     .done((response) => {
       $('#modalTodo').modal('hide');
-      $('#title').val('')
+      $('#titleTodo').val('')
       $('#desc').val('')
       $('#due-date').val('')
       detailProject(projectId)
@@ -248,9 +259,40 @@ function addTodo() {
     })
 }
 
-function modalTodoEdit(id){
+function addMyTodo(event) {
+  event.preventDefault()
+
+  let name = $('#nama').val()
+  let description = $('#description').val()
+  let due_date = $('#due_date').val()
+  let status = false
+  let project = false
+
+  $.ajax({
+    url: "http://localhost:3000/todos",
+    method: 'POST',
+    data: {
+      name, description, due_date, status, project
+    },
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  })
+    .done((response) => {
+      $('#nama').val('')
+      $('#description').val('')
+      $('#due_date').val('')
+      listTodo()
+      $('#addTodo').hide()
+    })
+    .fail((jqXHR, textStatus) => {
+      console.log(`request failed ${textStatus}`)
+    })
+}
+
+function modalTodoEdit(id) {
   idTodoSelected = id
-  
+
   $.ajax({
     url: `http://localhost:3000/todos/${id}`,
     method: 'GET',
@@ -259,6 +301,7 @@ function modalTodoEdit(id){
     }
   })
     .done(function ({ data }) {
+
       let due_date = new Date(data.due_date)
       let date = due_date.getDate()
       let month = due_date.getMonth() + 1
@@ -269,9 +312,9 @@ function modalTodoEdit(id){
       if (month < 10) {
         month = `0${month}`
       }
-      $('#nama').val(data.name)
-      $('#description').val(data.description)
-      $('#due_date').val(`${year}-${month}-${date}`)
+      $('#titleTodoProject').val(data.name)
+      $('#descriptionTodoProject').val(data.description)
+      $('#due_dateTodoProject').val(`${year}-${month}-${date}`)
     })
     .fail(err => {
       swal("This not yours!", "", "error");

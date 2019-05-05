@@ -40,11 +40,7 @@ class Project {
   }
 
   static findOne(req, res) {
-    project.findById(req.params.id, {
-      sort: {
-        due_date: -1 //Sort by Date Added DESC
-      }
-    })
+    project.findById(req.params.id)
       .populate("userId")
       .populate('owner')
       .populate('members')
