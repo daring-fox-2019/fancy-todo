@@ -2,6 +2,15 @@
 
 API Documentation
 
+** Online Access **
+
+Website can be accessed via : http://produktivv.paulinadavita.com/
+In case you want to experience without logging in, you may use this dummy account 
+```
+email : john@gmail.com
+password : 123456
+```
+
 **URLs**
 
 ```
