@@ -10,7 +10,7 @@ class ControllerTodo{
       status : "not done",
       due_date : req.body.due_date
     }
-
+    console.log(newTodo)
     Todo.create(newTodo)
     .then(result=>{
       res.json("success")
@@ -45,6 +45,7 @@ class ControllerTodo{
 
     Todo.findOne(condition)
     .then(result=>{
+      console.log(result)
       if(result) {
         res.json(result)
       } else {
@@ -78,7 +79,6 @@ class ControllerTodo{
     let condition = {
       _id : new ObjectID (req.params.id)
     }
-    
     Todo.findOne(condition)
     .then(result=>{
       if(result) {
@@ -103,7 +103,7 @@ class ControllerTodo{
       }
     })
     .then(updated=>{
-      console.log("akhir")
+      console.log("akhir update")
       res.json("success")
     })
     .catch(error=>{

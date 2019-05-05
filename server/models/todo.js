@@ -12,7 +12,7 @@ const TodoSchema = new Schema({
       validator : function(due_date){
           const input = new Date(due_date);
           const today = new Date();         
-          return input >= today
+          return input > today
       },
       message : "date must be later than today"
     }

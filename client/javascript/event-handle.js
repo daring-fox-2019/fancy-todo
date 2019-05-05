@@ -1,4 +1,7 @@
 $(document).ready(function(){
+  checkLogin()
+  let today = new Date
+  $('#due_date-field').val(today.toISOString().split('T')[0])
   
   $('.ui.menu')
   .visibility({
@@ -8,9 +11,8 @@ $(document).ready(function(){
   
   setTimeout(function(){
     $('.ui.menu.placeholder').hide()},
-    3000)
+    2000)
     
-  checkLogin()
 
   if(localStorage.getItem('token')){
     getUserData()
@@ -24,33 +26,33 @@ $(document).ready(function(){
 })
 
 function newTodo(){
-  console.log("disini")
-  $.ajax( {
-    method :'POST',
-    url: 'http://localhost:3000/todos',
-    headers : {
-      id : localStorage.getItem('id'),
-      token : localStorage.getItem('token'),
-      email : localStorage.getItem('email')
-    },
-    data : {
-      name : $("#name-field").val(),
-      description : $("#description-field").val(),
-      due_date : $("#due_date-field").val()
-    }
-    })
-  .done(function(response) {
-    console.log(response)
-      if(response == "success"){
-        location.reload()
-      } else {
-        location.reload()
+  console.log("aku disini")
+    $.ajax( {
+      method :'POST',
+      url: 'http://localhost:3000/todos',
+      headers : {
+        id : localStorage.getItem('id'),
+        token : localStorage.getItem('token'),
+        email : localStorage.getItem('email')
+      },
+      data : {
+        name : $("#name-field").val(),
+        description : $("#description-field").val(),
+        due_date : $("#due_date-field").val()
       }
+      })
+    .done(function(response) {
+        if(response == "success"){
+          getUserData()
+        } else {
+          getUserData()
+        }
+      })
+    .fail(function(jqXHR, textStatus) {
+      console.log(jqXHR)
+      console.log(textStatus)  
     })
-  .fail(function(jqXHR, textStatus) {
-    console.log(jqXHR)
-    console.log(textStatus)  
-  })
+    
 }
 
 // $('#dui-date-form').on('')
@@ -107,9 +109,9 @@ function detailTodo(todoId){
       $(".add-form").transition('hide')
       $(".edit-form").transition('show')
       if(response.status == "completed"){
-        $('#detail-name').html(`<h5>Title</h5><input type='text' value='${response.name}' name='upd-name' id="upd-name"><br><h5>Status</h5><div class="ui teal label">${response.status}</div>`)
+        $('#detail-name').html(`<h5>Title</h5><input type='text' value='${response.name}' name='upd-name' id='upd-name'><br><h5>Status</h5><div class="ui teal label">${response.status}</div>`)
       } else {
-        $('#detail-name').html(`<h5>Title</h5><input type='text' value='${response.name}' name='upd-name'><br><h5>Status</h5><div class="ui grey label">${response.status}</div>`)
+        $('#detail-name').html(`<h5>Title</h5><input type='text' value='${response.name}' name='upd-name' id='upd-name'><br><h5>Status</h5><div class="ui grey label">${response.status}</div>`)
       }
       $('#detail-description').html(`<br><h5>Description</h5><textarea id="upd-description" type='text'name='upd-description'>${response.description}</textarea>`)
       $('#detail-due_date').html(`<br><h5>Due Date</h5><input type='date' value='${date}' id="upd-due_date" name='upd-due_date'>`)
@@ -125,12 +127,6 @@ function detailTodo(todoId){
 
 function updateMyData(todoId){
   console.log(todoId)
-  let upd = {
-      name : $("#upd-name").val(),
-      description : $("#upd-description").val(),
-      due_date : $("#upd-due_date").val()
-  }
-  setTimeout(function(){
     $.ajax( {
       method :'PUT',
       url: `http://localhost:3000/todos/${todoId}`,
@@ -140,22 +136,22 @@ function updateMyData(todoId){
         email : localStorage.getItem('email')
       },
       data : {
-        upd
+        name : $("#upd-name").val(),
+        description : $("#upd-description").val(),
+        due_date : $("#upd-due_date").val()
       }
       })
     .done(function(response) {
         if(response == "success"){
-          location.reload()
+          getUserData()
         } else {
-          location.reload()
+          getUserData()
         }
       })
     .fail(function(jqXHR, textStatus) {
       console.log(jqXHR)
       console.log(textStatus)  
     })
-  }, 2000)
-    
 }
 
 function deleteTodo(todoId){
@@ -170,7 +166,7 @@ function deleteTodo(todoId){
     })
     .done(response=>{
       if(response == "success"){
-        location.reload()
+        getUserData()
       } else {
         location.reload()
         console.log("error delete")
@@ -197,7 +193,7 @@ function markDone(todoId){
     })
     .done(response=>{
       if(response == "success"){
-        location.reload();
+        getUserData()
       } else {
         location.reload()
       }
