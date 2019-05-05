@@ -1,3 +1,12 @@
+function showAlert(message) {
+    $('#notification').show();
+    $('#notification__content').text(message);
+
+    setTimeout(function(){ 
+        $('#notification').hide();
+    }, 3000);
+}
+
 function login(email, password) {
     $.ajax({
         url: `http://localhost:3000/api/users/signin`,
@@ -15,7 +24,7 @@ function login(email, password) {
         renderLoggedInPage()
     })
     .fail(function(jqXHR, textStatus) {
-        console.log(textStatus);
+        showAlert(jqXHR.responseJSON.msg)
     })
 }
 
@@ -34,7 +43,7 @@ function register(email,name,password) {
         $("#login__page").show()
     })
     .fail(function(jqXHR, textStatus) {
-        console.log(textStatus);
+        showAlert(jqXHR.responseJSON.msg)
     })
 }
 
@@ -101,7 +110,7 @@ function fetchTodo() {
         });
     })
     .fail(function(jqXHR, textStatus) {
-        console.log(textStatus);
+        showAlert(jqXHR.responseJSON.msg)
     })
 }
 
@@ -140,7 +149,7 @@ function deleteTodo(todoId) {
         }
     })
     .fail(function(jqXHR, textStatus) {
-        console.log(textStatus);
+        showAlert(jqXHR.responseJSON.msg)
     })
 }
 
@@ -179,7 +188,7 @@ function onSignIn(googleUser) {
         renderLoggedInPage()
     })
     .fail(function(jqXHR, textStatus) {
-        console.log(textStatus);
+        showAlert(jqXHR.responseJSON.msg)
     })
 }
 
@@ -228,11 +237,11 @@ function changeStatus(id, status) {
         }
     })
     .done(function(response) {
-        console.log('>>>>>>> ', response);
+        showAlert('Status changed!')
         renderLoggedInPage()
     })
     .fail(function(jqXHR, textStatus) {
-        console.log(textStatus);
+        showAlert(jqXHR.responseJSON.msg)
     })
 }
 
@@ -277,8 +286,16 @@ $(document).ready(function() {
         })
         .fail(function(jqXHR, textStatus) {
             $('#createTodoModal').modal('hide');
+
+            let message = ''
+
+            for (let key in jqXHR.responseJSON.msg.errors) {
+                message+=jqXHR.responseJSON.msg.errors[key].message+'\n'
+            }
+
+            showAlert(message)
+
             fetchTodo()
-            console.log(textStatus);
         })
     })
 
@@ -306,8 +323,14 @@ $(document).ready(function() {
         })
         .fail(function(jqXHR, textStatus) {
             $('#editTodoModal').modal('hide');
-            fetchTodo()
-            console.log(textStatus);
+            let message = ''
+
+            for (let key in jqXHR.responseJSON.msg.errors) {
+                message+=jqXHR.responseJSON.msg.errors[key].message+'\n'
+            }
+
+            showAlert(message)
+            fetchTodo();
         })
     })
 
@@ -368,7 +391,7 @@ $(document).ready(function() {
 
         })
         .fail(function(jqXHR, textStatus) {
-            console.log(textStatus);
+            showAlert(jqXHR.responseJSON.msg)
         })
     })
 

@@ -74,7 +74,7 @@ class TodoController {
             res.status(201).json(todoCreate)
         })
         .catch(err => {
-            res.status(500).json(err)
+            res.status(400).json({msg: err})
         })
     }
 
@@ -122,7 +122,7 @@ class TodoController {
             res.status(200).json(search);
         })
         .catch(err=> {
-            res.status(400).json({'msg': 'Internal server error'})
+            res.status(400).json({'msg': err})
         })
     }
 }

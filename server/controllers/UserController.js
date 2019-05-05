@@ -32,8 +32,6 @@ class UserController {
     static signin(req, res) {
         const {email, password} = req.body
 
-        console.log('headers: ', req.headers);
-
         User.findOne({
             email
         })
@@ -64,7 +62,7 @@ class UserController {
 
         })
         .catch(err => {
-            res.status(400).json({msg: 'Bad request'})
+            res.status(400).json({msg: err})
         })
     }
 

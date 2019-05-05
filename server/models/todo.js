@@ -5,11 +5,11 @@ const { Schema } = mongoose;
 const todoSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: [true, 'Name is required']
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'Description is required']
     },
     status: {
         type: Boolean,
@@ -17,7 +17,7 @@ const todoSchema = new Schema({
     },
     due_date: {
         type: Date,
-        required: true
+        required: [true, 'Due date is required']
     },
     owner : { type: Schema.Types.ObjectId, ref: 'User' }
 });
