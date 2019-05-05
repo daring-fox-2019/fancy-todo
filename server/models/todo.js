@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose()
+const { Schema } = mongoose
 
 const TodoSchema = new Schema({
   user : { type: Schema.Types.ObjectId, ref: 'User' },
@@ -8,9 +8,9 @@ const TodoSchema = new Schema({
   status : String,
   due_date : {
     type : Date,
-    validator : {
-      validate : function(due_date){
-          const input = new Date(this.due_date);
+    validate : {
+      validator : function(due_date){
+          const input = new Date(due_date);
           const today = new Date();         
           return input > today
       },

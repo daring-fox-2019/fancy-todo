@@ -16,7 +16,8 @@ class ControllerUser{
       res.json(result)
     })
     .catch(err=>{
-      res.json(err)
+      res.json(null)
+      
     })
   }
 
@@ -28,8 +29,9 @@ class ControllerUser{
     .then(result=>{
       if(result){
         if (decrypt(req.body.password, result.password) == true){ 
-         let token = jwt.sign({email : result.email}, process.env.SECRET_JWT)
+         let token = jwt.sign({email : result.email, id : result._id}, process.env.SECRET_JWT)
          let loggedIn = {
+           id : result._id,
            user : result.email,
            token
          }
