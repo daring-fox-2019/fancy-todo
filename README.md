@@ -1,10 +1,16 @@
 # fancy-todo
 
-## How To Run
+## Usage
 
-``` npm run dev ```
+Make sure Node.js is installed in your computer then run these commands:
 
-``` npm run start ```
+```javascript
+npm install
+
+npm run dev
+
+npm run start
+```
 
 ## Environment
 
