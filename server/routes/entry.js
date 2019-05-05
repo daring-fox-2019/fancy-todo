@@ -11,7 +11,6 @@ const {
 } = middleware;
 
 const {
-  testMWare,
   postRegister,
   postLogin,
   getUserById,
@@ -20,6 +19,5 @@ const {
 router.post('/register', postRegister);
 router.post('/login', loginMethod, postLogin);
 router.get('/home', userAuthentication, getUserById);
-router.get('/test', userAuthentication, testMWare);
 
 module.exports = router;

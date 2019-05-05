@@ -6,10 +6,6 @@ const { createAccessToken } = require('../helpers/auth');
 
 class EntryController {
 
-  static testMWare(req, res) {
-    res.status(200).json({message: 'AUTHENTICATED WOOHOOO'});
-  };
-
   static postRegister(req, res, next) {
     const {
       username,

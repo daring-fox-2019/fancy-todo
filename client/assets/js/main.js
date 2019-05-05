@@ -4,6 +4,7 @@ let editId = "";
 let projectId = "";
 
 $(document).ready(function() {
+
   // Materialize
   $(".tabs").tabs();
 
@@ -162,6 +163,7 @@ $(document).on("click", ".delete-todo", function() {
       $(this)
         .closest("tr")
         .remove();
+        alertify.success("Deleted")
     })
     .fail((jqXHR, text) => {
       console.log(text, jqXHR);
@@ -182,6 +184,7 @@ $(document).on("click", ".delete-todo-project", function() {
       $(this)
       .closest("tr")
       .remove();
+      alertify.success("Deleted")
     })
     .fail((jqXHR, text) => {
       console.log(text);
@@ -201,6 +204,7 @@ $(document).on("click", ".delete-project", function() {
     .done((response) => {
       console.log(response);
       $(this).closest('.card').remove();
+      alertify.success("Deleted")
     })
     .fail((jqXHR, text) => {
       console.log(text, jqXHR);
@@ -231,6 +235,7 @@ $(document).on("click", "#add-member-button", function() {
     },
   })  
     .done((response) => {
+      alertify.success('Added')
       getHome();
     })
     .fail((jqXHR, text) => {
@@ -334,6 +339,7 @@ function userLogin(event) {
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("userId", response.userId);
       checkLogin();
+      alertify.success('Welcome')
       getHome();
     })
     .fail((jqXHR, text) => {
@@ -373,7 +379,9 @@ function attachSignin(element) {
           console.log(response);
           localStorage.setItem("accessToken", response.accessToken);
           localStorage.setItem("userId", response.userId);
+          alertify.success('Welcome')
           checkLogin();
+          
         })
         .fail((jqXHR, textStatus) => {
           console.log(textStatus);
@@ -392,6 +400,7 @@ function signOut() {
     localStorage.clear();
     $("#entry").show();
     checkLogin();
+    alertify.success('Bye')
   });
 }
 
@@ -672,6 +681,5 @@ function createProjectTodo() {
       console.log(text, jqXHR);
     });
 }
-
 
 /* End */
