@@ -20,11 +20,19 @@ function register() {
       name,
       email,
       password
+    },
+    statusCode: {
+      400: function() {
+        alert('400 status code! user error');
+      },
+      500: function() {
+        window.location = './http-500.html'
+      }
     }
   })
     .done((data) => {
       localStorage.setItem('token', data.token)
-      $('#messageSuccess').text(`Hai ${data.name}, kamu berhasil login`)
+      $('#message').text(`Hai ${data.name}, kamu berhasil login`)
       console.log("success register", data)
       getAllTodos()
       $("#TodoLists").show()
@@ -32,7 +40,7 @@ function register() {
     })
     .fail((err) => {
       console.log(err)
-      $('#messageError').text(err.responseJSON.message)
+      $('#message').css('color','#FF0000').text(err.responseJSON.message)
     })
 }
 
@@ -46,11 +54,19 @@ function login() {
     data: {
       email,
       password
+    },
+    statusCode: {
+      400: function() {
+        alert('400 status code! user error');
+      },
+      500: function() {
+        window.location = './http-500.html'
+      }
     }
   })
     .done((data) => {
       localStorage.setItem('token', data.token)
-      $('#messageSuccess').text(`Hai ${data.name}, kamu berhasil login`)
+      $('#message').css('color','rgb(0, 75, 187)').text(`Hai ${data.name}, kamu berhasil login`)
       console.log("success login", data)
       // $('#namaUser').text(data.name)
       getAllTodos()
@@ -59,7 +75,7 @@ function login() {
     })
     .fail((err) => {
       console.log(err)
-      $('#messageError').text(err.responseJSON.message)
+      $('#message').css('color','#FF0000').text(err.responseJSON.message)
     })
 }
 
@@ -76,19 +92,27 @@ function onSignIn(googleUser) {
     type: 'POST',
     data: {
       id_token
+    },
+    statusCode: {
+      400: function() {
+        alert('400 status code! user error');
+      },
+      500: function() {
+        window.location = './http-500.html'
+      }
     }
   })
     .done((data) => {
       console.log(data)
-      if(data.passRandom) $('#messageSuccess').text('Hurry up change your password now, your password is', data.passRandom)
+      if(data.passRandom) $('#message').css('color','rgb(0, 75, 187)').text('Hurry up change your password now, your password is', data.passRandom)
       localStorage.setItem('token', data.token)
-      $('#messageSuccess').text(`Hai ${data.name}, kamu berhasil login`)
+      $('#message').css('color','rgb(0, 75, 187)').text(`Hai ${data.name}, kamu berhasil login`)
       getAllTodos()
       $("#TodoLists").show()
       $("#login-register-form").hide()
     })
     .fail((err) => {
-      $('#messageError').text('response failed :', err)
+      $('#message').css('color','#FF0000').text('response failed :', err)
     })
 }
 
@@ -110,7 +134,7 @@ function addNewTodo() {
   let today = new Date()
 
   if (newduedate < today) {
-    $('#messageError').text("Due date cant be the past!!!")
+    $('#message').css('color','#FF0000').text("Due date cant be the past!!!")
   }
   else {
     $.ajax({
@@ -122,6 +146,14 @@ function addNewTodo() {
         title: $('#newTitle').val(),
         description: $('#newDesc').val(),
         duedate: newduedate
+      },
+      statusCode: {
+        400: function() {
+          alert('400 status code! user error');
+        },
+        500: function() {
+          window.location = './http-500.html'
+        }
       }
     })
       .done(function (response) {
@@ -131,7 +163,7 @@ function addNewTodo() {
         getAllTodos()
       })
       .fail(function (jqXHR, textStatus) {
-        $('#messageError').text('response failed :', textStatus)
+        $('#message').css('color','#FF0000').text('response failed :', textStatus)
       })
   }
 }
@@ -140,6 +172,14 @@ function getAllTodos() {
     url: `${baseURL}/todos/read`,
     method: 'GET',
     headers: {token: localStorage.getItem('token')},
+    statusCode: {
+      400: function() {
+        alert('400 status code! user error');
+      },
+      500: function() {
+        window.location = './http-500.html'
+      }
+    }
   })
   .done(todos => {
     $('#results').empty()
@@ -151,16 +191,25 @@ function getAllTodos() {
     })
     .fail((err) => {
       console.log(err)
-      $('#messageError').text(err.responseJSON.message)
+      $('#message').css('color','#FF0000').text(err.responseJSON.message)
     })
 }
 function searchTodos() {
   let selected = $('#filterByStatus').val()
-  let query = `?status=${selected}`
+  let query = ""
+  if(selected != "all status") query = `/search?status=${selected}`
   $.ajax({
-    url: `${baseURL}/todos/read/search${query}`,
+    url: `${baseURL}/todos/read${query}`,
     method: 'GET',
-    headers: {token: localStorage.getItem('token')}
+    headers: {token: localStorage.getItem('token')},
+    statusCode: {
+      400: function() {
+        alert('400 status code! user error');
+      },
+      500: function() {
+        window.location = './http-500.html'
+      }
+    }
   })
   .done(todos => {
     $('#results').empty()
@@ -172,7 +221,7 @@ function searchTodos() {
     })
     .fail((err) => {
       console.log(err)
-      $('#messageError').text(err.responseJSON.message)
+      $('#message').css('color','#FF0000').text(err.responseJSON.message)
     })
 }
 
@@ -182,7 +231,15 @@ function editTodo(todoId) {
   $.ajax({
     url: `${baseURL}/todos/read/${todoId}`,
     method: 'GET',
-    headers: {token: localStorage.getItem('token')}
+    headers: {token: localStorage.getItem('token')},
+    statusCode: {
+      400: function() {
+        alert('400 status code! user error');
+      },
+      500: function() {
+        window.location = './http-500.html'
+      }
+    }
   })
     .done(todo => {
       $('#editTodoForm').show()
@@ -195,7 +252,7 @@ function editTodo(todoId) {
     })
     .fail((err) => {
       console.log(err)
-      $('#messageError').text(err.responseJSON.message)
+      $('#message').css('color','#FF0000').text(err.responseJSON.message)
     })
 }
 
@@ -212,16 +269,24 @@ function updateTodo(todoId) {
         description: $('#selectedDescription').val(),
         status: $('#selectedStatus').val(),
         duedate: new Date($('#selectedDueDate').val()),
+      },
+      statusCode: {
+        400: function() {
+          alert('400 status code! user error');
+        },
+        500: function() {
+          window.location = './http-500.html'
+        }
       }
     })
       .done(todo => {
-        $('#messageSuccess').text(`Update ${todo.title} Berhasil`)
+        $('#message').css('color','rgb(0, 75, 187)').text(`Update ${todo.title} Berhasil`)
         dontRefresh()
         $('#editTodoForm').attr("onsubmit",null).hide()
       })
       .fail((err) => {
         console.log(err)
-        $('#messageError').text(err.responseJSON.message)
+        $('#message').css('color','#FF0000').text(err.responseJSON.message)
       })
   }
 }
@@ -231,15 +296,23 @@ function deleteTodo(todoId) {
   $.ajax({
     url: `${baseURL}/todos/delete/${todoId}`,
     method: 'DELETE',
-    headers: {token: localStorage.getItem('token')}
+    headers: {token: localStorage.getItem('token')},
+    statusCode: {
+      400: function() {
+        alert('400 status code! user error');
+      },
+      500: function() {
+        window.location = './http-500.html'
+      }
+    }
   })
     .done(result => {
-      $('#messageSuccess').text(`Delete Todo Berhasil`)
+      $('#message').css('color','rgb(0, 75, 187)').text(`Delete Todo Berhasil`)
       dontRefresh()
     })
     .fail((err) => {
       console.log(err)
-      $('#messageError').text(err.responseJSON.message)
+      $('#message').css('color','#FF0000').text(err.responseJSON.message)
     })
 }
 

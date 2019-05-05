@@ -126,15 +126,14 @@ class UserController {
           })
         }
       })
-      .catch(err => {
-        let message       
-        if(err) {
-          if(err.message) message = err.message
-          else message = err
+      .catch(err => {     
+        if(err.message) {  
+          res.status(406).json({
+            message: err.message
+          })
         }
-        else message = "Internal Server Error Login"
-        res.status(500).json({
-          message
+        else res.status(500).json({
+          message: "Internal Server Error Login"
         })
       })
   }
