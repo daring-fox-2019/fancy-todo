@@ -1,0 +1,32 @@
+{
+  "name": "fancy-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cococold27/fancy-todo.git"
+  },
+  "author": "Coco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cococold27/fancy-todo/issues"
+  },
+  "homepage": "https://github.com/cococold27/fancy-todo#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "google-auth-library": "^3.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.4.22"
+  },
+  "devDependencies": {
+    "dotenv": "^7.0.0"
+  }
+}
