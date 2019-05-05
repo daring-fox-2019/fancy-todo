@@ -1,0 +1,71 @@
+* {
+    font-family: Verdana, Geneva, Tahoma;
+    font-size: 0.95rem;
+}
+
+body {
+    margin: 0;
+}
+
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 160px;
+    background-color: #f1f1f1;
+    height: 100%; /* Full height */
+    position: fixed; /* Make it stick, even on scroll */
+    overflow: auto; /* Enable scrolling if the sidenav has too much content */
+}
+
+a.navlink {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: black;
+}
+
+a.navlink:hover {
+    background-color: #e7aaa6;
+}
+
+.content {
+    padding-top: 8px;
+    padding-bottom: 24px;
+    margin-left: 180px;
+    max-width: 1100px;
+    margin-right: 5%;
+}
+
+#register-form {
+    display: none;
+}
+
+#login-form {
+    display: none;
+}
+
+.todo {
+    list-style-type: none;
+    padding: 0.3rem 0.5rem 0.6rem 0.5rem;
+    margin-left: 0;
+    margin-bottom: 0.6rem;
+    background-color: #dadada;
+}
+
+.crudbutton {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #505357;
+    padding: 0.1rem 0.4rem 0.2rem 0.4rem;
+}
+
+.focused {
+    display: none;
+    background-color: #ffffff;
+    border: 2px solid #505357;
+    position: fixed;
+    width: 38%;
+    padding: 1.8rem;
+    margin: auto;
+}
