@@ -1,0 +1,81 @@
+* {
+  /* background-color: red; */
+  font-size: 14px;
+}
+/* ======================= */
+/* BEFORE LOGIN */
+/* ======================= */
+
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../img/homepage-background.jpg");
+  /* background-image: none; */
+  background-color: rgb(223, 223, 223);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.row {
+  background-color: white;
+}
+
+.jumbotron {
+  background-color: #fff !important;
+}
+
+.jumbotron-todo {
+  padding-top: 2rem;
+}
+
+#jumbotron-before-login {
+  margin-top: 15%;
+}
+
+#jumbotron-before-login h1,
+#jumbotron-before-login button {
+  text-align: center;
+}
+
+#jumbotron-button {
+  display: flex;
+  justify-content: center;
+}
+
+#container-before-login {
+    width: 70%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#todo-page {
+  width: 80%;
+  margin: 1rem auto;
+}
+
+a {
+  color: rgb(64, 64, 207);
+}
+
+a:hover {
+  text-decoration: none;
+  color: rgb(0, 0, 99);
+}
+
+.alert-light {
+  background-color: white;
+  border-color: white;
+}
+
+/* ======================= */
+/* AFTER LOGIN */
+/* ======================= */
+/* #jumbotron-after-login {
+  background-image: none;
+} */
+
+td:hover {
+  /* background-color: red; */
+  opacity: 0.8;
+}

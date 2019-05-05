@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="google-signin-client_id"
+    content="466465965888-a9att6rnmuc0gef8nftcht5a0t79277f.apps.googleusercontent.com" />
+
+  <title>Fancy Todo</title>
+
+  <link rel="icon" href="./resources/img/page-icon.png">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:700" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <!-- Bootstrap CSS -->
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="./lib/css/bootstrap.css" />
+
+  <!-- jQuery UI -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="./resources/css/main.css" />
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</head>
+
+<body>
+  <div id="before-login">
+    <div id="container-before-login">
+      <div class="jumbotron" id="jumbotron-before-login">
+        <h1 class="display-1" style="font-family: 'Dancing Script', cursive;">Fancy Todo</h1>
+
+        <hr class="my-4">
+
+        <div id="jumbotron-button">
+          <!-- Button trigger modal login -->
+          <button type="button" class="btn btn-outline-dark mr-1" data-toggle="modal" data-target="#form-login">
+            Log in
+          </button>
+
+          <!-- Modal Login -->
+          <div class="modal fade" id="form-login" tabindex="-1" role="dialog" aria-labelledby="form-login-title"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="form-login-title">
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true"></div>
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="form-login">
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="username" />
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="password" />
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-block">
+                      Log in
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Button trigger modal register -->
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#form-register">
+            Register
+          </button>
+
+          <!-- Modal Register -->
+          <div class="modal fade" id="form-register" tabindex="-1" role="dialog" aria-labelledby="form-register-title"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="form-register">
+                    <div class="form-group">
+                      <label for="username-register">Username</label>
+                      <input type="text" class="form-control" id="username-register" aria-describedby="usernameHelp" />
+                    </div>
+                    <div class="form-group">
+                      <label for="password-register">Password</label>
+                      <input type="password" class="form-control" id="password-register"
+                        aria-describedby="passwordHelp" />
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-block">
+                      Register
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Update Todo -->
+  <div class="modal fade" id="form-update-todo" tabindex="-1" role="dialog" aria-labelledby="form-update-todo-title"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="form-update-todo">
+            <div class="form-group">
+              <label for="update-todo-name">Name</label>
+              <input type="text" class="form-control" id="update-todo-name" />
+            </div>
+            <div class="form-group">
+              <label for="update-todo-description">Description</label>
+              <input type="text" class="form-control" id="update-todo-description" />
+            </div>
+            <div class="form-group">
+              <label for="update-todo-due-date">Due Date</label>
+              <input type="text" class="form-control" id="update-todo-due-date" placeholder="mm/dd/yyyy" />
+            </div>
+            <button type="submit" class="btn btn-dark">
+              Save Changes
+            </button>
+            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="after-login">
+    <nav class="navbar navbar-light bg-light" style="background-color: #fff !important;">
+      <a class="navbar-brand" href="#">Fancy Todo</a>
+      <form id="form-signout" class="form-inline my-2 my-lg-0 text-right" style="align-content: right">
+        <button class="btn btn-outline-dark my-2 my-sm-0 mr-2" type="submit">
+          Sign Out
+        </button>
+      </form>
+    </nav>
+
+    <!-- Todo -->
+    <div class="row" id="todo-page">
+      <div class="col-12">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="welcome-alert"
+          style="margin-top: 1rem">
+          <div id="welcome-alert-message">
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="col-12">
+          <div class="alert alert-light alert-dismissible fade show" role="alert" id="welcome-alert"
+            style="margin-top: 1rem">
+            <h2 id="random-quote" class="mt-4" style="text-align: center; color: black;"></h2>
+            <h3 id="random-quote-author" class="mt-4" style="text-align: center; color: rgb(92, 92, 92);"></h3>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Add Todo -->
+      <div class="container col-3 container-todo">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card-header">
+              <button class="btn btn-link" onclick="removeProjectId()">
+                Show All
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+
+            <div class="accordion" id="accordion-projects">
+
+              <div class="card">
+                <div class="card-header" id="heading-projects">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapse-projects" aria-expanded="false" aria-controls="collapse-projects">
+                      Projects
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapse-projects" class="collapse" aria-labelledby="heading-projects"
+                  data-parent="#accordion-projects">
+                  <div class="card-body">
+
+
+
+                    <ul class="nav flex-column">
+                      <div id="project-list">
+                      </div>
+                      <li class="nav-link">
+                        <div class="row">
+                          <div class="col-12">
+                            <button type="button" class="btn btn-dark" id="add-project-button">Add Project</button>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <form class="col-12" id="form-add-project" style="display: none;">
+                            <div class="form-group">
+                              <input type="text" class="form-control" id="add-project-name" autocomplete="off"
+                                placeholder="Project name..." required />
+                            </div>
+                            <button type="submit" class="btn btn-dark">Add Project</button>
+                            <button type="button" class="btn btn-outline-dark ml-1"
+                              id="add-project-button-cancel">Cancel</button>
+                          </form>
+                        </div>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container col-6 container-todo">
+        <div class="jumbotron jumbotron-todo">
+          <div class="d-flex justify-content-between">
+            <div id="project-name">
+              Project name
+            </div>
+            <div id="project-creator">
+              Creator:
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <table class="table" border="1">
+                <thead class="thead-dark">
+                  <tr align="center">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody id="table-todos"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <button type="button" class="btn btn-dark" id="add-todo-button">Add Task</button>
+            </div>
+          </div>
+          <div class="row">
+            <form class="col-5" id="form-add-todo" style="display: none;">
+              <div class="form-group">
+                <label for="add-todo-name">Task Name</label>
+                <input type="text" class="form-control" id="add-todo-name" autocomplete="off" required />
+              </div>
+              <div class="form-group">
+                <label for="add-todo-description">Description</label>
+                <input type="text" class="form-control" id="add-todo-description" autocomplete="off" required />
+              </div>
+              <div class="form-group">
+                <label for="add-todo-due-date">Due Date</label>
+                <input type="text" class="form-control" id="add-todo-due-date" placeholder="mm/dd/yyyy"
+                  autocomplete="off" />
+              </div>
+              <button type="submit" class="btn btn-dark">Add Task</button>
+              <button type="button" class="btn btn-outline-dark ml-1" id="add-todo-button-cancel">Cancel</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      <div class="container col-3 container-todo">
+        <div id="member-list-container">
+          <div class="row">
+            <div class="col-12">
+              Members
+            </div>
+            <div id="member-list">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="button" class="btn btn-dark" id="add-member-button">Add Member</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <form id="form-add-member" style="display: none;">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="add-member-name" autocomplete="off"
+                    placeholder="Search member..." required />
+                </div>
+                <button type="submit" class="btn btn-dark">Add Member</button>
+                <button type="button" class="btn btn-outline-dark ml-1" id="add-member-button-cancel">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script>
+
+
+
+  </script>
+  <script src="./resources/js/date-parser.js"></script>
+  <script src="./resources/js/generate-quote.js"></script>
+  <script src="./resources/js/user.js"></script>
+  <script src="./resources/js/todo.js"></script>
+  <script src="./resources/js/project.js"></script>
+  <script src="./resources/js/member.js"></script>
+  <script src="./resources/js/main.js"></script>
+</body>
+
+</html>
