@@ -7,7 +7,7 @@ class ControllerTodo{
       user : new ObjectID(req.headers.id),
       name : req.body.name,
       description : req.body.description,
-      status : req.body.status,
+      status : "not done",
       due_date : req.body.due_date
     }
 
@@ -24,6 +24,7 @@ class ControllerTodo{
     let condition = {
       user : new ObjectID (req.headers.id)
     }
+    console.log("disini")
 
     Todo.find(condition)
     .then(results=>{
@@ -64,7 +65,7 @@ class ControllerTodo{
     Todo.findByIdAndDelete(condition)
     .then(result=>{
       if(result) {
-        res.json(result)
+        res.json("success")
       } else {
         throw { error : { message : "not exists" } }
       }
@@ -78,7 +79,7 @@ class ControllerTodo{
     let condition = {
       _id : new ObjectID (req.params.id)
     }
-
+    
     Todo.findOne(condition)
     .then(result=>{
       if(result) {
@@ -95,15 +96,20 @@ class ControllerTodo{
         if(req.body.due_date != "" && req.body.due_date){
           todo.due_date = req.body.due_date
         }
+        console.log("todo === ",todo)
         return todo.save()
       } else {
+        console.log("ga ada")
         throw { error : { message : "not exists" } }
       }
     })
     .then(updated=>{
-      res.json(updated)
+      console.log("akhir")
+      res.json("success")
     })
     .catch(error=>{
+      console.log(error)
+      console.log("error disini")
       res.json({error : error.message})
     })
   }

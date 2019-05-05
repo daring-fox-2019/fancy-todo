@@ -24,6 +24,7 @@
   <title>Fancy Todo</title>
 </head>
 <body>
+
 <div class="login-true">
   <div class="ui menu">
     <p class="header item"><i class="pencil alternate icon"></i>Fancy Todo</p>
@@ -39,19 +40,32 @@
   </div>
   <br><br>
   <div class="ui segment" id="content-view">
-      <div class="ui center aligned container">
-        <div class="ui divided grid">
-          <div class="three wide column">
-            <h4 class="ui header">Group 1</h4>
-            
-          </div>
-          <div class="ten wide column">
-            <h4 class="ui header">Group 2</h4>
-            
-          </div>
+    <div class="ui container">
+      <div class="ui divided grid">
+        <div class="five wide column">
+            <h4 class="ui header">UserData</h4>
+            <div id="user-data"></div>
+            <div id="todo-list"></div>
+        </div>
+        <div class="ten wide column">
+            <h4 class="ui header">Add New Todo</h4>
+            <form>
+              <input type="text" name="name" placeholder="todo-name"><br>
+              <input type="date" name="due_date" placeholder="todo-name"><br>
+              <input type="text" name="description" placeholder="todo-name"><br>
+              <button class="ui large teal button" input="submit">Submit</button>
+            </form>
+            <div id=detail-todo></div>
+            <h4 class="ui header">Todo Detail</h4>
+            <div id=detail-todo></div>
+            <h4 class="ui header">Quote of the Day</h4>
+            <div id="quote-content"></div>
+        </div>
       </div>
     </div>
+  </div>
 </div>
+
 
 <div class="login-false" id="logform">
   <div class="ui middle aligned center aligned grid">

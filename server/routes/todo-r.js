@@ -9,12 +9,10 @@ router.post("/", controller.newTodos)
 
 router.get("/", controller.viewAllTodos)
 
-router.use(authorization)
+router.get("/:id", authorization, controller.viewOneTodo)
 
-router.get("/:id", controller.viewOneTodo)
+router.delete("/:id", authorization, controller.deleteOneTodo)
 
-router.delete("/:id", controller.deleteOneTodo)
-
-router.put("/:id", controller.updateOneTodo)
+router.put("/:id", authorization, controller.updateOneTodo)
 
 module.exports = router

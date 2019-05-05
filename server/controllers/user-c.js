@@ -79,7 +79,7 @@ class ControllerUser{
             let token = jwt.sign({
                 email: newUser.email,
                 id: newUser._id
-            }, process.env.SECRET)
+            }, process.env.SECRET_JWT)
             let obj = {
                 token,
                 id: newUser._id,

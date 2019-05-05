@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
-const {ObjectID} = require('mongodb')
-const Todo = require('../models/user')
+const Todo = require('../models/todo')
+const { ObjectID } = require('mongodb')
+
 
 function authentication(req,res,next){
   try {
@@ -18,19 +19,23 @@ function authentication(req,res,next){
 
 function authorization(req,res,next){
   let condition = {
+    _id : new ObjectID(req.params.id),
     user : new ObjectID(req.headers.id),
-    _id : new ObjectID(req.params.id)
     }
-    
+    console.log(condition)
+
     Todo.findOne(condition)
     .then(result=>{
+      console.log(result)
       if(result){
         next();
       } else {
-        res.status(403).json({message : "you have no rights to access this "})
+        console.log("ga ketemu")
+        res.status(403).json({message : "you have no rights to access this aaaa "})
       }
     })
     .catch(err=>{
+      console.log("error difind one")
       res.status(403).json({message : "you have no rights to access this"})
     })
   }
