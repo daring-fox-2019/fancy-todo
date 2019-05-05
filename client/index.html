@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="google-signin-client_id" content="51858266549-4uhmt5em3nma09rvhm5tdlmhh6vne8cb.apps.googleusercontent.com">
+  <!-- Google Fonts -->
+  <link  href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
+  <title>Fancy Todos</title>
+</head>
+<body>
+  
+    <nav id="navbar" class="nav-extended">
+      <div class="nav-wrapper blue-grey darken-1">
+        <a href="#" class="brand-logo center">Fancy Todo</a>
+        <!-- <ul id="nav-mobile" class="center hide-on-med-and-down">
+          <li><a href="">Today</a></li>
+          <li><a href="">Upcoming</a></li>
+        </ul> -->
+      </div>
+      <div class="nav-content center blue-grey darken-1">
+        <ul class="tabs tabs-transparent">
+          <li id="today" class="tab"><a>Today</a></li>
+          <li id="upcoming" class="tab"><a >Upcoming</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div id="login-window" class="container center">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="container center">
+        <div class="container center">
+          <div class="card blue-grey darken-1">
+            <form id="login-form" action="#">
+              <div class="card-content white-text">
+                <span class="card-title">Fancy Todo</span>
+                <div class="container center">
+                  <div class="container center">
+                    <input placeholder="username" id="username" type="text" class="validate" autocomplete="off" style="color:whitesmoke">
+                    <input placeholder="password" id="password" type="text" class="validate" autocomplete="off" style="color:whitesmoke">                  
+                  </div>              
+                </div>
+              </div>
+              <div class="card-action center">
+                <div>
+                  <a class="waves-effect waves-light btn" type="submit">login</a>
+                </div>
+                <br>
+                <a id="register" class="waves-effect waves-light btn">register</a>
+                </div>
+              </div>
+            </form>
+            <div style="display: flex; justify-content: center">
+              <div class="g-signin2" data-onsuccess="onSignIn" style="margin-left:auto; margin-right: auto"></div>
+            </div>
+          </div>
+          <a href="#" onclick="signOut();">Sign out</a>
+        </div>
+      </div>
+
+    <div id="register-window" class="container center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container center">
+          <div class="container center">
+            <div class="card blue-grey darken-1">
+              <form id="register-form" action="#">
+                <div class="card-content white-text">
+                  <span class="card-title">Register New User</span>
+                  <div class="container center">
+                    <div class="container center">
+                      <input placeholder="username" id="username" type="text" class="validate" autocomplete="off" style="color:whitesmoke">
+                      <input placeholder="email" id="email" type="text" class="validate" autocomplete="off"  style="color:whitesmoke">                  
+                      <input placeholder="password" id="password" type="text" class="validate" autocomplete="off"  style="color:whitesmoke">                                      
+                    </div>              
+                  </div>
+                </div>
+                <div class="card-action center">
+                  <div>
+                    <a class="waves-effect waves-light btn" type="submit">register</a>
+                    <br>
+                    <br>
+                    <a id="register-back" href="" style="margin-left:auto; margin-right: auto">back</a>
+                  </div>
+                </div>
+              </form>
+            </div>        
+          </div>
+        </div>
+      </div>
+
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>
