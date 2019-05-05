@@ -4,6 +4,11 @@ const { Schema } = mongoose;
 const Helper = require('../helpers/helper')
 
 const userSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: [4, 'Name min 4']
+    },
     email: {
         type: String,
         required: true,
@@ -43,7 +48,7 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.pre('save',function(next, done) {  
+userSchema.pre('save', function(next, done) {
     this.password = Helper.hashPassword(this.password)
     next()
 });

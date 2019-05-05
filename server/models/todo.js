@@ -20,6 +20,11 @@ const todoSchema = new Schema({
     owner : { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
+todoSchema.pre('save',function(next, done) {  
+    this.status = false
+    next()
+});
+
 const Todo = mongoose.model('Todo', todoSchema);
 
 module.exports = Todo

@@ -3,14 +3,15 @@ const Todo = require('../models/todo')
 const Helper = require('../helpers/helper')
 
 class UserController {
-    static signup(req, res) {
-        const {email, password} = req.body
+    static signup(req, res) {        
+        const {email, password, name} = req.body
 
         User.create({
-            email, password
+            name, email, password
         })
         .then(user=> {
-            res.status(200).json(user)
+            console.log('-__________-');
+            res.status(201).json(user)
         })
         .catch(err => {
             res.status(400).json(err)
@@ -30,15 +31,36 @@ class UserController {
     static signin(req, res) {
         const {email, password} = req.body
 
+        console.log('headers: ', req.headers);
+
         User.findOne({
             email
         })
         .then(user => {
-            if( Helper.comparePassword(password, user.password) ) {
-                res.status(200).json(user)
-            }else{
-                res.status(200).json({msg: 'username/password wrong'})
+            if(!user) {
+                throw 'Username/password wrong'
+            } else {
+                if( Helper.comparePassword(password, user.password) ) {
+                    let token = Helper.generateJWT({
+                        email: user.email,
+                        name: user.name,
+                        id: user._id
+                    });
+
+                    let finalToken = {
+                        token,
+                        id: user._id,
+                        name: user.name,
+                        email: user.email
+                    };
+
+                    res.status(200).json(finalToken)
+                }else{
+                    throw 'Username/password wrong'
+                }
+
             }
+
         })
         .catch(err => {
             console.log(err);
@@ -54,7 +76,7 @@ class UserController {
             description,
             status,
             due_date,
-            owner: req.params.userId
+            owner: localStorage.id
         } )
         .then(todo=> {
             res.status(201).json(todo)
@@ -62,6 +84,19 @@ class UserController {
         .catch(err => {
             res.status(500).json(err)
         })
+    }
+
+    static findUserTodo(req, res) {
+        const id=req.params.id
+
+        Todo.find({owner:id})
+        .then(todos=> {
+            res.status(201).json(todos)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+
     }
 }
 
