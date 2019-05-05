@@ -1,0 +1,4 @@
+node_modules
+.env
+produktivv_key_pair_aws.pem
+credentials.json

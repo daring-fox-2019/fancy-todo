@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,800" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="./materialize/css/materialize.min.css" media="screen,projection" />
+    <!-- Other material cdn -->
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="google-signin-client_id"
+        content="445619934297-i30r489vqmcgldok747hptkr75q5fl5v.apps.googleusercontent.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    <!-- Other added and Own css -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
+    <link rel="stylesheet" href="./materialize/css/style.css">
+    <!-- <link rel="stylesheet" href="./materialize/css/loading-bar.css"> -->
+
+</head>
+
+<body>
+
+    <!--DEMO01-->
+    <div id="animatedModal">
+        <!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID  class="close-animatedModal" -->
+        <div class="close-animatedModal">
+            <h5 class="white-text">X</h5>
+        </div>
+        <div class="modal-content">
+            <center>
+                <h2><b>Produktivv</b></h1>
+                    <h4>
+                        <b>pro·duc·tive</b><br>
+                        <i>/prəˈdəktiv/</i><br>
+                    </h4>
+                    <p>// <i>Having the quality or power of producing especially in abundance</i> //</p>
+                    <h6>As planning routines could turn into a mayhem, <u>Produktivv</u> aims to create a cloud
+                        square<br> for new-age individuals
+                        and project collaborators to be engaged in a space to connect virtually and manage their
+                        routines.</h6><br>
+                    <u><b>
+                            <p>What's new in V.1.0</p>
+                        </b></u>
+                    <ul>
+                        <li>🔨 Track personal to-do lists</li>
+                        <li>🔨Create project collaboration with other users</li>
+                        <li>🔨Email notification on project invitations</li>
+                        <li>💥 <i>Coming soon!</i> Real-time chat inside project</li>
+                    </ul>
+                    <br>
+                    <br>
+                    <br>
+                    <p>Cheers, Team.</p>
+            </center>
+        </div>
+    </div>
+    <!-- END ANIMATION USE CASE -->
+
+
+    <!-- NAV BAR STARTS -->
+    <!-- MOBILE SIDE NAV -->
+    <ul class="sidenav" id="mobile-demo">
+            <li><a id="demo02" href="#animatedModal">Use Case</a></li>
+            <li><a onclick="showLogin()" id="mobtombol-login" class="black-text">Login</a></li>
+            <li><a onclick="showRegister()" id="mobtombol-register" class="black-text">Register</a></li>
+            <li><a id="mobtombol-project" id="mobtombol-project" onclick="showProject()"class="black-text">Projects</a></li>
+        <li><a onclick="fetchTodo()" id="mobtombol-todo" class=" black-text">Todo</a></li>
+        <li><a id="mobtombol-signout" onclick="signOut()" class="black-text">Sign Out</a></li>
+
+    </ul>
+    <!-- MOBILE SIDE NAV -->
+    <div id="kelompok_navbar">
+        <div style="margin-bottom:8vh;" class="navbar-fixed">
+            <nav class="white z-depth-0">
+                <div class="container black-text">
+                    <div class="nav-wrapper ">
+                        <img src="./assets/produktivv_logo.png"
+                            style="margin-top:0px; max-width:180px; max-height:60px;" onclick="showLanding()"
+                            class="brand-logo black-text" />
+                         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
+                        <ul style="black-text;" class="right hide-on-med-and-down">
+                            <li><a id="demo01" href="#animatedModal">Use Case</a></li>
+                            <li><a onclick="showLogin()" id="tombol-login" class="black-text">Login</a></li>
+                            <!-- <li><a id="tombol-dashboard" onclick="showDashboard()" class="black-text">Dashboard</a></li> -->
+                            <li><a id="tombol-project" id="tombol-project" onclick="showProject()"
+                                    class="black-text">Projects</a></li>
+                            <li><a onclick="fetchTodo()" id="tombol-todo" class=" black-text">Todo</a></li>
+                            <li><a id="tombol-signout" onclick="signOut()" class="black-text">Sign Out</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- NAV BAR END -->
+
+    <!-- LANDING PAGE HEADER SLIDER -->
+    <div id="perjudulan" class="container justify-center">
+        <div id="judul">
+            <center>
+                <h1 id="h1judul">Your personal <b><span class="judul" id="landing-greet"></span></b></h1>
+                <h5>Plan your routines. Collaborate with teams. In one, eye-pleasing <span
+                        style="color:midnightblue">Produktivv</span> square.</h5>
+            </center>
+        </div>
+        <div id="bawahjudul">
+            <div class="row justify-center align-content-center">
+                <form class="col s6 offset-s4">
+                    <div class="input-field col s6">
+                        <button onclick="showRegister()" style="border-radius: 20px; background-color:midnightblue"
+                            class="ml30 btn waves-effect white-text waves-light btn-flat">Get Started
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- LANDING PAGE GAMBAR-GAMBAR -->
+        <div id="gambar-bawah-landing">
+            <img class="item-1"
+                src="https://assets.wordpress.envato-static.com/uploads/2015/07/09-bucket-admin-stats-charts-data.jpg">
+            <img class="item-2"
+                src="https://assets.wordpress.envato-static.com/uploads/2015/07/09-bucket-admin-stats-charts-data.jpg">
+            <img class="item-3"
+                src="https://assets.wordpress.envato-static.com/uploads/2015/07/09-bucket-admin-stats-charts-data.jpg">
+        </div>
+    </div>
+
+    <!-- DASHBOARD START HERE -->
+    <div id="dashboard">
+        <!-- PROJEK START HERE -->
+        <div class="row">
+            <div id="project-list">
+                <div class="col s2">
+                    <div>
+                        <button href="#addTodo" style="border-radius: 20px; width:200px; background-color:midnightblue"
+                            class="mb10 btn waves-effect white-text waves-light btn-flat  modal-trigger">Create Todo
+                        </button>
+                    </div>
+                    <div>
+                        <button href="#addProject"
+                            style="width:200px; border-radius: 20px; background-color:midnightblue"
+                            class="mb10 btn waves-effect white-text waves-light btn-flat modal-trigger">Create Project
+                        </button>
+                    </div>
+                    <div id='check-array-pulsate'>
+                        <button onclick="fetchMyPendingInvitations()" href="#checkInvitations"
+                            style="border-radius: 20px; width:200px; background-color:midnightblue"
+                            class="mb10 btn waves-effect white-text waves-light btn-flat modal-trigger">Check
+                            Invitations
+                        </button>
+                    </div>
+                </div>
+                <div id="tabel-project" class="col s9">
+                </div>
+            </div>
+            <!-- PROJECT ENDS HERE -->
+
+            <!-- TODO LIST START HERE -->
+            <div id='tombol-addtodo-kiri' class="col s2">
+                <button href="#addTodo" style="border-radius: 20px; width:200px; background-color:midnightblue"
+                    class="mb10 btn waves-effect white-text waves-light btn-flat  modal-trigger">Create Todo
+                </button>
+            </div>
+            <div class="col s8">
+                <div class="col s12" id="todo-list-none">
+                    <div class="container">
+                        <h4 style="display:flex; font-weight: 600" class="center-align">Let's get busy! Try managing a
+                            new
+                            Project or a new Personal To-Do </h4>
+                    </div>
+                </div>
+                <div class="col s12 cards-container">
+                    <div id="todo-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TODO LIST END HERE -->
+    <!-- END DASHBOARD -->
+
+    <!-- REGISTER FORM -->
+    <div id="register-form">
+        <div class="row justify-center">
+            <form class="col s6 offset-s3">
+                <CENTER>
+                    <h4><B><i>Produktivv</i></B> ease your daily mayhem on routines.
+                        Start now to get your things done properly.</h4>
+                </CENTER>
+                <br>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input placeholder="Placeholder" id="firstName" type="text" class="validate">
+                        <label for="firstName">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="lastName" type="text" class="validate">
+                        <label for="lastName">Last Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <button onclick="register()" style="border-radius: 20px; background-color:midnightblue"
+                    class="btn waves-effect white-text waves-light btn-flat" type="submit">Let's Do It!
+                </button>
+                <div style="margin-left: 20px; display:inline-block" class="margin-top:40px" id="google-login">
+                    <div style="margin-left: 10px !important;" class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- END REGISTER FORM -->
+
+    <!-- LOGIN FORM -->
+    <div id="login-form">
+        <div class="row justify-center">
+            <form class="border col s6 offset-s3">
+                <CENTER>
+                    <h3><B><i>Produktivv</i></B> ease your daily mayhem on routines.
+                        <br>Login now to start</h3>
+                </CENTER>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="emaillogin" type="email" class="validate">
+                        <label for="emaillogin">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="passwordlogin" type="password" class="validate">
+                        <label for="passwordlogin">Password</label>
+                    </div>
+                </div>
+                <button onclick="login()" style="border-radius: 20px; background-color:greenyellow"
+                    class="btn waves-effect white-text waves-light btn-flat" type="submit">Login
+                </button>
+                <button onclick="showRegister()" style="border-radius: 20px; background-color:greenyellow"
+                class="ml30 btn waves-effect white-text waves-light btn-flat">Get Started
+            </button>
+                <div style="margin-left: 20px; display:inline-block" class="margin-top:40px !important" id="google-login">
+                    <div style="margin-left: 10px !important;" class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- END LOGIN FORM -->
+
+    <!-- START MODAL ON ADD TODO NON PROJECT -->
+    <div id="addTodo" class="modal">
+        <div class="modal-content">
+            <h6>Add New Todo</h6>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">clear_all</i>
+                            <input id="task-name" type="text" class="validate">
+                            <label for="icon_prefix">What to do?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">chat_bubble_outline</i>
+                            <input id="task-desc" type="text" class="validate">
+                            <label for="icon_prefix">Description</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">add_alert</i>
+                            <input id="task-dueDate" type="datetime-local">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a onclick="addTodo()" class="modal-close waves-effect waves-green btn-flat">OK</a>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL ON ADD TODO NON PROJECT -->
+
+    <!-- START MODAL ON EDIT -->
+    <div id="editTodo" class="modal">
+        <div class="modal-content">
+            <h6>Edit Your Todo</h6>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">clear_all</i>
+                            <input id="edit-task-name" value="" type="text" class="validate">
+                            <label class="active" for="icon_prefix"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">chat_bubble_outline</i>
+                            <input id="edit-task-desc" value="" type="text" class="validate">
+                            <label for="icon_prefix"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">add_alert</i>
+                            <!-- <input id="task-dueDate" type="text" class="datepicker"> -->
+                            <input id="edit-task-dueDate" value="" type="datetime-local">
+                            <!-- <label for="icon_prefix">Click To Pick Date</label> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="edit-button" class="modal-footer"><a class="modal-close waves-effect waves-green btn-flat">OK</a>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL ON EDIT TODO -->
+
+    <!-- START MODAL ON ADD PROJECT -->
+    <div id='projectform'>
+        <div id="addProject" class="modal">
+            <div class="modal-content">
+                <h6>Add New Project</h6>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">clear_all</i>
+                                <input id="nameproject" value="" type="text" class="validate">
+                                <label class="active" for="icon_prefix"></label>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+            <button onclick="addProject()" id="add-project-button" class="modal-footer"><a
+                    class="modal-close waves-effect waves-green btn-flat">OK</a>
+            </button>
+        </div>
+    </div>
+    <!-- END OF MODAL ADD PROJECT -->
+
+
+    <!-- START MODAL ON ADD TODO ON PROJECT -->
+    <div id="addTodoForThisProject" class="modal"></div>
+    <!-- END MODAL ON ADD TODO ON PROJECT -->
+
+    <!-- START MODAL ON EDIT PROJECT -->
+    <div id="editProjectModal" class="modal"></div>
+    <!-- END MODAL ON EDIT PROJECT -->
+
+    <!-- START ON MODAL ADD MEMBER FOR THIS PROJECT -->
+    <div id="inviteMember" class="modal"></div>
+    <!-- END ON MODAL ADD MEMBER FOR THIS PROJECT -->
+
+    <!-- START MODAL ON EDIT TODO IN THIS PROJECT -->
+    <div id="editTodoForThisProject" class="modal"></div>
+    <!-- END MODAL ON EDIT TODO IN THIS PROJECT -->
+
+    <!-- START ON MODAL CHECK INVITATION FOR THIS PROJECT -->
+    <div id="checkInvitations" class="modal">
+        <div class="modal-content">
+            <h5>Your Pending Invitation</h5>
+            <div id="daftar-pending" class="row">
+            </div>
+        </div>
+    </div>
+    <!-- END ON MODAL CHECK INVITATION FOR THIS PROJECT -->
+    <!-- START ON MODAL MESSAGE BOX -->
+    <div id="messageBoxModal" class="modal"></div>
+
+    <!-- END ON MODAL MESSAGE BOX -->
+
+    <!--JavaScript at end of body for optimized loading-->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="./materialize/js/materialize.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="./materialize/js/animatedModal.js"></script>
+    <script>
+        $('.modal').modal()
+    </script>
+    <!-- <script src="./materialize/js/loading-bar.js"></script> -->
+    <script src="./msgbox.js"></script>
+    <script src="./main.js"></script>
+
+</body>
+
+<!-- </html <center>
+<button href="#addTodo" style="width:200px; border-radius: 20px; background-color:midnightblue"
+    class="btn waves-effect white-text waves-light btn-flat  modal-trigger">Add Todo
+</button>
+<button href="#addProject" style="width:200px; border-radius: 20px; background-color:midnightblue"
+    class="btn waves-effect white-text waves-light btn-flat  modal-trigger">Create
+    Project
+</button></center> -->
