@@ -32,7 +32,10 @@ Aplikasi ini menggunakan beberapa teknologi dan tools antara lain :
 ### Middle wares
 path : /server/middlewares
 
-middleware digunakan di beberapa routes untuk fungsi suthentication dan authorization
+### Front End
+untuk membuat front end nya, saya menggunakan html, css dan javascript dengan
+CSS Framework => semantic ui
+DOM => jquery
 
 [bcrypt]: <https://github.com/noviirna>
 [express]: <https://github.com/noviirna>
