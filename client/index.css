@@ -12,3 +12,22 @@ table {
 #main {
   height: 100%;
 }
+#projects {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+#empty-project {
+  width: 300px;
+  margin: 0 auto;
+}
+.list-group {
+  margin-top: 20px;
+}
+#collapse-project {
+  margin-top: 10px;
+}
+#form-project {
+  display: flex;
+  justify-content: space-between;
+}

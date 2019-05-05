@@ -11,11 +11,13 @@ let projectSchema = new mongoose.Schema({
   },
   members: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    default: []
   }],
   todos: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Todo'
+    ref: 'Todo',
+    default: []
   }]
 })
 
