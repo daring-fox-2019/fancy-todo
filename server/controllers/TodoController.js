@@ -1,8 +1,15 @@
 const User = require('../models/user')
 const Todo = require('../models/todo')
-const Helper = require('../helpers/helper')
-const ObjectId = require('objectid')
 const calculateDate = require('../helpers/calculateDate')
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+           user: 'lutfii.dev@gmail.com',
+           pass: '1412Dev!'
+    }
+});
 
 class TodoController {
     static list(req, res) {
@@ -33,6 +40,7 @@ class TodoController {
 
     static create(req, res) {
         const {id, name, description, status, due_date} = req.body
+        let todoCreate = ''
 
         Todo.create( {
             name,
@@ -42,7 +50,29 @@ class TodoController {
             owner: id
         } )
         .then(todo=> {
-            res.status(201).json(todo)
+            todoCreate = todo
+            return User.findOne({id})
+        })
+        .then(user => {
+            const mailOptions = {
+                from: 'lutfii.dev@gmail.com',
+                to: `${user.email}`,
+                subject: '<fancy todo> You create a new todo',
+                html: `
+                <div>
+                    <p>Congratulations!</p>
+                    <p>
+                        Your todo list: ${todoCreate.name} has been created
+                    </p>
+                </div>
+                `
+            };
+
+            transporter.sendMail(mailOptions, function (err, info) {
+            if(err) throw err
+            });
+
+            res.status(201).json(todoCreate)
         })
         .catch(err => {
             res.status(500).json(err)
@@ -84,9 +114,6 @@ class TodoController {
         let nameREGEX = `^${req.query.name}`
         console.log(req.headers.id);
         Todo.
-        // find(
-        //     {name: { $regex: `${nameREGEX}`, $options: 'i' } }
-        // ).
         find( 
             {
                 $and:[
