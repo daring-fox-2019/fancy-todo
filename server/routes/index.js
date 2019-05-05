@@ -9,7 +9,7 @@ routes.use('/users', users)
 routes.use('/todos', authentication, authorize, todos)
 
 routes.get('*', (req, res) => {
-    res.send('404 page not found')
+    res.status(404).json({msg: 'Page not found'})
 })
 
 module.exports = routes

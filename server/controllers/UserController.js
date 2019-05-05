@@ -12,11 +12,10 @@ class UserController {
             name, email, password
         })
         .then(user=> {
-            console.log('-__________-');
             res.status(201).json(user)
         })
         .catch(err => {
-            res.status(400).json(err)
+            res.status(400).json({msg: err})
         })
     }
 
@@ -26,7 +25,7 @@ class UserController {
             res.status(200).json(user)
         })
         .catch(err => {
-            res.status(400).json(err)
+            res.status(400).json({msg:err})
         })
     }
 
@@ -65,8 +64,7 @@ class UserController {
 
         })
         .catch(err => {
-            console.log(err);
-            res.status(500).json({err})
+            res.status(400).json({msg: 'Bad request'})
         })
     }
 
@@ -129,12 +127,12 @@ class UserController {
             res.status(201).json(todo)
         })
         .catch(err => {
-            res.status(500).json(err)
+            res.status(400).json({msg: err})
         })
     }
 
     static findUserTodo(req, res) {
-        const id=req.params.id
+        const id=req.params.todoId
 
         Todo.find({owner:id})
         .then(todos=> {

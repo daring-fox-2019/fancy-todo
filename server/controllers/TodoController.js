@@ -87,7 +87,7 @@ class TodoController {
 
         Todo.findOneAndUpdate({_id: id}, object, {new: true})
         .then(todo => {
-            res.status(201).json(todo)
+            res.status(200).json(todo)
         })
         .catch(err => {
             res.status(500).json(err)
