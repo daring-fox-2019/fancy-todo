@@ -2,7 +2,6 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-  console.log(req.headers)
   if(req.headers.hasOwnProperty('token')){
     req.decoded = jwt.verify(req.headers.token, process.env.KUNCI)
     next()

@@ -9,6 +9,9 @@
     href="https://www.gannett-cdn.com/presto/2018/10/19/PBRE/d25f200a-77c7-444b-aa43-30ef0e8158e5-Books.jpg?crop=2459,1386,x0,y272&width=3200&height=1680&fit=bounds"
     type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id"
+    content="396392411826-p13rav5fuhqi2h66cqnh66ocha9eqj99.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css">
@@ -16,7 +19,8 @@
 
 <body>
   <!-- START ON REGISTER SECTION FORM -->
-  <h6 id="message"></h6>
+  <h6 id="messageSuccess"></h6>
+  <h6 id="messageError"></h6>
   <div id="login-register-form" class="container mt-4">
     <ul class="nav nav-pills mb-3" id="login-register-tab" role="tablist">
       <li class="nav-item">
@@ -29,7 +33,8 @@
       </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
-      <form class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab" method="POST">
+      <form class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab"
+        method="POST">
         <div class="form-group">
           <label for="Email">Email address</label>
           <input type="email" class="form-control" id="emaillogin" aria-describedby="emailHelp"
@@ -43,12 +48,13 @@
         <br>
         <div class="mt-4">
           <h3>OR</h3>
-          <h5>Sign in with Google:</h5>
-          <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+          <h5>Sign in with Google :</h5>
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
           <br>
         </div>
       </form>
-      <form class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab" method="POST">
+      <form class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab"
+        method="POST">
         <div class="form-group">
           <label for="Username">Name</label>
           <input type="text" class="form-control" id="nameregister" placeholder="Enter username">
@@ -70,11 +76,11 @@
     <div class="row">
       <ol class="nav mr-auto">
         <li class='nav-item'>
-          <a id="createNewTodo" class="nav-link" href="#">Create New Todo</a>
+          <a id="createNewTodo" class="nav-link" href="">Create New Todo</a>
         </li>
       </ol>
       <h3 id="namaUser" class="nav text-center">
-        
+
       </h3>
       <ol class="nav ml-auto">
         <li class='nav-item'>
@@ -86,22 +92,43 @@
       <div class="col-3 border">
         Todos
         <select id="filterByStatus">
-          <option value="unfinished" selected>Unfinished</option>
+          <option disabled selected value>-- choose --</option>
+          <option value="unfinished">Unfinished</option>
           <option value="finished">Finished</option>
         </select>
       </div>
       <div class="col-4 border">
-        <form method="GET" id="searchForm">
+        <!-- <form method="GET" id="searchForm">
           <input id="searchBox" type="text" placeholder="Search.." name="search">
           <input id="searchButton" type="submit" value="Cari"></input>
-        </form>
+        </form> -->
         <div id="results" class="list-group">
 
         </div>
       </div>
-      <div id="selectedRepo" class="col-5 border">
-        <p id='selectedName'></p>
-        <p id='selectedDescription'></p>
+      <div id="selectedTodo" class="col-5 border">
+        <form id="editTodoForm">
+          <div class="form-group">
+            <label for="selectedTitle">Title</label>
+            <input id='selectedTitle' class="form-control" type="text">
+          </div>
+          <div class="form-group">
+            <label for="selectedDescription">Description</label>
+            <input id='selectedDescription' class="form-control" type="text">
+          </div>
+          <div class="form-group">
+            <label for="selectedStatus">Status</label>
+            <select id="selectedStatus" class="form-control">
+                <option value="unfinished" selected>Unfinished</option>
+                <option value="finished">Finished</option>
+              </select>
+          </div>
+          <div class="form-group">
+            <label for="selectedDueDate">Due Date</label>
+            <input id='selectedDueDate' class="form-control" type="date">
+          </div>
+          <input type="submit" class="btn btn-primary" value="Update">
+        </form>
       </div>
     </div>
   </div>

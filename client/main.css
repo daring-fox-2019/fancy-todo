@@ -1,9 +1,14 @@
-#message{
+#messageSuccess{
+  color:rgb(0, 75, 187);
+  position: absolute;
+  left:50%;
+}
+#messageError{
   color:#FF0000;
   position: absolute;
   left:50%;
 }
 
-#createTodo, #TodoLists, #login-register-form {
+#createTodo, #editTodoForm, #TodoLists, #login-register-form {
   display: none;
 }

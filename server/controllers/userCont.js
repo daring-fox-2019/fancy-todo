@@ -2,6 +2,7 @@ require('dotenv').config()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const randomPass = require('../helpers/randomPass')
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -15,32 +16,37 @@ class UserController {
       .then((ticket) => {
         payload = ticket.getPayload();
         const userid = payload['sub']
-        console.log(ticket);
+        console.log(payload)
         return User.findOne({ email: payload.email })
       })
       .then((user) => {
         if (user) {
+          let { name } = user
           let payload = {
+            _id: user._id,
             name: user.name,
             email: user.email
           }
-          let token = jwt.sign(payload, process.env.API_KEY)
+          let token = jwt.sign(payload, process.env.KUNCI)
           console.log('token --->', token, '<---token')
-          res.status(200).json({ token })
+          res.status(200).json({ token, name })
         } else {
-          return User.create({
+          let passRandom = randomPass()
+          User.create({
             name: payload.name,
             email: payload.email,
-            password: "123456"
+            password: passRandom
           })
             .then((user) => {
+              let { name } = user
               let payload = {
+                _id: user._id,
                 name: user.name,
                 email: user.email
               }
-              let token = jwt.sign(payload, process.env.API_KEY)
+              let token = jwt.sign(payload, process.env.KUNCI)
               console.log('token --->', token, '<---token')
-              res.status(200).json({ token })
+              res.status(200).json({ token, name, passRandom })
             })
             .catch((err) => {
               res.status(500).json(err)
@@ -67,12 +73,12 @@ class UserController {
         if (result) {
           let { name } = result
           let payload = {
+            _id: user._id,
             name: result.name,
             email: result.email
           }
-          console.log(process.env.KUNCI)
           let token = jwt.sign(payload, process.env.KUNCI)
-          console.log('token regis-->', token)
+          console.log('token register -->', token)
           res.status(200).json({
             token, name
           })
@@ -103,7 +109,7 @@ class UserController {
               email: result.email
             }
             let token = jwt.sign(payload, process.env.KUNCI)
-            console.log('token login-->', token)
+            console.log('token login -->', token)
             res.status(200).json({
               token, name
             })

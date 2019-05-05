@@ -8,12 +8,13 @@ const ObjectId = mongoose.mongo.ObjectId
 
 class TodoController {
   static create(req,res){
+    console.log(req.decoded)
     Todo.create({
       user: ObjectId(req.decoded._id),
       title: req.body.title,
       description: req.body.description,
       status: "unfinished",
-      duedate: new Date(req.body.duedate),
+      duedate: req.body.duedate,
     })
     .then(result=>{
       res.status(201).json(result)
@@ -26,9 +27,22 @@ class TodoController {
     })
   }
   static read(req,res){
+    // console.log("READ",req.decoded)
+    Todo.find({user: ObjectId(req.decoded._id)})
+    .then(result=>{
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to read Todos",
+        err
+      })
+    })
+  }
+  static search(req,res){
+    // console.log("SEARCH",req.decoded)
     let obj = {user: ObjectId(req.decoded._id)}
     if(req.query.status) obj.status = req.query.status
-
     Todo.find(obj)
     .then(result=>{
       res.status(200).json(result)
@@ -75,7 +89,7 @@ class TodoController {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      duedate: newDueDate,
+      duedate: req.body.duedate,
     })
     .then(result=>{
       res.status(200).json(result)
@@ -88,7 +102,7 @@ class TodoController {
     })
   }
   static delete(req,res){
-    Todo.deleteOne({_id: req.params.id})
+    Todo.deleteOne({_id: ObjectId(req.params.id)})
     .then(result=>{
       res.status(200).json(result)
     })

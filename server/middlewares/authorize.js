@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const ObjectId = mongoose.mongo.ObjectId
 
 module.exports = (req, res, next) => {
-  console.log(req.decoded,req.params.id)
   Todo.findOne({_id: ObjectId(req.params.id)})
+  .populate('user')
   .then(row=>{
-    console.log(typeof row.user)
-    if(ObjectId(req.params.id) == row.user){
+    console.log("Authorize",row.user._id.equals(req.decoded._id))
+    if(row.user._id.equals(req.decoded._id)){
       next()
     }
     else{
