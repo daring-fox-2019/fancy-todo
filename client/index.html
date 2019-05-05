@@ -15,8 +15,6 @@
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <script src="https://apis.google.com/js/api:client.js"></script>
   <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
-
-
   <title>Fancy Todo</title>
 </head>
 
@@ -154,6 +152,31 @@
     </div>
     <!-- End Modal -->
 
+
+    <!-- Modal Add Member -->
+    <div id="add-member-modal" class="modal small">
+        <div class="modal-content">
+          <h4>Add a member to this project</h4>
+          <div id="add-member-form">
+              <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="project-member-email" name="project-member-email" type="text" autocomplete="off">
+                      <label for="project-member-email">Email</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <a id="add-member-button" class="modal-close waves-effect waves-green btn-flat">Add a member</a>
+        </div>
+      </div>
+
+    <!-- End -->
+
     <div class="section menu-section">
 
       <div id="project-form">
@@ -207,7 +230,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="todo-date" name="todo-date" type="text" class="datepicker">
-                <label for="description">Set date</label>
+                <label for="todo-date">Set date</label>
               </div>
             </div>
             <button id="add-todo-button" type="submit" class="grey btn flat" style="width:100%"><i
@@ -217,14 +240,50 @@
           </form>
         </div>
       </div>
+
+      <!-- Todo Project -->
+      <div id="todo-project-form">
+          <div class="row">
+            <div id="todo-header" class="grey darken-4">
+              <p class="center-align white-text">Add Project Todo</p>
+            </div>
+            <form class="col s12">
+  
+  
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="todo-project-name" name="todo-project-name" type="text" autocomplete="off">
+                  <label for="name">Name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="todo-project-desc" name="todo-project-desc" type="text" autocomplete="off">
+                  <label for="description">Description</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="todo-project-date" name="todo-project-date" type="text" class="datepicker">
+                  <label for="todo-project-date">Set date</label>
+                </div>
+              </div>
+              <button id="add-todo-project-button" type="submit" class="grey btn flat" style="width:100%"><i
+                  class="material-icons md-36 md-light ">
+                  note_add
+                </i></button>
+            </form>
+          </div>
+        </div>
+
     </div>
 
     <div class="section main-section">
       <div class="row">
         <div class="col s12">
           <ul class="tabs">
-            <li class="tab col s6"><a class="active" href="#todos">My Todos</a></li>
-            <li class="tab col s6"><a href="#projects">My Projects</a></li>
+            <li id="todo-tab" class="tab col s6"><a class="active" href="#todos">My Todos</a></li>
+            <li id="project-tab" class="tab col s6"><a href="#projects">My Projects</a></li>
           </ul>
         </div>
         <div id="todos" class="col s12">
@@ -249,9 +308,38 @@
         </div>
 
         <div id="projects" class="col s12">
-
-
+          <h3>Projects</h3>
+          <hr>
+          <div id="project-list" class="row">
+            
+          </div>
         </div>
+
+        <div id="project-page" class="col s12">
+            <h3>Project Todos</h3>
+            <p>Member:</p>
+            <span id="member-list">
+               
+            </span>
+            <table id="projec-table" class="striped bordered">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Due</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="project-todo-table">
+  
+              </tbody>
+            </table>
+        </div>
+
+
+
       </div>
     </div>
 

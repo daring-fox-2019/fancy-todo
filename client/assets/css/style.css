@@ -131,7 +131,7 @@ nav {
 
 /* Menu Section */
 
-#project-form, #todo-form {  
+#project-form, #todo-form, #todo-project-form {  
   border-top: 0;
   border-bottom: 4px solid darkgrey;
   padding: 5px;
@@ -190,12 +190,20 @@ nav {
   padding: 0 1rem;
 }
 
-.delete-todo:hover {
+.delete-todo:hover, .delete-todo-project:hover {
   background-color: #ff6961;
 }
 
 .edit-todo:hover {
   background-color: #ff7e47;
+}
+
+.card {
+  border-radius: 3px;
+}
+
+.add-member {
+  cursor: pointer;
 }
 
 /* End */

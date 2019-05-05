@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const Project = require('../models/Project');
 const Todo = require('../models/Todo');
 const User = require('../models/User');
@@ -16,7 +18,7 @@ class MainController {
         .populate(
         {
           path: 'todos',
-          select: ['name', 'description'],
+          select: ['name', 'description', 'date', 'status'],
           populate: {
             path: 'userId',
             select: ['username', 'email'],
@@ -42,11 +44,13 @@ class MainController {
     const {
       name,
       description,
+      date,
     } = req.body;
 
     const newTodo = new Todo({
       name,
       description,
+      date: moment(date, 'MM-DD-YYYY'),
       userId,
     });
     console.trace(newTodo)
@@ -74,11 +78,14 @@ class MainController {
     const {
       name,
       description,
+      date,
+      status,
     } = req.body;
 
     const updates = {
       name,
       description,
+      date,
       status,
     };
 
@@ -113,12 +120,19 @@ class MainController {
   };
 
   static patchAddMemberToProject(req, res, next) {
-    const {
-      projectId,
-      userId
-    } = req.params;
+    let userId = '';
+    const { projectId } = req.params;
+    const { email } = req.body;
 
-    Project.findByIdAndUpdate(projectId, { $push: { members: userId } }, { new: true })
+    User.findOne({ email })
+      .then((user) => {
+        if(user) {
+          userId = user._id;
+          return Project.findByIdAndUpdate(projectId, { $push: { members: user._id } }, { new: true })
+        } else {
+          throw new Error('User not found');
+        }
+      })
       .then((updated) => {
         User.update(
           { _id: userId },
@@ -133,6 +147,8 @@ class MainController {
       .catch((error) => {
         next(error);
       });
+
+
   };
 
 };

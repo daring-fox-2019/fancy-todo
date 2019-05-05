@@ -122,7 +122,10 @@ class EntryController {
       .populate(
         {
           path: 'projects',
-          select: ['name', 'description'],
+          select: ['name', 'description', 'members', 'todos', 'ownerId'],
+          populate: {
+            path: 'todos'
+          }
         },
       )
       .populate(

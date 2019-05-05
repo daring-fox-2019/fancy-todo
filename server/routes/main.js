@@ -22,9 +22,9 @@ const {
 router.use(userAuthentication);
 
 router.get('/:projectId', projectMembership, getProjectById);
-router.patch('/:projectId/member/:userId',projectOwnership, patchAddMemberToProject);
+router.patch('/:projectId/member',projectOwnership, patchAddMemberToProject);
 router.post('/:projectId/todo', projectMembership, postCreateTodoInProject);
-router.put('/todo/:todoId', projectMembership, putEditTodoInProjectById);
-router.delete('/todo/:todoId', projectMembership, deleteTodoInProjectById);
+router.put('/:projectId/todo/:todoId', projectMembership, putEditTodoInProjectById);
+router.delete('/:projectId/todo/:todoId', projectMembership, deleteTodoInProjectById);
 
 module.exports = router;
