@@ -113,6 +113,26 @@ body {
     margin-bottom: 20px;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.detail-page {
+    max-height: 620px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.description {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sectionTitle {
+    font-size: 2em; 
+    margin: 0;
+}
+
 .navMain {
     background: teal;
 }

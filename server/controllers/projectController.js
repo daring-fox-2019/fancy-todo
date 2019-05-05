@@ -31,6 +31,7 @@ class ProjectController {
 
         Project
             .find({_id: id})
+            .populate('owner')
             .populate('todos')
             .populate('members')
             .then(result => {
