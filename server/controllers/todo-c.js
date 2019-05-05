@@ -13,7 +13,7 @@ class ControllerTodo{
 
     Todo.create(newTodo)
     .then(result=>{
-      res.json(result)
+      res.json("success")
     })
     .catch(err=>{
       res.json({error : err.message})
@@ -24,7 +24,6 @@ class ControllerTodo{
     let condition = {
       user : new ObjectID (req.headers.id)
     }
-    console.log("disini")
 
     Todo.find(condition)
     .then(results=>{

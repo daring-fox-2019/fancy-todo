@@ -41,25 +41,34 @@
   <br><br>
   <div class="ui segment" id="content-view">
     <div class="ui container">
-      <div class="ui divided grid">
+      <div class="ui stackable divided grid">
         <div class="five wide column">
-            <h4 class="ui header">UserData</h4>
-            <div id="user-data"></div>
+            <h4 id="user-data"></h4>
+            <div class="ui divider"></div>
             <div id="todo-list"></div>
         </div>
         <div class="ten wide column">
+          <div class="add-form">
             <h4 class="ui header">Add New Todo</h4>
-            <form>
-              <input type="text" name="name" placeholder="todo-name"><br>
-              <input type="date" name="due_date" placeholder="todo-name"><br>
-              <input type="text" name="description" placeholder="todo-name"><br>
-              <button class="ui large teal button" input="submit">Submit</button>
+            <form class="ui form">
+              <input type="text" name="name"  data-content="title of task" id="name-field" placeholder="title"><br><br>
+              <input type="date" name="due_date"  data-content="date must be later than today" id="due_date-field"><br><br>
+              <textarea name="description"  data-content="description of task" id="description-field" placeholder="description"></textarea><br><br>
+              <button class="ui large teal button" type="submit" onclick="newTodo()">Submit</button>
             </form>
-            <div id=detail-todo></div>
-            <h4 class="ui header">Todo Detail</h4>
-            <div id=detail-todo></div>
-            <h4 class="ui header">Quote of the Day</h4>
-            <div id="quote-content"></div>
+          </div>
+          <div id="edit-form">
+            <h4 class="ui header" id=detail-title></h4>
+            <div class="ui divider"></div>
+            <form class="ui form">
+              <div id=detail-name></div>
+              <div id=detail-description></div>
+              <div id=detail-due_date></div>
+              <div id="detail-action"></div>
+            </form>
+          </div>
+              <h4 class="ui header">Quote of the Day</h4>
+              <div id="quote-content"></div>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ class ControllerUser{
          let token = jwt.sign({email : result.email, id : result._id}, process.env.SECRET_JWT)
          let loggedIn = {
            id : result._id,
-           user : result.email,
+           email : result.email,
            token
          }
          res.json(loggedIn)
