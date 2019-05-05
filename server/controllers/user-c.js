@@ -1,7 +1,9 @@
-
 const User = require('../models/user')
 const { decrypt } = require('../helpers/password')
 const jwt = require('jsonwebtoken')
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(process.env.CLIENT_ID);
+
 
 class ControllerUser{
   static createNewUser(req,res){
@@ -22,9 +24,12 @@ class ControllerUser{
   }
 
   static findOneUser(req,res){
+    console.log("disini")
+    console.log(req.body)
     let condition = {
       email : req.body.email
     }
+
     User.findOne(condition)
     .then(result=>{
       if(result){
@@ -47,6 +52,47 @@ class ControllerUser{
       res.json(error)
     })
   }
+
+  static signInGoogle(req, res) {
+    var newEmail = ''
+    client.verifyIdToken({
+            idToken: req.headers.token,
+            audience: process.env.CLIENT_ID
+        })
+        .then(function(ticket) {
+            newEmail = ticket.getPayload().email
+            return User.findOne({
+                email: newEmail
+            })
+        })
+        .then(function(userLogin) {
+            if (!userLogin) {
+                return user.create({
+                    email: newEmail,
+                    password: 'password'
+                })
+            } else {
+                return userLogin
+            }
+        })
+        .then(function(newUser) {
+            let token = jwt.sign({
+                email: newUser.email,
+                id: newUser._id
+            }, process.env.SECRET)
+            let obj = {
+                token,
+                id: newUser._id,
+                email: newUser.email
+            }
+            res.status(200).json(obj)
+        })
+        .catch(function(err) {
+            console.log(err)
+            res.status(500).json(err)
+        })
+  }
+
 }
 
 module.exports = ControllerUser

@@ -5,17 +5,12 @@ router.get("/", (req,res)=>{
   res.send("users")
 })
 
-router.post("/register", controller.createNewUser)
-
 router.post("/login", controller.findOneUser)
 
-router.post("/loginGoogle", (req,res)=>{
-  res.send("users")
-})
+router.post("/register", controller.createNewUser)
 
-router.post("/logOutGoogle", (req,res)=>{
-  res.send("users")
-})
+router.post("/loginGoogle", controller.signInGoogle)
+
 
 
 module.exports = router
