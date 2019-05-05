@@ -12,5 +12,5 @@
 | Make it fancy! Tambahkan 1 fitur atau lebih yang akan menjadikan aplikasi todo kamu menjadi unik dan berbeda. Misal, integrasikan dengan Google Calendar. (Ingat, tambahkan fitur seunik mungkin) | ❌ |
 | Extras (Wajib buat anak ngulang): | --- |
 | Authenticated user bisa membuat project, dan invite/add member ke project tersebut. | ✔ |
-| User dapat membuat todo di project yang sudah dipilih | ❌ |
-| Todo yang ada di suatu project hanya bisa di read/write (CRUD) oleh project members. | ❌ |
+| User dapat membuat todo di project yang sudah dipilih | ✔ |
+| Todo yang ada di suatu project hanya bisa di read/write (CRUD) oleh project members. | ✔ |
