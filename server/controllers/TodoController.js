@@ -28,7 +28,6 @@ class TodoController {
             name: req.params.todoName
         })
         .then(todo => {
-            console.log(todo);
             todo.deadline = calculateDate.inDays(todo.due_date, new Date() )
 
             res.status(200).json(todo)
@@ -81,17 +80,14 @@ class TodoController {
 
     static update(req, res) {
         const id = req.params.id
+        let object = {}
+        Object.keys(req.body).forEach(el =>{
+            object[el] = req.body[el]
+        })
 
-        Todo.findOneAndUpdate({_id: id}, {new: true})
+        Todo.findOneAndUpdate({_id: id}, object, {new: true})
         .then(todo => {
-            console.log(todo);
-            for(let key in req.body) {
-                todo[key] = req.body[key]
-            }
-
-            todo.save()
-
-            res.status(200).json(todo)
+            res.status(201).json(todo)
         })
         .catch(err => {
             res.status(500).json(err)
@@ -112,7 +108,6 @@ class TodoController {
 
     static search(req, res) {
         let nameREGEX = `^${req.query.name}`
-        console.log(req.headers.id);
         Todo.
         find( 
             {
@@ -127,7 +122,6 @@ class TodoController {
             res.status(200).json(search);
         })
         .catch(err=> {
-            console.log(err);
             res.status(400).json({'msg': 'Internal server error'})
         })
     }

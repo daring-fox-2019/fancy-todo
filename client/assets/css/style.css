@@ -3,6 +3,7 @@
 .fs-15{font-size: 15px}
 .color-grey4{color: #616161}
 .color-red{color: #dc3545}
+.color-blue { color: #007bff }
 .w25 {width: 24.5%  ;}
 .w75 { width: 74.5%; }
 .w85 { width: 85%; }
@@ -63,6 +64,10 @@
     height: 595px;
     width: calc(100% + 327px);
     margin-left: -200px;
+}
+.card--my {
+    padding: 4em 2em;
+    border-radius: .7em;
 }
 .nav-search > input { display: inline-block; }
 .nav-search > select { width: 13%; }
@@ -131,6 +136,8 @@
 
 #member__card-container {
     padding: 0em 20em;
+    height: 425px;
+    overflow-y: scroll;
 }
 #searchTodo {
     padding: 0em 19em;

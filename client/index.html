@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <title>Fancy Todo</title>
 </head>
 <body class="relative">
@@ -24,8 +24,8 @@
 
     <div class="container">
 
-        <section id="landing__page" class="hide">
-            <div class="row">
+        <section id="landing__page" class="abs-center text-center hide">
+            <div class="row card card--my">
                 <div class="col-md-12">
                     <h3>Welcome, please login to continue</h3>
                 </div>
@@ -37,46 +37,82 @@
             </div>
         </section>
 
-        <section id="login__page">
-            <div class="row">
+        <section id="login__page" class="abs-center text-center hide">
+            <div class="row card card--my" style="padding: 2em 4em;">
                 <form id="login__form" method="POST">
-                    <div>
-                        <h3>Login</h3>
+                    <div style="margin-bottom: 10px">
+                        <h3 class="color-red">Login</h3>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="login__email" placeholder="Email">
+                        <input 
+                            type="text" 
+                            id="login__email" 
+                            class="form-control"
+                            placeholder="Email"
+                        >
                     </div>
 
                     <div class="form-group">
-                        <input type="password" id="login__password" placeholder="Password">
+                        <input 
+                            type="password" 
+                            id="login__password" 
+                            class="form-control"                        
+                            placeholder="Password"
+                        >
                     </div>
 
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                    
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div style="display: flex; justify-content: space-between">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+
+                    <div id="login__register-btn" class="color-red cursor-pointer mt-20">
+                        Create account
+                    </div>
+
                 </form>
             </div>
         </section>
 
-        <section id="register__page">
-            <div class="row">
+        <section id="register__page" class="abs-center text-center hide">
+            <div class="row card card--my" style="padding: 2em 4em;">
                 <form id="register__form" method="POST">
-                    <div>
-                        <h3>Register</h3>
+                    <div style="margin-bottom: 10px">
+                        <h3 class="color-red">Register</h3>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="register__name" placeholder="Name">
+                        <input 
+                            type="text" 
+                            id="register__name" 
+                            class="form-control"
+                            placeholder="Name"
+                        >
                     </div>
 
                     <div class="form-group">
-                        <input type="email" id="register__email" placeholder="Email">
+                        <input 
+                            type="email" 
+                            id="register__email" 
+                            class="form-control"
+                            placeholder="Email"
+                        >
                     </div>
 
                     <div class="form-group">
-                        <input type="password" id="register__password" placeholder="Password">
+                        <input 
+                            type="password" 
+                            id="register__password" 
+                            class="form-control"                        
+                            placeholder="Password"
+                        >
                     </div>
 
                     <button type="submit" class="btn btn-primary">Register</button>
+
+                    <div id="register__login-btn" class="color-red cursor-pointer mt-20">
+                        I have account
+                    </div>
                 </form>
             </div>
         </section>

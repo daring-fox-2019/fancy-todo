@@ -12,10 +12,12 @@ const todoSchema = new Schema({
         required: true
     },
     status: {
-        type: String
+        type: Boolean,
+        required: true
     },
     due_date: {
-        type: Date
+        type: Date,
+        required: true
     },
     owner : { type: Schema.Types.ObjectId, ref: 'User' }
 });

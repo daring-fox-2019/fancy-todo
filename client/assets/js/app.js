@@ -65,8 +65,8 @@ function fetchTodo() {
             $("#member__card-container").append(
                 `
                 <div class="card">
-                    <div class="card-content">
-                        <div>
+                    <div class="card-body" style="display: flex; justify-content: space-evenly">
+                        <div style="width: 85%;">
                             <h6 data-name="${todo.name}">${todo.name}</h6>
                             <p data-description="${todo.description}">${todo.description}</p>
                             <span class="fs-15 color-red">${dateDiff} days remaining</span>
@@ -83,8 +83,16 @@ function fetchTodo() {
                             <div 
                                 class="delete-btn"
                                 data-id="${todo._id}" 
-                                onclick="deleteTodo('${todo._id}')"
+                                onclick="confirmDelete('${todo._id}')"
                             ><i class="far fa-trash-alt"></i> Delete</div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div class="cursor-pointer" onclick="changeStatus('${todo._id}',${todo.status})">
+                            <i 
+                            class="${todo.status === false ? 'far fa-times-circle color-red' : 'far fa-check-circle color-blue'}"
+                            >${todo.status === false ? "Not complete": "Completed"}
+                            </i>
                         </div>
                     </div>
                 </div>
@@ -184,6 +192,50 @@ function signOut() {
     });
 }
 
+function confirmDelete(id) {
+    Swal.fire({
+        title: 'Delete this todo?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+            deleteTodo(id)
+
+            Swal.fire(
+                'Deleted!',
+                'Your todo has been deleted.',
+                'success'
+            )
+        }
+      })
+}
+
+function changeStatus(id, status) {
+    let newStatus = !status
+
+    $.ajax({
+        url: `http://localhost:3000/api/todos/${id}`,
+        method: `PATCH`,
+        data: {
+            status: newStatus
+        },
+        headers: {
+            token: localStorage.token
+        }
+    })
+    .done(function(response) {
+        console.log('>>>>>>> ', response);
+        renderLoggedInPage()
+    })
+    .fail(function(jqXHR, textStatus) {
+        console.log(textStatus);
+    })
+}
+
 $(document).ready(function() {  
     renderLoggedInPage()
 
@@ -216,9 +268,6 @@ $(document).ready(function() {
             method: `POST`,
             data: {
                 name, description, due_date, id
-            },
-            headers: {
-                token: localStorage
             }
         })
         .done(function(response) {
@@ -227,6 +276,8 @@ $(document).ready(function() {
             fetchTodo()
         })
         .fail(function(jqXHR, textStatus) {
+            $('#createTodoModal').modal('hide');
+            fetchTodo()
             console.log(textStatus);
         })
     })
@@ -250,11 +301,12 @@ $(document).ready(function() {
             }
         })
         .done(function(response) {
-            console.log(response);
             $('#editTodoModal').modal('hide');
             fetchTodo()
         })
         .fail(function(jqXHR, textStatus) {
+            $('#editTodoModal').modal('hide');
+            fetchTodo()
             console.log(textStatus);
         })
     })
@@ -281,12 +333,11 @@ $(document).ready(function() {
                 $("#member__card-container").append(
                     `
                     <div class="card">
-                        <div class="card-content">
-                            <div>
+                        <div class="card-body" style="display: flex; justify-content: space-evenly">
+                            <div style="width: 85%;">
                                 <h6 data-name="${todo.name}">${todo.name}</h6>
                                 <p data-description="${todo.description}">${todo.description}</p>
                                 <span class="fs-15 color-red">${dateDiff} days remaining</span>
-
                             </div>
                             <div>
                                 <div 
@@ -299,9 +350,16 @@ $(document).ready(function() {
                                 <div 
                                     class="delete-btn"
                                     data-id="${todo._id}" 
-                                    onclick="deleteTodo('${todo._id}')"
+                                    onclick="confirmDelete('${todo._id}')"
                                 ><i class="far fa-trash-alt"></i> Delete</div>
                             </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                        <div class="cursor-pointer" onclick="changeStatus('${todo._id}',${todo.status})">
+                            <i 
+                            class="${todo.status === false ? 'far fa-times-circle color-red' : 'far fa-check-circle color-blue'}"
+                            >${todo.status === false ? "Not complete": "Completed"}
+                            </i></div>
                         </div>
                     </div>
                     `
@@ -341,4 +399,14 @@ $(document).ready(function() {
     $('[type="date"]').prop('min', function(){
         return new Date().toJSON().split('T')[0];
     });
+
+    $("#login__register-btn").on('click', function() {
+        $("#login__page").hide()
+        $("#register__page").show()
+    })
+
+    $("#register__login-btn").on('click', function() {
+        $("#login__page").show()
+        $("#register__page").hide()
+    })
 })
