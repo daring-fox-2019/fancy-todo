@@ -38,6 +38,17 @@ function register(email,name,password) {
     })
 }
 
+function dateFormat(date) {
+    let today = new Date(date);
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    
+    today = `${yyyy}-${mm}-${dd}`;
+    
+    return today
+}
+
 function fetchTodo() {
     $.ajax({
         url: `http://localhost:3000/api/todos`,
@@ -67,7 +78,7 @@ function fetchTodo() {
                                 data-id="${todo._id}" 
                                 data-toggle="modal" 
                                 data-target="#editTodoModal" 
-                                onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', ${todo.status}, '${todo.due_date}')"
+                                onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', '${todo.due_date}')"
                             ><i class="far fa-edit"></i> Edit</div>
                             <div 
                                 class="delete-btn"
@@ -98,10 +109,10 @@ function clearEditTodoInputForm() {
     $("#edit-todo__due_date").val('')
 }
 
-function editTodo(id, name, desc, status, due_date) {
+function editTodo(id, name, desc, due_date) {
     $("#edit-todo__name").val(name)
     $("#edit-todo__description").val(desc)
-    $("#edit-todo__due_date").val(due_date)
+    $("#edit-todo__due_date").val(dateFormat(due_date));
     $("#edit-todo__id").val(id)
 }
 
@@ -145,8 +156,6 @@ function renderLoggedInPage() {
 }
 
 function onSignIn(googleUser) {
-    // var profile = googleUser.getBasicProfile();
-    // var profile = googleUser.getAuthResponse();
     const token = googleUser.getAuthResponse().id_token;
 
     $.ajax({
@@ -164,12 +173,6 @@ function onSignIn(googleUser) {
     .fail(function(jqXHR, textStatus) {
         console.log(textStatus);
     })
-
-
-    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    // console.log('Name: ' + profile.getName());
-    // console.log('Image URL: ' + profile.getImageUrl());
-    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 }
 
 function signOut() {
@@ -270,9 +273,6 @@ $(document).ready(function() {
             }
         })
         .done(function(todos) {
-            // console.log(response);
-            // $('#editTodoModal').modal('hide');
-            // fetchTodo()
             $("#member__card-container > div").remove()
 
             todos.forEach(todo=> {
@@ -294,7 +294,7 @@ $(document).ready(function() {
                                     data-id="${todo._id}" 
                                     data-toggle="modal" 
                                     data-target="#editTodoModal" 
-                                    onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', ${todo.status}, '${todo.due_date}')"
+                                    onclick="editTodo('${todo._id}', '${todo.name}', '${todo.description}', '${todo.due_date}')"
                                 ><i class="far fa-edit"></i> Edit</div>
                                 <div 
                                     class="delete-btn"
