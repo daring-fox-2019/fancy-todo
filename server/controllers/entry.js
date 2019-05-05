@@ -113,6 +113,31 @@ class EntryController {
     };
   };
 
+  static getUserById(req, res, next) {
+    User.findById(req.authenticated.id)
+      .populate(
+        {
+          path: 'projects',
+          select: ['name', 'description'],
+        },
+      )
+      .populate(
+        {
+          path: 'todos',
+          select: ['name', 'description'],
+        }
+      )
+      .then((user) => {
+        res.status(200).json({
+          message: 'FETCHED',
+          user,
+        });
+      })
+      .catch((error) => {
+        next(error);
+      });
+  };
+
 };
 
 module.exports = EntryController;

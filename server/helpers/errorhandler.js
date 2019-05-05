@@ -5,12 +5,22 @@ const errorCode = (errorMessage) => {
   switch(errorMessage) {
     case 'Wrong email/password':
       return 400;
+      
     case 'We can\'t verify your request':
       return 400;
+      
     case 'User not found':
       return 404;
+
     case 'Unauthorized':
       return 401;
+
+    case 'Todo not found':
+      return 404;
+
+    case 'Project not found':
+      return 404;
+
     default:
       return 500;
   };
@@ -35,7 +45,7 @@ const handler = (error) => {
     code = errorCode(error.message);
   } else if(mongooseClientError.includes(error.name)) {
       errorObj.source = 'Database';
-      errorObj.message = error.message ?  error.message.split('failed:')[1] : 'We can\'t process your request';
+      errorObj.message = error.message ?  error.message : 'We can\'t process your request';
       code = 400;
   } else {
       errorObj.source = 'System';

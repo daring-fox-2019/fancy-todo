@@ -20,13 +20,13 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password cannot be empty']
   },
-  projectID: [
+  projects: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Project',
     },
   ],
-  todosID: [
+  todos: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Todo',

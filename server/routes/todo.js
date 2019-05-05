@@ -18,6 +18,9 @@ const {
   deleteTodoById,
 } = controller;
 
+router.use(userAuthentication);
+router.use('/:id', todoOwnership);
+
 router.get('/', getAllTodos);
 router.get('/:id', getTodoById);
 router.post('/', postCreateTodo);

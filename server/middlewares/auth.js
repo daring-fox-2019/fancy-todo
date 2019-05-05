@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
+const { ObjectId } = require('mongoose').Types;
 
 const User = require('../models/User');
 const Project = require('../models/Project');
@@ -58,11 +59,55 @@ const userAuthentication = (req, res, next) => {
 };
 
 const todoOwnership = (req, res, next) => {
-
+  const { id } = req.params;
+  
+  Todo.findById(id)
+    .then((todo) => {
+      if(todo && todo.userId == req.authenticated.id) {
+        next();
+      } else if(todo && todo.userId != req.authenticated.id) {
+        throw new Error('Unauthorized');
+      } else {
+        throw new Error('Todo not found');
+      };
+    })
+    .catch((error) => {
+      next(error);
+    });
 };
 
 const projectOwnership = (req, res, next) => {
+  const id = req.params.id ? req.params.id : req.params.projectId
 
+  Project.findById(id)
+    .then((project) => {
+      if(project && project.ownerId == req.authenticated.id) {
+        next();
+      } else if(project && project.ownerId != req.authenticated.id) {
+        throw new Error('Unauthorized');
+      } else {
+        throw new Error('Project not found');
+      };
+    })
+    .catch((error) => {
+      next(error);
+    })
+};
+
+const projectMembership = (req, res, next) => {
+  const { projectId } = req.params; 
+
+  Project.findById(projectId)
+    .then((project) => {
+      if(project && project.members.includes(req.authenticated.id)) {
+        next();
+      } else {
+        throw new Error('Unauthorized');
+      };
+    })
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports = {
@@ -70,4 +115,5 @@ module.exports = {
   userAuthentication,
   todoOwnership,
   projectOwnership,
+  projectMembership,
 };

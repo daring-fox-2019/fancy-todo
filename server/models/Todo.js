@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 const Schema = mongoose.Schema;
 
 const todoSchema = new Schema({
@@ -11,11 +12,20 @@ const todoSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  userID: {
+  userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
 }, { timestamps: true });
+
+todoSchema.pre('save', function(next) {
+  User.update(
+    { _id: this.userId },
+    { $push: { todos: this._id } },
+  )
+    .exec();
+  next();
+});
 
 const Todo = mongoose.model('Todo', todoSchema);
 

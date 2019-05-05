@@ -31,7 +31,7 @@ class TodoController {
   };
 
   static postCreateTodo(req, res, next) {
-    // const userID = req.authenticated.id;
+    const userId = req.authenticated.id;
 
     const {
       name,
@@ -41,7 +41,7 @@ class TodoController {
     const newTodo = new Todo({
       name,
       description,
-      // userID,
+      userId,
     });
 
     newTodo.save()
@@ -72,7 +72,7 @@ class TodoController {
     }
 
     for(let key in updates) {
-      if(updates.hasOwnproperty(key) && !updates[key]) {
+      if(String(updates[key]) == 'null') {
         delete updates[key];
       };
     };
@@ -89,10 +89,6 @@ class TodoController {
       });
   };
   
-  static patchEditStatusById(req, res) {
-    
-  }
-
   static deleteTodoById(req, res, next) {
     const{ id } = req.params;
 
