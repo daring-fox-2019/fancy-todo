@@ -139,8 +139,9 @@ class ProjectController {
             description: req.body.description,
             dueDate: new Date(req.body.dueDate),
             owner: req.user._id,
-            status: 'open'
+            status: req.body.status
         }
+        
         let newTodo
 
         Todo.create(todo)
@@ -161,6 +162,8 @@ class ProjectController {
 
     static removeTodo(req, res) {
         let todo_id = req.params.todo_id
+        let project_id = req.params.id
+
         Project
             .findOneAndUpdate({_id: project_id}, {$pull: {todos: todo_id}}, {new: true})
             .populate('todos')
@@ -181,9 +184,10 @@ class ProjectController {
             updated[key] = req.body[key]
         }
 
-        Todo.findOneAndUpdate({_id: req.params.id}, updated, {new: true})
-            .then(updated => {
-                res.status(200).json(updated)
+        Todo.findOneAndUpdate({_id: req.params.project_id}, updated, {new: true})
+            .then(newTodo => {
+                console.log(newTodo);
+                res.status(200).json(newTodo)
             })
             .catch(err => {
                 res.status(500).json(err);

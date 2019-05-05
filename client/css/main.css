@@ -37,6 +37,11 @@ body {
 .loginModal {
     width: 50%;
 }
+.socialDiv {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+}
 
 #registerForm {
     min-height: 100vh;
@@ -178,6 +183,10 @@ body {
 
 .navItem {
     font-size: 1em;   
+}
+
+.addModal {
+    max-height: 90%;
 }
 
 /* MEDIA QUERIES */

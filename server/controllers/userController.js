@@ -2,6 +2,7 @@ const User = require('../models/user')
 const crypt = require('../helpers/crypt')
 const jwt = require('../helpers/jwt')
 const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 class UserController {
     static create(req, res) {
@@ -85,25 +86,26 @@ class UserController {
               res.status(200).json({token: token, _id: user._id, email: user.email, name: user.name})
             }
             else {
-              return User.create({
+              User.create({
                 email: email,
                 name: name,
-                password: crypt.hashPassword('pass1234'),
+                password: crypt.hashPassword(process.env.DEFAULT_PASSWORD),
+              })
+              .then(user => {
+                let token = jwt.sign({
+                  email: user.email,
+                  name: user.name,
+                  role: user.role
+                }, process.env.JWT_SECRET)
+    
+                res.status(200).json({token: token, _id: user._id, email: user.email, name: user.name})
               })
             }
           })
-          .then(user => {
-            let token = jwt.sign({
-              email: user.email,
-              name: user.name,
-              role: user.role
-            }, process.env.JWT_SECRET)
-
-            res.status(200).json({token: token, _id: user._id, email: user.email, name: user.name})
-          })
-          .catch(err => [
+          .catch(err => {
+            console.log(err);
             res.status(500).json(err)
-          ])
+          })
       }
       verify().catch(error => {
           console.log(error);

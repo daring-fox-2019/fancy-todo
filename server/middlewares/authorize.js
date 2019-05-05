@@ -18,19 +18,17 @@ module.exports = {
             next()
         }
         else if(!todo_id) {
-            Todo
+            next()
+            /* Todo
             .findOne({owner: user._id})
             .then(found => {
                 if(found) {
                     next()
                 }
-                else {
-                    
-                }
             })
             .catch(err => [
                 res.status(500).json(err)
-            ])
+            ]) */
         }
         else {
             Todo

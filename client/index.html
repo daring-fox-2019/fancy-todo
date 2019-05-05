@@ -26,6 +26,7 @@
                 <a class="waves-effect waves-light btn landingButton modal-trigger" data-target="loginModal" id="showLoginBtn">Login</a>
                 <a class="waves-effect waves-light btn landingButton" onclick="showRegister()">Register</a>
             </div>
+
             <!-- Modal Structure -->
             <div id="loginModal" class="modal loginModal">
                 <div class="modal-content">
@@ -49,8 +50,8 @@
                     <a href="#" id="loginBtn" class="modal-close waves-effect waves-green btn">LOGIN</a>
                     <a href="#" id="registerBtn" class="waves-effect waves-green btn">REGISTER</a>
                 </div>
-                <div class="divider"><h5>Or sign in via</h5></div>
-                <div class="col">
+                <div class="divider"></div>
+                <div class="socialDiv">
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 </div>
             </div>
@@ -76,15 +77,15 @@
                                 </div>
                         </div>
                         <div class="row">
-                                <div class="input-field">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <input id="register-name" type="text">
-                                    <label for="name">Full Name</label>
-                                </div>
+                            <div class="input-field">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="register-name" type="text">
+                                <label for="register-name">Full Name</label>
+                            </div>
                         </div>
                         <div class="row mt-3">
                             <a class="btn" onclick="register()">Register</a>
-                            <a class="btn" onclick="showLanding()">Home</a>
+                            <a class="btn grey darken-1" onclick="showLanding()">Home</a>
                         </div>
                 </form>
             </div>
@@ -134,7 +135,7 @@
             </div>
             <div id="createProjectModal" class="modal">
                 <div class="modal-content">
-                    <h2>Create Project</h2>
+                    <h4>Create Project</h4>
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="project-name" type="text" required>
@@ -154,12 +155,113 @@
                     </div>
                 </div>
             </div>
+            <div id="editProjectModal" class="modal">
+                <div class="modal-content">
+                    <h4>Edit Project</h4>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="editproject-name" type="text" required>
+                            <label for="editproject-name">Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="editproject-description" type="text">
+                            <label for="editproject-description">Description</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a href="#" class="modal-close waves-effect waves-green btn" onclick="submitEditProject()">Submit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="createTodoModal" class="modal addModal">
+                <div class="modal-content">
+                    <h4>Create Todo</h4>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="todo-title" type="text" required>
+                            <label for="todo-title">Title</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="todo-description" type="text">
+                            <label for="todo-description">Description</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="todo-duedate" type="text" class="datepicker">
+                            <label for="todo-duedate">Due Date</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="todo-status" required="">
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="Open">Open</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                            <label for="todo-duedate">Status</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a href="#" class="modal-close waves-effect waves-green btn" onclick="createTodo()">Submit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="editTodoModal" class="modal addModal">
+                <div class="modal-content">
+                    <h4>Edit Todo</h4>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="edittodo-title" type="text" required>
+                            <label for="edittodo-title">Title</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="edittodo-description" type="text">
+                            <label for="edittodo-description">Description</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="edittodo-duedate" type="text" class="datepicker">
+                            <label for="edittodo-duedate">Due Date</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="edittodo-status" required="">
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="Open">Open</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                            <label for="edittodo-duedate">Status</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a id="editTodoBtn" href="#" class="modal-close waves-effect waves-green btn" onclick="submitEditTodo()">Submit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="fixed-action-btn">
                 <a class="btn-floating btn-large red">
                     <i class="large material-icons">mode_edit</i>
                 </a>
                 <ul>
-                    <li><a class="btn-floating blue modal-trigger" data-target="createProjectModal" ><i class="material-icons">add</i></a></li>
+                    <li><a class="btn-floating blue modal-trigger tooltipped" data-target="createProjectModal" data-position="top" data-tooltip="Add project" ><i class="material-icons">add</i></a></li>
+                    <li><a class="btn-floating green modal-trigger tooltipped" data-target="createTodoModal" data-position="top" data-tooltip="Add Todo" ><i class="material-icons">add</i></a></li>
                 </ul>
             </div>
         </div>

@@ -4,7 +4,7 @@ class TodoController {
     static find(req, res) {
         let regKey = new RegExp(req.query.q, 'i');
 
-        if(req.query.q || req.query.q !== '') {
+        if(req.query.q && req.query.q !== '') {
             Todo.find()
             .or([{ 'title': { $regex: regKey }}, { 'description': { $regex: regKey }}])
             .exec()
@@ -16,7 +16,7 @@ class TodoController {
             })
         }
         else {
-            Todo.find()
+            Todo.find({owner: req.user._id})
             .then(todos => {
                 res.status(200).json(todos)
             })
@@ -44,7 +44,7 @@ class TodoController {
             description: req.body.description,
             dueDate: new Date(req.body.dueDate),
             owner: req.user._id,
-            status: 'open'
+            status: req.body.status
         }
 
         Todo.create(todo)
