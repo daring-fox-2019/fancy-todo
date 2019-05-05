@@ -76,7 +76,6 @@ function signOut() {
 
 
 function onSignIn(googleUser) {
-
   let id_token = googleUser.getAuthResponse().id_token;
   
   $.ajax({ 

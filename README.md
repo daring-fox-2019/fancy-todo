@@ -317,3 +317,8 @@ npm init
 npm install
 nodemon -L app.js
 ```
+
+## server deploy
+```
+http://todo-server.komangmahendra.me
+```

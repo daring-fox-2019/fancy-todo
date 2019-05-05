@@ -21,7 +21,6 @@ function initClient() {
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
   }).then(function () {
-    // Listen for sign-in state changes.
     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     authorizeButton.onclick = handleAuthClick;
@@ -67,7 +66,6 @@ function listUpcomingEvents() {
     'orderBy': 'startTime'
   }).then(function(response) {
     var events = response.result.items;
-    //appendPre('Upcoming events:');
 
     $('#container-google-calendar').empty()
     if (events.length > 0) {
@@ -83,10 +81,8 @@ function listUpcomingEvents() {
             <p> <span style="font-size:20px"> <b>${events.length-i} . ${event.summary} </b></span> - <span style="color:#519E8A">${moment(when).format("MMM Do YY")} </span></p>
         </div>
         `)
-        //appendPre(event.summary + ' (' + when + ')')
       }
     } else {
-      //appendPre('No upcoming events found.');
         $('#container-google-calendar').prepend(`
             <p style="font-size:25px;color:#55545C"><b>No upcoming events found ... </b></p>
         `)
@@ -105,7 +101,6 @@ function addEvent(){
     start = new Date(start)
     end = new Date(end)
 
-    console.log(start<end, start < new Date(), end < new Date())
     if( ! (start < end || (start < new Date()) || (end < new Date()))){
         Swal.fire({
             type: "error",

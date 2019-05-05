@@ -4,7 +4,7 @@ const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_GOOGLE);
 
 class User{
-    static createUser(req, res){
+    static createUser(req, res, next){
         const {name, email, password} = req.body
 
         userModel.create({name , email, password})
@@ -16,7 +16,7 @@ class User{
         })
     }
 
-    static postLogin(req, res){
+    static postLogin(req, res, next){
         const {email, password} = req.body
 
         userModel.findOne({email})
@@ -37,7 +37,7 @@ class User{
         })
     }
 
-    static patchUpdate(req, res){
+    static patchUpdate(req, res, next){
         const _id = req.headers.id
         const { email, password, project_id} = req.body
 

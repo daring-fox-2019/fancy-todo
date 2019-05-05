@@ -1,4 +1,4 @@
-var url = "http://localhost:4000";
+var url = "http://todo-server.komangmahendra.me";
 
 var token = localStorage.getItem('token')
 
