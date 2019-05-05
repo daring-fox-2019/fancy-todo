@@ -95,16 +95,28 @@
                     <div class="nav-wrapper">
                         <a href="#" class="brand-logo">Fancy Todo</a>
                         <ul class="right hide-on-med-and-down">
-                            <li><a href="#" id="profileName"></a></li>
-                            <li><a href="#" onclick="logout()">Logout</a></li>
+                            <li><a href="#" id="profileName" class="navItem"></a></li>
+                            <li><a href="#" onclick="logout()" class="navItem">Logout</a></li>
                         </ul>
                     </div>
                 </nav>
             </div>
-            <ul id="slide-out" class="sidePanel">
-                <li><a href="#!"><i class="material-icons">cloud</i>Projects</a></li>
-                <li><a href="#!"><i class="material-icons">cloud</i>Todos</a></li>
-            </ul>
+            <div class="content">
+                <div class="col">
+                    <ul id="slide-out" class="sidePanel">
+                        <li><a href="#" class="links" onclick="showProjectsHome()"><i class="material-icons">all_inbox</i>&nbsp;Projects</a></li>
+                        <li><a href="#" class="links" onclick="showTodosHome()"><i class="material-icons">assignment</i>&nbsp;Todos</a></li>
+                    </ul>
+                </div>
+                <div class="content-page">
+                    <div class="content-title">
+                        <h3 id="content-title"></h3>
+                        <div id="content-list" class="main-list">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="fixed-action-btn">
                 <a class="btn-floating btn-large red">
                     <i class="large material-icons">mode_edit</i>
@@ -119,6 +131,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"

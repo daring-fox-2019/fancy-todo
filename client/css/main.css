@@ -59,11 +59,84 @@ body {
     flex-direction: column;
 }
 
+.content {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 64px);
+    width: auto;
+}
+
+.content-page {
+    width: 100%;
+}
+
+.main-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-height: 520px;
+    overflow-y: scroll;
+}
+
+.collection-item {
+    display: flex;
+    width: 80%;
+    padding: 10px;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(209, 209, 209, 0.871)
+}
+
+.project-list-item {
+    display: flex;
+}
+
+.project-item-content {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+.item-title {
+    font-size: 1.4em;
+    color: teal;
+}
+
+.item-title:hover {
+    color: rgb(5, 168, 168);
+}
+
+.item-description {
+    font-size: 0.8em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .navMain {
     background: teal;
 }
 .brand-logo {
     margin-left: 20px;
+}
+
+.links {
+    color: teal;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    min-width: 200px;
+    padding-left: 30px;
+    transition: 0.2s all ease-out;
+}
+
+.links:hover {
+    color: rgb(5, 168, 168);
+    transition: 0.2s all ease-out;
+}
+
+.navItem {
+    font-size: 1em;   
 }
 
 /* MEDIA QUERIES */

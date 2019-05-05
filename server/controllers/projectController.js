@@ -14,6 +14,18 @@ class ProjectController {
             })
     }
 
+    static findValidProjects(req, res) {
+        Project.find({$or: [{members: req.user._id}, {owner: req.user._id}]})
+            .populate('todos')
+            .populate('members')
+            .then(list => {
+                res.status(200).json(list)
+            })
+            .catch(err => {
+                res.status(500).json(err);
+            })
+    }
+
     static findOne(req, res) {
         let id = req.params.id
 

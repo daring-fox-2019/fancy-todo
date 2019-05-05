@@ -5,6 +5,8 @@ var currentUser = {
     name: '',
 }
 
+var projectList = [], todoList = []
+
 var loginState = function(value) {
     if(value) {
         $('#dashboard').show()
@@ -18,6 +20,10 @@ var loginState = function(value) {
     }
 }
 
+function dateFormat(date) {
+    return moment(new Date(date)).format('YYYY-MM-DD');
+}
+
 function showRegister() {
     $('#registerForm').show()
     $('#landing').hide()
@@ -27,6 +33,69 @@ function showLanding() {
     $('#registerForm').hide()
     $('#landing').show()
     $('#dashboard').hide()
+}
+
+function showProjectsHome() {
+    $('#content-title').html('Projects');
+    fetchProjects();
+}
+
+function generateProjectsList() {
+    if(projectList && projectList.length > 0) {
+        $('#content-list').html('')
+        projectList.forEach( project => {
+            let template = 
+            `<div class="collection-item">
+                <div class="project-item-content">
+                    <a href="#" class="item-title" onclick="showProjectDetail()"><span>${project.name}</span></a>
+                    <span class="grey-text item-description">${project.description}</span>
+                    <a href="#" style="font-size: 0.8em;" onclick="showProjectDetail()">>More Details</a>
+                </div>
+                <div>
+                <a href="#" class="btn blue darken-2" onclick="editProject()"><i class="material-icons">edit</i></a>
+                <a href="#" class="btn" style="background: red;" onclick="deleteProject()"><i class="material-icons">delete</i></a>
+                </div>
+            </div>
+            `
+
+            $('#content-list').append(template)
+        })
+    }
+    else {
+        $('#content-list').html(`<h6>You currently don't have any project</h6>`)
+    }
+}
+
+function showTodosHome() {
+    $('#content-title').html('Todos');
+    fetchTodos();
+    generateTodosList();
+}
+
+function generateTodosList() {
+    if(todoList && todoList.length > 0) {
+        $('#content-list').html('')
+        todoList.forEach( todo => {
+            let template = 
+            `<div class="collection-item">
+                <div class="project-item-content">
+                    <a href="#" class="item-title" onclick="showProjectDetail()"><span>${todo.title}</span></a>
+                    <span class="grey-text item-description">${todo.description}</span>
+                    <span class="grey-text due-date">Due Date: &nbsp;${dateFormat(todo.dueDate)}</span>
+                </div>
+                <div>
+                <a href="#" class="btn blue darken-2" onclick="editTodo()"><i class="material-icons">edit</i></a>
+                <a href="#" class="btn" style="background: red;" onclick="deleteTodo()"><i class="material-icons">delete</i></a>
+                </div>
+            </div>
+            `
+
+            $('#content-list').append(template)
+        })
+    }
+    else {
+        $('#content-list').html(`<h6>You currently don't have any todo</h6>`)
+    }
 }
 
 function logout() {
@@ -64,11 +133,48 @@ function setUserData(data) {
     $('#profileName').html(currentUser.name);
 }
 
+function fetchProjects() {
+    $.ajax({
+        method: 'GET',
+        url: serverURL + '/projects',
+        headers: {
+            token: localStorage.getItem('todo_token')
+        }
+    })
+    .done(function(data) {
+        projectList = [...data]
+        generateProjectsList();
+    })
+    .catch(function(err) {
+        swal("Error", err.responseText, "error");
+    })
+}
+
+function fetchTodos() {
+    $.ajax({
+        method: 'GET',
+        url: serverURL + '/todos',
+        headers: {
+            token: localStorage.getItem('todo_token')
+        }
+    })
+    .done(function(data) {
+        todoList = [...data]
+        generateTodosList();
+    })
+    .catch(function(err) {
+        swal("Error", err.responseText, "error");
+    })
+}
+
 $(document).ready(function(){
     $('.modal').modal();
     $('.fixed-action-btn').floatingActionButton();
     //check if there is valid token, if it is, show dashboard
+    projectList = []
+    todoList = []
     isLogin()
+    showProjectsHome()
 })
 
 $('#registerBtn').click(function() {
