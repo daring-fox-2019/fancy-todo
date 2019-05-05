@@ -1,0 +1,15 @@
+.border {
+    border: 1px solid lightgrey;
+}
+
+.todo-project-title {
+    font-size: 30px;
+}
+
+.progress-bar-container {
+    width: 100px;
+}
+
+.font-theme {
+    font-family: "Courier New", Courier, monospace;
+}

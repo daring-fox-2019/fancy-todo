@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- css bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <!-- google-signin script -->
+    <meta name="google-signin-client_id"
+        content="655523201289-jst7eo80qn70gagnn6p32ei4gdnb8lcb.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- custom style -->
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/login-overlay.css">
+
+    <title>Fancy Todo</title>
+</head>
+
+<div class="login-overlay">
+    <div class="top-left">
+        <p></p>
+    </div>
+    <div class="middle">
+        <h1>Welcome to Fancy Todo</h1>
+        <hr>
+        <!-- register modal button -->
+        <button type="button" class="mr-2 btn btn-primary login-modal-button" data-toggle="modal"
+            data-target="#registerModal">
+            Register
+        </button>
+
+        <!-- login modal button -->
+        <button type="button" class="mr-2 btn btn-primary register-modal-button" data-toggle="modal"
+            data-target="#loginModal">
+            Login
+        </button>
+    </div>
+    <div class="bottom-left">
+        <p>Portofolio</p>
+    </div>
+</div>
+
+<body>
+    <div id="fancy-todo">
+        <div class="container-fluid px-0" style="background-color: #09BD49">
+            <div class="container px-0">
+                <nav class="navbar navbar-light" style="background-color: #09BD49; color:white;">
+                    <a class="navbar-brand">Fancy Todo</a>
+                    <form class="form-inline">
+                        <!-- <button type="button" class="mr-2 btn btn-primary login-modal-button" data-toggle="modal"
+                                    data-target="#registerModal">
+                                    Register
+                                </button>
+                    
+                                <button type="button" class="mr-2 btn btn-primary register-modal-button" data-toggle="modal"
+                                    data-target="#loginModal">
+                                    Login
+                                </button> -->
+    
+                        <a href="#" onclick="handleClickLogout()" class="sign-out mr-2" style="color:white;">Sign out</a>
+                    </form>
+                </nav>
+            </div>
+        </div>
+        <div class="container border">
+            <div class="row">
+                <div class="col-2 border px-0">
+                    <div class="accordion" id="accordionExample">
+
+                        <!-- accordion1 -->
+                        <div class="card">
+                            <div class="p-0">
+                                <!-- clock here -->
+                            </div>
+                            <div class="card-header p-0" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseTodo" aria-expanded="true" aria-controls="collapseTodo"
+                                        onclick="getMyTodo()">
+                                        <i class="far fa-list-alt">&nbsp;</i>My Todo
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <!-- <div id="collapseTodo" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordionExample">
+                                <div class="card-body p-0">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                    richardson ad
+                                    <div class="container-fluid px-0 border">
+                                        aiya
+                                    </div>
+                                    <div class="container-fluid px-0 border">
+                                        aiya
+                                    </div>
+                                    <div class="container-fluid px-0 border">
+                                        aiya
+                                    </div>
+
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <!-- accordion2 -->
+                        <div class="card">
+                            <div class="card-header p-0" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseProject" aria-expanded="true"
+                                        aria-controls="collapseProject">
+                                        <i class="fas fa-angle-double-down">&nbsp;</i>My Project
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseProject" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordionExample">
+                                <div class="card-body p-0">
+                                    <div id="project-list">
+                                        <div class="container-fluid px-0 border">
+                                            {{project list here}}
+                                        </div>
+                                        <!-- getprojectlist here -->
+                                    </div>
+                                    <div class="row justify-content-end my-2 justify-content-center">
+                                        <button type="button" class="btn btn-primary py-0" data-toggle="modal"
+                                            data-target="#createProjectModal"><i class="fas fa-plus"></i> New
+                                            Project</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-7 px-4 border" id="main-content-content-wrapper" style="height:88vh;">
+                    <div class="container-fluid " id="simple-todo-wrapper">
+                        <div class="row todo-project-title my-2">
+                            My Todo List
+                        </div>
+                        <div class="row justify-content-end my-2">
+                            <button type="button" class="btn btn-primary py-0" data-toggle="modal"
+                                data-target="#todoModal"><i class="fas fa-plus"></i> Add Todo</button>
+                        </div>
+                        <!-- header -->
+                        <div class="row d-flex justify-content-between py-2">
+                                <div class="todo-left">
+                                    <div class="container-fuid px-3">
+                                        <div class="row align-items-center">
+                                            Project Todo List
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="todo-right">
+                                    <div class="container-fluid px-3">
+                                        <div class="row align-items-center">
+                                                <div class="action m-2 text-center" style="width: 100px;">
+                                                        Elapsed
+                                                    </div>|
+                                                <div class="action mx-2 text-center" style="width: 50px;">
+                                                        Due
+                                                    </div>|
+                                            <div class="action mr-2 text-center" style="width: 85px;">
+                                                Action
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- divider -->
+                        <hr style="width:100%;">
+                        <div id="simple-todo-container">
+                            <div class="row d-flex justify-content-between py-2 ">
+                                <div class="todo-left">
+                                    <div class="container-fuid px-3">
+                                        <div class="row align-items-center">
+
+                                            <i class="fas fa-feather-alt mr-1"></i>
+                                            <div class="text"> Text here </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="todo-right">
+                                    <div class="container-fluid px-3">
+                                        <div class="row align-items-center">
+                                            <div class="progress-bar-container mr-3">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0"
+                                                        style="width:25%;" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="text-date mr-2">
+                                                May 4
+                                            </div>
+                                            <!-- <a href="#"><i class="fas fa-info-circle mr-1"></i></a>
+                                                    <a href="#"><i class="fas fa-info-circle mr-1"></i></a> -->
+                                            <a href="#"><i class="fas fa-ellipsis-h mr-2"></i></a>
+                                            <a href="#"><i class="fas fa-check mx-2"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- divider -->
+                        <hr style="width:100%;">
+                    </div>
+
+
+                    <div class="container-fluid " id="project-wrapper">
+                        <div class="row justify-content-between my-2">
+                            <div class="my-2 todo-project-title" id="project-detail-title">
+                                {{Project Name}}
+                            </div>
+                            <div id="delete-this-project">
+                                <button type="button" class="btn btn-danger py-0 px-1 mt-2"
+                                    onclick="deleteThisProject()">Delete this project &nbsp;<i
+                                        class="fas fa-trash"></i></button>
+
+
+                            </div>
+                        </div>
+
+                        <div class="row my-2 todo-project-members d-flex">
+                            Members :
+                            <div class="d-flex" id="project-detail-members">
+                                <button type="button" class="btn btn-primary py-0 px-1">
+                                    Profile <a href="#" onclick="console.log('hai')"><span class="badge badge-light"><i
+                                                class="fas fa-times"></i></span></a>
+                                    <span class="sr-only">unread messages</span>
+                                </button>
+                            </div>
+                            <div id="project-detail-members" class="px-2">
+                                <a href="#" onclik="addMember()" data-toggle="modal"
+                                    data-target="#addMemberProjectModal"><span
+                                        class="badge badge-pill badge-info px-1">Add Member <i
+                                            class="fas fa-plus-circle"></i></span></a>
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-end my-2">
+                            <button type="button" class="btn btn-primary py-0" data-toggle="modal"
+                                data-target="#projectModal"><i class="fas fa-plus"></i> Add Project Todo</button>
+                        </div>
+                        <!-- header -->
+                        <div class="row d-flex justify-content-between py-2">
+                                <div class="todo-left">
+                                    <div class="container-fuid px-3">
+                                        <div class="row align-items-center">
+                                            Project Todo List
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="todo-right">
+                                    <div class="container-fluid px-3">
+                                        <div class="row align-items-center">
+                                                <div class="action m-2 text-center" style="width: 100px;">
+                                                        Elapsed
+                                                    </div>|
+                                                <div class="action mx-2 text-center" style="width: 50px;">
+                                                        Due
+                                                    </div>|
+                                            <div class="action mr-2 text-center" style="width: 85px;">
+                                                Action
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- divider -->
+                            <hr style="width:100%;">
+                        <!-- divider -->
+                        <hr style="width:100%;">
+                        <div id="project-todo-container">
+                            <div class="row d-flex justify-content-between py-2">
+                                <div class="todo-left">
+                                    <div class="container-fuid px-3">
+                                        <div class="row align-items-center">
+                                            <i class="fas fa-feather-alt mr-1"></i>
+                                            <div class="text"> Text here </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="todo-right">
+                                    <div class="container-fluid px-3">
+                                        <div class="row align-items-center">
+                                            <div class="progress-bar-container mr-3">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0"
+                                                        style="width:25%;" aria-valuemin="0" aria-valuemax="100"
+                                                        id="progress-bar-1"></div>
+                                                    <!-- $('#progress-bar-1').css('width', '100%') -->
+                                                </div>
+                                            </div>
+                                            <div class="text-date mr-2">
+                                                May 4
+                                            </div>
+                                            <!-- <a href="#"><i class="fas fa-info-circle mr-1"></i></a>
+                                                    <a href="#"><i class="fas fa-info-circle mr-1"></i></a> -->
+                                            <a href="#"><i class="fas fa-ellipsis-h mr-2"></i></a>
+                                            <a href="#"><i class="fas fa-check mx-2"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- divider -->
+                            <hr style="width:100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col border m-3 ">
+                    <div id="todo-detail-wrapper">
+                        <div class="row p-2 px-3" id="todo-explanation-title" style="font-size:25px;">
+                            {{single todo title}}
+                        </div>
+                        <!-- divider -->
+                        <hr style="width:100%;">
+                        <div class="row p-2 px-3 align-items-center" id="todo-explanation-status"
+                            style="font-size:10px; font-style:italic;">
+                            {{single todo status}}
+                        </div>
+                        <hr style="width:100%;">
+                        <div class="row p-1 px-3" id="todo-explanation-date"
+                            style="font-size: 10px; font-style:italic;">
+                            {{single todo created}}, {{single due date}},
+                        </div>
+                        <hr style="width:100%;">
+
+                        <div class="row p-1 px-3" id="todo-progress-bar" style="font-size: 12px;">
+                            Time elapsed since todo creation
+                        </div>
+                        <hr style="width:100%;">
+                        <div class="progress-bar-container mr-3 mb-3" style="width:100%;">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="0" style="width:25%;"
+                                    aria-valuemin="0" aria-valuemax="100" id="progress-bar-detail"></div>
+                            </div>
+                        </div>
+                        <hr style="width:100%;">
+                        <!-- divider -->
+                        <div class="row p-2 px-3" id="todo-explanation-description">
+                            {{single todo description}}
+                            Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolorLorem ipsum dolor
+                            Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolorLorem ipsum dolor
+                        </div>
+
+                    </div>
+                    <hr style="width:100%;">
+                    <div class="live-clock">
+                        <div style="text-align:center;padding:1em 0;">
+                            <h4><a style="text-decoration:none;"
+                                    href="https://www.zeitverschiebung.net/en/city/1642911"><span
+                                        style="color:gray;">Current local time in</span><br />Jakarta, Indonesia</a>
+                            </h4> <iframe
+                                src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FJakarta"
+                                width="100%" height="90" frameborder="0" seamless></iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid border" style="background-color:#09BD49;" >
+            <div class="container" >
+                <div class="row" style="color:white; height: 5.4vh;">
+                    Portofolio - Michael Ryan Saputra
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- register modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <!-- form register -->
+                    <div class="card" id="container-form-register">
+                        <div class="card-body">
+                            <h4 class="card-title">Register</h4>
+                            <hr>
+                            <form id="form-register">
+                                <div class="form-group">
+                                    <label for="register-name">Name</label>
+                                    <input type="text" class="form-control" id="register-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-email">Email</label>
+                                    <input type="email" class="form-control" id="register-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-password">Password</label>
+                                    <input type="password" class="form-control" id="register-password" required>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mt-4">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <!-- form login -->
+                    <div class="card" id="container-form-login">
+                        <div class="card-body">
+                            <h4 class="card-title">Login</h4>
+                            <hr>
+                            <form id="form-login">
+                                <div class="form-group">
+                                    <label for="login-email">Email</label>
+                                    <input type="email" class="form-control" id="login-email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password">Password</label>
+                                    <input type="password" class="form-control" id="login-password">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mt-4">Login</button>
+
+                                <p>Your also can login using google account</p>
+                                <!-- google-signin button -->
+                                <div class="g-signin2" data-onsuccess="handleGoogleSignin"></div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- todoModal -->
+    <div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- form starts here -->
+                    <div class="card" id="container-form-todo">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Todo</h4>
+                            <hr>
+                            <form id="form-todo">
+                                <div class="form-group">
+                                    <label for="todo-name">Todo:</label>
+                                    <input type="text" class="form-control" id="todo-name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="todo-description">Desc:</label>
+                                    <input type="text" class="form-control" id="todo-description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="todo-description">Enter Due Date:</label>
+                                    <input type="date" name="date" id="todo-duedate" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mt-4">Create Todo</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- todoProjectModal -->
+    <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <!-- form login -->
+                    <div class="card" id="container-form-login">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Todo</h4>
+                            <hr>
+                            <form id="form-create-todo-project">
+                                <div class="form-group">
+                                    <label for="project-todo-id">Project Id:</label>
+                                    <input type="text" class="form-control" id="project-todo-id" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-todo-name">Project Todo:</label>
+                                    <input type="text" class="form-control" id="project-todo-name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-todo-description">Description:</label>
+                                    <input type="text" class="form-control" id="project-todo-description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-todo-duedate">Enter Due Date:</label>
+                                    <input type="date" name="date" id="project-todo-duedate" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mt-4">Create inProject
+                                    Todo</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- createProjectModal -->
+    <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <!-- form login -->
+                    <div class="card" id="container-form-create-project">
+                        <div class="card-body">
+                            <h4 class="card-title">Create Project</h4>
+                            <hr>
+                            <form id="form-create-project">
+                                <div class="form-group">
+                                    <label for="project-name">Project Name</label>
+                                    <input type="text" class="form-control" id="project-name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-description">Project Description</label>
+                                    <input type="text" class="form-control" id="project-description">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mt-4">Create Project</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- addMemberProjectModal -->
+    <div class="modal fade" id="addMemberProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <!-- form login -->
+                    <div class="card" id="container-add-member-project">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Project Member</h4>
+                            <hr>
+                            <form id="form-add-member">
+                                <label for="project-member-email">Member Email</label>
+                                <div class="input-group mb-3">
+
+                                    <input type="text" class="form-control" placeholder="Enter email here"
+                                        aria-label="Enter email here" aria-describedby="button-addon2"
+                                        id="project-member-email">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="check-member-button"
+                                            onclick="checkMember()">Check</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="project-name">Member Id</label>
+                                    <input type="text" class="form-control" id="project-member-id" disabled>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mt-4"
+                                    id="project-add-member-button" disabled>Add Member</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- swal -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <!-- axios script -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+    <!-- bootstrap jquery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="./scripts/helper.js"></script>
+    <script src="./scripts/show-hide.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/document-ready.js"></script>
+    <script src="./scripts/main.js"></script>
+</body>
+
+</html>
