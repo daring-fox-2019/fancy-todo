@@ -1,6 +1,4 @@
 $(document).ready(function(){
-  let today = new Date
-  $('#due_date-field').val(today.toISOString().split('T')[0])
   
   $('.ui.menu')
   .visibility({
@@ -26,6 +24,7 @@ $(document).ready(function(){
 })
 
 function newTodo(){
+  console.log("disini")
   $.ajax( {
     method :'POST',
     url: 'http://localhost:3000/todos',
@@ -41,6 +40,7 @@ function newTodo(){
     }
     })
   .done(function(response) {
+    console.log(response)
       if(response == "success"){
         location.reload()
       } else {
@@ -115,7 +115,7 @@ function detailTodo(todoId){
       $('#detail-due_date').html(`<br><h5>Due Date</h5><input type='date' value='${date}' id="upd-due_date" name='upd-due_date'>`)
       $('#detail-action').html("<br>Action : <label class='ui mini orange label' onclick='markDone\("+ id +")\'>mark as done</label><label class='ui mini red label' onclick='deleteTodo\("+ id +")\'>delete this</label><div class='ui divider'></div>")
       $('#detail-action').append("<button class='ui large grey button' onclick='changeToAdd()'>I want to Add new Todos</button>")
-      $('#detail-action').append("<button class='ui large teal button' onclick='updateMyData\("+ id +")\'>Update Data Above</button>")
+      $('#detail-action').append("<button class='ui large teal button' type='submit' onclick='updateMyData\("+ id +")\'>Update Data Above</button>")
     })
     .fail(err=>{
       console.log("error find one", err)
@@ -125,6 +125,12 @@ function detailTodo(todoId){
 
 function updateMyData(todoId){
   console.log(todoId)
+  let upd = {
+      name : $("#upd-name").val(),
+      description : $("#upd-description").val(),
+      due_date : $("#upd-due_date").val()
+  }
+  setTimeout(function(){
     $.ajax( {
       method :'PUT',
       url: `http://localhost:3000/todos/${todoId}`,
@@ -134,9 +140,7 @@ function updateMyData(todoId){
         email : localStorage.getItem('email')
       },
       data : {
-        name : $("#upd-name").val(),
-        description : $("#upd-description").val(),
-        due_date : $("#upd-due_date").val()
+        upd
       }
       })
     .done(function(response) {
@@ -150,6 +154,8 @@ function updateMyData(todoId){
       console.log(jqXHR)
       console.log(textStatus)  
     })
+  }, 2000)
+    
 }
 
 function deleteTodo(todoId){
