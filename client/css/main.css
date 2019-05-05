@@ -54,7 +54,7 @@ body {
 }
 
 .sidePanel {
-    max-width: 200px;
+    max-width: 150px;
     display: inline-flex;
     flex-direction: column;
 }
@@ -116,6 +116,7 @@ body {
 .flex-column {
     display: flex;
     flex-direction: column;
+    padding: 10px;
 }
 .detail-page {
     max-height: 620px;
@@ -133,6 +134,25 @@ body {
     margin: 0;
 }
 
+.nomarginpadding {
+    margin: 0;
+    padding: 0;
+}
+
+.project-detail-title {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.left-border {
+    border-left: 1px dashed rgba(128, 128, 128, 0.377);
+    padding-left: 30px;
+}
+
+.small-text {
+    font-size: 0.8em;
+}
+
 .navMain {
     background: teal;
 }
@@ -146,7 +166,7 @@ body {
     align-items: center;
     min-height: 40px;
     min-width: 200px;
-    padding-left: 30px;
+    padding-left: 15px;
     transition: 0.2s all ease-out;
 }
 

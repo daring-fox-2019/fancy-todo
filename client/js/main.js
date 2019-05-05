@@ -7,6 +7,7 @@ var currentUser = {
 
 var projectList = [], todoList = []
 var currentProject = {}
+var users = []
 
 var loginState = function(value) {
     if(value) {
@@ -80,7 +81,14 @@ function generateProjectsList() {
 }
 
 function showProjectDetail(elem) {
-    let project_id = elem.dataset.id
+    let project_id;
+
+    if(!elem.dataset) {
+        project_id = elem
+    }
+    else {
+        project_id = elem.dataset.id
+    }
 
     $.ajax({
         method: 'GET',
@@ -113,27 +121,35 @@ function showProjectDetail(elem) {
 
         currentProject.members.forEach(member => {
             membersTemplate += 
-            `<div class='row'>
+            `<div style="display: flex; justify-content: space-between;">
                 <div class='flex-column'>
-                    <h5>${member.name}</h5>
-                    <p>${member.email}</p>
+                    <span class="small-text" >${member.name} (${member.email})</span>
                 </div>
                 <div>
-                    <a href="#" class="btn-floating red white-text" data-userid="${member._id}" onclick="removeMember(this)">X</i></a>
+                    <a href="#" class="btn red" data-id="${member._id}" onclick="removeMember(this)"><i class="material-icons">delete</i></a>
                 </div>
             </div>
             `
         })
 
         let template = 
-        `<h3>${currentProject.name}</h3>
+        `<h3 class="nomarginpadding project-detail-title">${currentProject.name}</h3>
         <div>
             <div class='row'>
                 <div class='col flex-column s12 m4 l4'>
-                    <div>${currentProject.description}</div>
-                    <div>created by ${currentProject.owner.name}</div>
+                    <div style="min-height: 70px;">${currentProject.description}</div>
+                    <div class="grey-text" style="font-size: 0.8em;">created by ${currentProject.owner.name}</div>
+                    <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+                        <span>Members</span>
+                        <a class="waves-effect waves-light btn modal-trigger" 
+                            data-target="addMemberModal" onclick="initMembersAutoComplete()">Add Member</a>
+                    </div>
+                    <div class="member-list">
+                    <hr>`+ 
+                    membersTemplate 
+                    + `</div>
                 </div>
-                <div class='col flex-column s12 m8 l8'>
+                <div class='flex-column s12 m8 l8 left-border'>
                     <div class="sectionTitle">Todos</div>
                 ` +
                     todosTemplate
@@ -145,6 +161,28 @@ function showProjectDetail(elem) {
         $('#project-detail-page').html(template)
         
         showProjectDetailPage()
+    })
+    .catch(function(err) {
+        swal("Error", err.responseText, "error");
+    })
+}
+function createProject() {
+    console.log(currentUser);
+    $.ajax({
+        method: 'POST',
+        url: serverURL + '/projects',
+        data: {
+            name: $('#project-name').val(),
+            description: $('#project-description').val(),
+            owner: currentUser._id,
+        },
+        headers: {
+            token: localStorage.getItem('todo_token')
+        }
+    })
+    .done(function(data) {
+        fetchProjects();
+        swal("Success", 'Project deleted successfully!', "success");
     })
     .catch(function(err) {
         swal("Error", err.responseText, "error");
@@ -170,6 +208,94 @@ function deleteProject(element) {
     })
 }
 
+// AutoComplete when Adding Members
+function initMembersAutoComplete() {
+    users = {}, newObj = {}
+    console.log('autocomplete');
+    $.ajax({
+        method: 'GET',
+        url: serverURL + '/users',
+        headers: {
+            token: localStorage.getItem('todo_token')
+        }
+    })
+    .done(function(data) {
+        let kvp = {}
+        users = data
+
+        let acUsers = {}
+        data.forEach(x => {
+            kvp[`${x.name} (${x.email})`] = x._id
+            acUsers = {...acUsers, ...kvp}
+        })
+
+        $('input.autocomplete').autocomplete({
+            data: acUsers,
+        });
+    })
+    .catch(function(err) {
+        swal("Error", err.responseText, "error");
+    })
+
+}
+
+function addMember() {
+    let userid, found
+    let key = $('#autocomplete-input').val();
+    let email = $('#autocomplete-input').val().split('(')[1]
+    email = email.substring(0, email.indexOf(')'))
+
+    found = users.find(x => x.email == email)
+    userid = found._id
+
+    if(userid)
+    {
+        $.ajax({
+            method: 'POST',
+            url: serverURL + '/projects/' + currentProject._id + '/addMember',
+            data: {
+                id: userid
+            },
+            headers: {
+                token: localStorage.getItem('todo_token')
+            }
+        })
+        .done(function(data) {
+            swal("Success", 'User has been added to project', "success");
+            var addModelModal = M.Modal.getInstance($('#addMemberModal'));
+            addModelModal.close();
+
+            $('#project-detail-page').hide()
+            showProjectDetail(currentProject._id)
+        })
+        .catch(function(err) {
+            swal("Error", err.responseText, "error");
+        })
+    }
+    else {
+        swal("Error", 'Invalid User', "error");
+    }
+}
+
+function removeMember(elem) {
+    $.ajax({
+        method: 'POST',
+        url: serverURL + '/projects/' + currentProject._id + '/removeMember',
+        data: {
+            id: elem.dataset.id
+        },
+        headers: {
+            token: localStorage.getItem('todo_token')
+        }
+    })
+    .done(function(data) {
+        swal("Success", 'User has been removed from project', "success");
+        showProjectDetail(currentProject._id)
+    })
+    .catch(function(err) {
+        swal("Error", err.responseText, "error");
+    })
+}
 
 /******************* 
  * TODO area 
@@ -385,3 +511,4 @@ function signOut() {
         isLogin()
     });
 }
+

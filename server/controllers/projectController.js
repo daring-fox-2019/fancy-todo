@@ -90,7 +90,7 @@ class ProjectController {
  
     static addMember(req, res) {
         let newMemberID = req.body.id
-
+        
         Project.findOneAndUpdate({_id: req.params.id}, {$push: {members: newMemberID}}, {new: true})
             .then(updated => {
                 res.status(200).json(updated)

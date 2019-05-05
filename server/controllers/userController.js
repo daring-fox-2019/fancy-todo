@@ -111,6 +111,16 @@ class UserController {
           res.status(500).json(error)
       });
     }
+
+    static findAll(req, res) {
+      User.find()
+          .then(list => {
+              res.status(200).json(list)
+          })
+          .catch(err => {
+              res.status(500).json(err);
+          })
+    }
 }
 
 module.exports = UserController

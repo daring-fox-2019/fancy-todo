@@ -15,7 +15,20 @@ const projectSchema = new Schema({
   },
   members: [{
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    validate: function(value) {
+      return this.members.find({
+            _id: { $ne: value }
+         })
+        .then( data => {
+            if(data.length !== 0) {
+                throw 'User is already in the project.';
+            }
+        })
+        .catch(err => {
+            throw err;
+        });
+    }
   }],
   pending: [{
     type: Schema.Types.ObjectId,
