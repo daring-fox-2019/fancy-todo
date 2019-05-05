@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,800" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="./materialize/css/materialize.min.css" media="screen,projection" />
+    <!-- Other material cdn -->
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="google-signin-client_id"
+        content="445619934297-i30r489vqmcgldok747hptkr75q5fl5v.apps.googleusercontent.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    <!-- Other added and Own css -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
+    <link rel="stylesheet" href="./materialize/css/style.css">
+    <!-- <link rel="stylesheet" href="./materialize/css/loading-bar.css"> -->
+
+</head>
+
+<body>
+
+    <div class="chat-container">
+        <div class="people-list" id="people-list">
+            <ul>
+                <li class="clearfix">
+                    <div class="about-person"></div>
+                    <div class="person-chat-name">
+                        Davita
+                    </div>
+                    <div class="status">
+                        <i class="material-icons tiny black-white">lens</i>Online
+                    </div>
+                </li>
+                <li class="clearfix">
+                    <div class="about-person"></div>
+                    <div class="person-chat-name">
+                        Martin
+                    </div>
+                    <div class="status">
+                        <i class="material-icons tiny black-white">lens</i>Online
+                    </div>
+                </li>
+                <li class="clearfix">
+                    <div class="about">
+                        <div class="name">Azhar</div>
+                        <div class="status">
+                            <i class="material-icons tiny black-white">lens</i>Online
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="chat">
+            <!-- STAR HEADER -->
+            <div class="chat-header clearfix">
+                <div class="chat-about">
+                    <div class="chat-with"> Chat in Group Boldfox</div>
+                    <div class="chat-num-messages">already 300 messages</div>
+                </div>
+            </div>
+            <!-- EHD HEADER -->
+            <!-- START LOGS -->
+            <div class="chat-history">
+                <ul>
+                    <li class="clearfix">
+                        <div class="message-data align-left">
+                            <span class="message-data-time">10:10 AM, Today</span> &nbsp; &nbsp;
+                            <span class="message-data-name">Martin</span> <i
+                                class="material-icons tiny black-white">lens</i>
+                        </div>
+                        <div class="message other-message float-right">
+                            Gabut ya lu jir
+                        </div>
+                    </li>
+                    <li>
+                        <div class="message-data align-right">
+                            <span class="message-data-time">10:15 AM, Today</span> &nbsp; &nbsp;
+                            <span class="message-data-name">Davita</span> <i
+                                class="material-icons tiny black-white">lens</i>
+                        </div>
+                        <div class="message my-message float-left">
+                                Tugasku membuat orang cemberut jadi tertawa
+                                (Ha-ha-ha-ha-ha-ha…)
+                                Dan juga membuat orang merana jadi bahagia
+                                (Hi-hu…y)
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                            <div class="message-data align-left">
+                                <span class="message-data-time">10:10 AM, Today</span> &nbsp; &nbsp;
+                                <span class="message-data-name">Martin</span> <i
+                                    class="material-icons tiny black-white">lens</i>
+                            </div>
+                            <div class="message other-message float-right">
+                                    Zulfikar orang memanggilku
+                                    Zulfikar itulah namaku
+                                    Sebagai penyanyi kutempuh hidup ini
+                                    Menghibur hati yang sedang sedih
+                            </div>
+                        </li>
+                    <li class="clearfix">
+                        <div class="message-data align-left">
+                            <span class="message-data-time">10:10 AM, Today</span> &nbsp; &nbsp;
+                            <span class="message-data-name">Martin</span> <i
+                                class="material-icons tiny black-white">lens</i>
+                        </div>
+                        <div class="message other-message float-right">
+                            Hehehehe
+                        </div>
+                    </li>
+                    <li>
+                        <div class="message-data align-right">
+                            <span class="message-data-time">10:15 AM, Today</span> &nbsp; &nbsp;
+                            <span class="message-data-name">Davita</span> <i
+                                class="material-icons tiny black-white">lens</i>
+                        </div>
+                        <div class="message my-message">
+                            IKAAAAAAAAANNN DUYUNG
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- END LOGS -->
+            <div class="chat-message clearfix">
+                <textarea name="message-to-send" id="message-to-send" placeholder="Type your message"
+                    rows="3"></textarea>
+                <button class="chat-box-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- END CHAT CONTAINER -->
+
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="./materialize/js/materialize.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./materialize/js/animatedModal.js"></script>
+    <script>
+        $('.modal').modal()
+    </script>
+    <!-- <script src="./materialize/js/loading-bar.js"></script> -->
+    <script src="./main.js"></script>
+
+</body>
+
+</html>
