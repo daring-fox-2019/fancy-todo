@@ -1,0 +1,9 @@
+#message{
+  color:#FF0000;
+  position: absolute;
+  left:50%;
+}
+
+#createTodo, #TodoLists, #login-register-form {
+  display: none;
+}
