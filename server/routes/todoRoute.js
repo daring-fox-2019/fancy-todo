@@ -4,8 +4,8 @@ const TodoController = require('../controllers/TodoController')
 const authentication = require('../middlewares/authentication')
 const authorize = require('../middlewares/authorize')
 
-routes.use(authorize)
 routes.use(authentication)
+routes.use(authorize)
  
 routes.post('/', TodoController.create)
 routes.get('/', TodoController.list)

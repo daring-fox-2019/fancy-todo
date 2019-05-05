@@ -4,7 +4,7 @@ function showAlert(message) {
 
     setTimeout(function(){ 
         $('#notification').hide();
-    }, 3000);
+    }, 5000);
 }
 
 function login(email, password) {
@@ -185,6 +185,7 @@ function onSignIn(googleUser) {
     .done(function(response) {
         localStorage.setItem('token', response.token)
         localStorage.setItem('name', response.name)
+        localStorage.setItem('id', response.id)
         renderLoggedInPage()
     })
     .fail(function(jqXHR, textStatus) {
@@ -267,7 +268,7 @@ $(document).ready(function() {
     $("#createTodoForm").submit(function(e) {
         e.preventDefault();
         
-        const id = localStorage.id
+        const owner = localStorage.id
         const name = $("#todo__name").val()
         const description = $("#todo__description").val()
         const due_date = new Date($("#todo__due_date").val())
@@ -276,7 +277,7 @@ $(document).ready(function() {
             url: `http://localhost:3000/api/todos`,
             method: `POST`,
             data: {
-                name, description, due_date, id
+                name, description, due_date, owner
             }
         })
         .done(function(response) {

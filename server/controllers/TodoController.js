@@ -38,7 +38,7 @@ class TodoController {
     }
 
     static create(req, res) {
-        const {id, name, description, status, due_date} = req.body
+        const {owner, name, description, status, due_date} = req.body
         let todoCreate = ''
 
         Todo.create( {
@@ -46,7 +46,7 @@ class TodoController {
             description,
             status,
             due_date,
-            owner: id
+            owner
         } )
         .then(todo=> {
             todoCreate = todo

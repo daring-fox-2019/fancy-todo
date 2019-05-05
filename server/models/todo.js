@@ -12,8 +12,7 @@ const todoSchema = new Schema({
         required: [true, 'Description is required']
     },
     status: {
-        type: Boolean,
-        required: true
+        type: Boolean
     },
     due_date: {
         type: Date,
