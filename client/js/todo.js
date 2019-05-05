@@ -1,3 +1,5 @@
+let idTodoSelected
+
 function detailTodo(id) {
 
   $('#addTodo').hide()
@@ -100,14 +102,14 @@ function detailTodo(id) {
     })
 }
 
-function editTodo(id) {
+function editTodo() {
 
-  let name = $('#title').val()
+  let name = $('#nama').val()
   let description = $('#description').val()
   let due_date = $('#due_date').val()
 
   $.ajax({
-    url: `http://localhost:3000/todos/${id}`,
+    url: `http://localhost:3000/todos/${idTodoSelected}`,
     method: 'PUT',
     data: {
       name, description, due_date
@@ -117,47 +119,18 @@ function editTodo(id) {
     }
   })
     .done(function (response) {
-      $('#exampleModal').modal('hide');
+      $('#modalEditTodo').modal('hide');
       $(".modal-backdrop").remove();
       $('#detail-todo').empty()
-      $('#nama').val('')
+      $('#title').val('')
       $('#description').val('')
       $('#due_date').val('')
-      listTodo()
-      // swal("Update Task Success", "", "success");
+      detailProject(idProjectSelected)
+      swal("Update Task Success", "", "success");
     })
     .fail(err => {
       swal("This not yours!", "", "error");
     })
-}
-
-function edit(id) {
-  $.ajax({
-    url: `http://localhost:3000/todos/${id}`,
-    method: 'GET',
-    headers: {
-      token: localStorage.getItem('token')
-    }
-  })
-    .done(function ({ data }) {
-      let due_date = new Date(data.due_date)
-      let date = due_date.getDate()
-      let month = due_date.getMonth() + 1
-      let year = due_date.getFullYear()
-      if (date < 10) {
-        date = `0${date}`
-      }
-      if (month < 10) {
-        month = `0${month}`
-      }
-      $('#title').val(data.name)
-      $('#description').val(data.description)
-      $('#due_date').val(`${year}-${month}-${date}`)
-    })
-    .fail(err => {
-      swal("This not yours!", "", "error");
-    })
-
 }
 
 function deleteTodo(id) {
@@ -174,25 +147,30 @@ function deleteTodo(id) {
   })
     .done(function (response) {
       swal("Delete Task Success", "", "success");
-      $('#detail-todo').empty()
-      listTodo()
+      $('#detail-project').empty()
+      detailProject(idProjectSelected)
     })
     .fail(err => {
       swal("This not yours!", "", "error");
     })
 }
 
-function changeStatus(id) {
+function changeStatus(id, status) {
+  let newStatus = status == 'false' ? true : false
+  
   $.ajax({
     url: `http://localhost:3000/todos/${id}`,
     method: 'PATCH',
+    data:{
+      status : newStatus
+    },
     headers: {
       token: localStorage.getItem('token')
     }
   })
     .done(function (response) {
       swal("Success update status!", "", "success");
-      listTodo()
+      detailProject(idProjectSelected)
     })
     .fail(err => {
       swal("This not yours!", "", "error");
@@ -242,9 +220,9 @@ function listTodo() {
 }
 
 function addTodo() {
-  let name = $('#nama').val()
-  let description = $('#description').val()
-  let due_date = $('#due_date').val()
+  let name = $('#title').val()
+  let description = $('#desc').val()
+  let due_date = $('#due-date').val()
   let status = false
   let projectId = idProjectSelected
 
@@ -259,12 +237,43 @@ function addTodo() {
     }
   })
     .done((response) => {
-      $('#nama').val('')
-      $('#description').val('')
-      $('#due_date').val('')
+      $('#modalTodo').modal('hide');
+      $('#title').val('')
+      $('#desc').val('')
+      $('#due-date').val('')
       detailProject(projectId)
     })
     .fail((jqXHR, textStatus) => {
       console.log(`request failed ${textStatus}`)
+    })
+}
+
+function modalTodoEdit(id){
+  idTodoSelected = id
+  
+  $.ajax({
+    url: `http://localhost:3000/todos/${id}`,
+    method: 'GET',
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  })
+    .done(function ({ data }) {
+      let due_date = new Date(data.due_date)
+      let date = due_date.getDate()
+      let month = due_date.getMonth() + 1
+      let year = due_date.getFullYear()
+      if (date < 10) {
+        date = `0${date}`
+      }
+      if (month < 10) {
+        month = `0${month}`
+      }
+      $('#nama').val(data.name)
+      $('#description').val(data.description)
+      $('#due_date').val(`${year}-${month}-${date}`)
+    })
+    .fail(err => {
+      swal("This not yours!", "", "error");
     })
 }

@@ -14,11 +14,15 @@ class Todo {
       .then(dataTodo => {
         return project.update({
           _id: req.body.projectId
-        },{
-          $push: {
-            todos : dataTodo._id
-          }
-        })
+        }, {
+            $push: {
+              todos: dataTodo._id
+            }
+          }, {
+            sort: {
+              due_date: -1 //Sort by Date Added DESC
+            }
+          })
       })
       .then(data => {
         res.status(201).json(data)
@@ -68,7 +72,7 @@ class Todo {
   }
 
   static changeStatus(req, res) {
-    todo.findOneAndUpdate({ _id: req.params.id }, { status: true }, { new: true })
+    todo.findOneAndUpdate({ _id: req.params.id }, { status: req.body.status }, { new: true })
       .then(data => {
         res.status(200).json({ message: "Update Success", data })
       })
@@ -80,9 +84,13 @@ class Todo {
   static delete(req, res) {
     project.update({
       _id: req.body.projectId
-      },{
+    }, {
         $pull: {
-          todos : req.params.id
+          todos: req.params.id
+        }
+      }, {
+        sort: {
+          due_date: -1 //Sort by Date Added DESC
         }
       })
       .then(data => {

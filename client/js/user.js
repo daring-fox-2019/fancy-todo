@@ -11,6 +11,7 @@ function onSignIn(googleUser) {
     .done((response) => {
       localStorage.setItem('token', response.token) //response token hasil jwt
       localStorage.setItem('userId', response.userId)
+      localStorage.setItem('userName', response.name)
       $('#loginForm').hide()
       $('#content').show()
     })
@@ -33,18 +34,17 @@ function login(event) {
       }
     })
       .done((response) => {
-        console.log(response);
-
         $('#email').val('')
         $('#password').val('')
         $('#loginForm').hide()
         $('#content').show()
         localStorage.setItem('token', response.token)
         localStorage.setItem('userId', response.userId)
-    })
+        localStorage.setItem('userName', response.name)
+      })
       .fail((jqXHR, textStatus) => {
         console.log(jqXHR);
-        
+
         console.log(`request failed ${textStatus}`)
       })
   }
@@ -91,6 +91,8 @@ function signOut() {
   auth2.signOut().then(function () {
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
+    localStorage.removeItem('userName')
+
     $('#loginForm').show()
     $('#content').hide()
     $('#list-project').empty()

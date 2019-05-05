@@ -1,9 +1,9 @@
 
 function detailProject(id) {
   idProjectSelected = id
-  let statusOwner = null
 
   $('#addProject').hide()
+  $('#listUser').empty()
   $('#detail-project').empty()
   $.ajax({
     url: `http://localhost:3000/projects/${idProjectSelected}`,
@@ -36,8 +36,8 @@ function detailProject(id) {
                     <th scope="col">No</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Due Date</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -45,36 +45,87 @@ function detailProject(id) {
                   
                 </tbody>
               </table>
-            </div>
-            <div id="buttonDeleteProject">
+              <div id="buttonDeleteProject">
+              </div>
             </div>
           </div>
-          
+          <div class="modal fade" id="modalEditTodo" tabindex="-1" role="dialog" aria-labelledby="modalEditTodoLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalEditTodoLabel" class="titleEditTodo">Edit Todo</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="nama" placeholder="Name taks">
+                
+                  <label for="description">Description</label>
+                  <input type="text" class="form-control" id="description" placeholder="The description">
+                
+                  <label for="due_date">Due Date</label>
+                  <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
+                                  
+                  <br/>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onClick="editTodo()">Edit</button>
+                  </div>
+              </div>
+            </div>
+          </div>
       `)
 
       if (data.owner._id == localStorage.userId) {
-        console.log("OWNER");
-        console.log(data._id);
-        
         $('#buttonDeleteProject').append(`<button type="button" class="btn btn-danger" onClick="deleteProject('${data._id}')">
             Delete Project
           </button>`)
       }
 
-      for (members of data.members) {
-        $('#list-members').append(`<li>${members.name}</li>`)
+      for (member of data.members) {
+        let buttonDelete = ''
+        if (data.owner._id == localStorage.userId) {
+          buttonDelete = `<i class="fas fa-times-circle" onClick="deleteMember('${member._id}')"></i>`
+        }
+        $('#list-members').append(`<li>${member.name} ${buttonDelete}</li> `)
       }
 
       for ([index, todo] of data.todos.entries()) {
+        let status = ''
+        let buttonStatus = ''
+
+        if (todo.status === false) {
+          status = 'Not yet'
+          buttonStatus = `<i class="fas fa-check-circle" onClick="changeStatus('${todo._id}','${todo.status}')"></i>`
+        } else {
+          status = 'Done'
+          buttonStatus = `<i class="fas fa-times-circle" onClick="changeStatus('${todo._id}','${todo.status}')"></i>`
+        }
+
+        let due_date = new Date(todo.due_date)
+        let date = due_date.getDate()
+        let month = due_date.getMonth() + 1
+        let year = due_date.getFullYear()
+
+        let difference = Math.ceil((new Date(todo.due_date) - new Date()) / (24 * 60 * 60 * 1000))
+
+        if (date < 10) {
+          date = `0${date}`
+        }
+        if (month < 10) {
+          month = `0${month}`
+        }
+        
         $('#list-todo').append(`<tr>
               <th scope="row">${index + 1}</th>
               <td>${todo.name}</td>
               <td>${todo.description}</td>
-              <td>${todo.status}</td>
-              <td>${todo.due_date}</td>
+              <td>${year}-${month}-${date}</td>
+              <td>${status}</td>
               <td>
-                <i class="fas fa-info-circle"></i>
-                <i class="fas fa-edit" data-toggle="modal" data-target="#modalEditTodo"></i>
+                ${buttonStatus}
+                <i class="fas fa-edit" onClick="modalTodoEdit('${todo._id}')" data-toggle="modal" data-target="#modalEditTodo" ></i>
                 <i class="fas fa-trash-alt" onClick='deleteTodo("${todo._id}")'></i>
               </td>
             </tr>`
@@ -159,30 +210,27 @@ function deleteProject(id) {
     buttons: true,
     dangerMode: true,
   })
-  .then((willDelete) => {
-    if (willDelete) {
-      $.ajax({
-        url: `http://localhost:3000/projects/${id}`,
-        method: 'DELETE',
-        headers: {
-          token: localStorage.getItem('token')
-        }
-      })
-        .done(function (response) {
-          swal("Delete Project Success", "", "success");
-          $('#detail-project').empty()
-          listProject()
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: `http://localhost:3000/projects/${id}`,
+          method: 'DELETE',
+          headers: {
+            token: localStorage.getItem('token')
+          }
         })
-        .fail(err => {
-          console.log(err);
-          
-          swal("This not yours!", "", "error");
-        })
-    }
-  });
+          .done(function (response) {
+            swal("Delete Project Success", "", "success");
+            $('#detail-project').empty()
+            listProject()
+          })
+          .fail(err => {
+            console.log(err);
 
-  
-  
+            swal("This not yours!", "", "error");
+          })
+      }
+    });
 }
 
 function listProject() {
@@ -241,8 +289,43 @@ function addProject(event) {
   }
 }
 
+function deleteMember(userId) {
+  swal({
+    title: "Are you sure want to delete this member?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: `http://localhost:3000/projects/deleteMember/${idProjectSelected}`,
+          method: 'POST',
+          data: {
+            user: userId
+          },
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+          .done((response) => {
+            detailProject(idProjectSelected)
+            swal("Delete Member Success", "", "success");
+          })
+          .fail((jqXHR, textStatus) => {
+            console.log(jqXHR.status);
+            if (jqXHR.status === 400) {
+
+            }
+
+            console.log(`request failed ${textStatus}`)
+          })
+      }
+    });
+
+}
+
 function addMember() {
-  console.log($('#listUser').val());
   if ($('#listUser').val()) {
     let user = $('#listUser').val()
 
@@ -258,13 +341,7 @@ function addMember() {
     })
       .done((response) => {
         $('#modalMember').modal('hide');
-
-        $('#list-members').empty()
-        for (members of response.members) {
-          $('#list-members').append(`<li>${members.name}</li>`)
-        }
-        console.log("ADD member success");
-
+        detailProject(idProjectSelected)
         listProject()
       })
       .fail((jqXHR, textStatus) => {

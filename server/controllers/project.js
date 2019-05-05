@@ -40,7 +40,11 @@ class Project {
   }
 
   static findOne(req, res) {
-    project.findById(req.params.id)
+    project.findById(req.params.id, {
+      sort: {
+        due_date: -1 //Sort by Date Added DESC
+      }
+    })
       .populate("userId")
       .populate('owner')
       .populate('members')
@@ -68,7 +72,6 @@ class Project {
         res.status(500).json({ message: "update task failed", err: err })
       })
   }
-
 
   static delete(req, res) {
     console.log(req.params.id, "server");
@@ -121,7 +124,7 @@ class Project {
       _id: req.params.id
     }, {
         $pull: {
-          members: req.body.userId
+          members: req.body.user
         }
       })
       .then(data => {
