@@ -67,7 +67,8 @@ function detailProject(id) {
                   <input type="text" class="form-control" id="descriptionTodoProject" placeholder="The description">
                 
                   <label for="due_dateTodoProject">Due Date</label>
-                  <input type="text" class="form-control" id="due_dateTodoProject" placeholder="YYYY-MM-DD">
+                  <input type="text" class="form-control" id="due_dateTodoProject" size="30" aria-describedby="due_dateTodoProject"
+                    placeholder="yyyy-mm-dd" autocomplete="off">
                                   
                   <br/>
                   <div class="modal-footer">

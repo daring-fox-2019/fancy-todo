@@ -70,7 +70,7 @@ function detailTodo(id) {
                             </div>
                             <div class="modal-body">
                             <form id="form-register">
-                              <div class="form-group">
+                              <div class="form-group">   
                                 <label for="title">Name</label>
                                 <input type="text" class="form-control" id="title" placeholder="Name taks">
                               </div>
@@ -80,7 +80,8 @@ function detailTodo(id) {
                               </div>
                               <div class="form-group">
                                 <label for="due_date">Due Date</label>
-                                <input type="text" class="form-control" id="due_date" placeholder="YYYY-MM-DD">
+                                <input type="text" class="form-control" id="due_date" size="30" aria-describedby="due_date"
+                    placeholder="yyyy-mm-dd" autocomplete="off">
                               </div>
                             </form>
                             </div>
@@ -236,7 +237,7 @@ function addTodo() {
   let status = false
   let projectId = idProjectSelected
   let project = true
-  
+
   $.ajax({
     url: "http://localhost:3000/todos",
     method: 'POST',

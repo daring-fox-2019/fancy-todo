@@ -35,6 +35,14 @@ function createTodo() {
 }
 
 $(document).ready(function () {
+  
+  $("#due-date").datepicker();
+  $("#due-date").datepicker("option", "dateFormat", "yy-mm-dd");
+  $("#due_date").datepicker();
+  $("#due_date").datepicker("option", "dateFormat", "yy-mm-dd");
+  $("#due_dateTodoProject").datepicker();
+  $("#due_dateTodoProject").datepicker("option", "dateFormat", "yy-mm-dd");
+
   listProject()
   $('#email').val('')
   $('#password').val('')

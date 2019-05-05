@@ -3,6 +3,19 @@ const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.CLIENT_ID)
 const { hash, compare } = require('../helpers/bcrypt')
 const { sign } = require('../helpers/jwt')
+const { mailOptions, transporter } = require('../helpers/nodemailer')
+const kue = require('kue')
+const queue = kue.createQueue()
+
+queue.process('email', function (val, done) {
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      return console.log(error);
+    } else {
+      done()
+    }
+  })
+})
 
 class User {
   static findAll(req, res) {
@@ -22,8 +35,10 @@ class User {
       password: hash(req.body.password)
     })
     user.create(newUser)
-
       .then(data => {
+        mailOptions.to = req.body.email
+        queue.create('email').save()
+
         res.status(201).json(data)
       })
       .catch(err => {
@@ -47,7 +62,7 @@ class User {
       .then((foundUser) => {
         if (foundUser) {
           const token = sign({ _id: foundUser._id, name: foundUser.name, email: foundUser.email })
-          res.status(200).json({ token, userId : foundUser._id , name: foundUser.name})
+          res.status(200).json({ token, userId: foundUser._id, name: foundUser.name })
         } else {
           let newUser = new user({
             name: payload.name,
@@ -56,8 +71,11 @@ class User {
           })
           user.create(newUser)
             .then(data => {
+              mailOptions.to = req.body.email
+              queue.create('email').save()
+
               const token = sign({ _id: data._id, name: data.name, email: data.email })
-              res.status(200).json({ token, userId : data._id, name: data.name })
+              res.status(200).json({ token, userId: data._id, name: data.name })
             })
 
         }
@@ -81,7 +99,7 @@ class User {
               name: found.name,
               email: found.email
             })
-            res.status(200).json({ token, userId : found._id, name: found.name })
+            res.status(200).json({ token, userId: found._id, name: found.name })
           } else {
             res.status(400).json({ message: `Wrong Username/Password` })
           }
