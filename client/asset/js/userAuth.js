@@ -59,7 +59,7 @@ function logout(){
     $('footer').hide()
     $('#project').hide()
     $('#container-google-calendar').empty()
-
+    $('#container-project-list').empty()
     signOut()
     
 }

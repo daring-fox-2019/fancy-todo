@@ -322,3 +322,7 @@ nodemon -L app.js
 ```
 http://todo-server.komangmahendra.me
 ```
+## client deploy
+```
+http://todo-client.komangmahendra.me
+```

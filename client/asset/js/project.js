@@ -2,6 +2,7 @@ function addProject(){
     const name = $('#project-name').val()
     axios.post(`${url}/projects`, { name },{headers: {token}})
     .then(({data}) => {
+        $('#container-project-list').empty()
         getAllUserProject()
         $('#project-name').val('')
         $('#hide-modal-project').click()
@@ -89,6 +90,7 @@ function deleteProject(){
     const project_id = $('#delete-project-id').val()
     axios.delete(`${url}/projects/${project_id}`, {headers : {token}})
     .then(({data}) => {
+        $('#container-project-list').empty()
         $('#content-project-todo').empty()
         $('#hide-modal-deleteproject').click()
         Swal.fire({

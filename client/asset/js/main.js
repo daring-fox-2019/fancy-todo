@@ -1,5 +1,5 @@
-//var url = "http://todo-server.komangmahendra.me";
-var url = "http://localhost:4000";
+var url = "http://todo-server.komangmahendra.me";
+// var url = "http://localhost:4000";
 
 var token = localStorage.getItem('token')
 
@@ -7,6 +7,7 @@ function toHome(){
     $('#home').fadeIn(1000)
     $('#project').hide()
     getAllTaskUser()
+    $('#container-project-list').empty()
 }
 
 function deleteTask(id, project_id){
@@ -32,6 +33,7 @@ function deleteTask(id, project_id){
 function toProject(){
     $('#home').hide()
     $('#project').fadeIn(1000)
+    $('#container-project-list').empty()
     getAllUserProject()
 }
 
@@ -144,7 +146,6 @@ function editTask(){
             });
             getAllTaskUser()
             if(project_id){
-                console.log('hahahahahahahahahaha')
                 getAllTodoProject(project_id)
             }
         })
