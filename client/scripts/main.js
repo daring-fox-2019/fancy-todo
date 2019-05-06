@@ -186,7 +186,7 @@ function showProjectDetail(id) {
                 <div class="container-fuid px-3">
                     <div class="row align-items-center">
                         <i class="fas fa-feather-alt mr-1"></i>
-                        <div class="text"> ${todos[i].name} </div>
+                        <div class="font-theme font-no-underline"> ${todos[i].name} </div>
                     </div>
                 </div>
             </div>
@@ -265,6 +265,11 @@ function addMember(e) {
     .then(({ data }) => {
         console.log(data)
         showProjectDetail(data._id)
+        swalSuccess('Success adding new member to project ' + data.name)
+        $('#addMemberProjectModal').modal('hide')
+    })
+    .catch(err => {
+        console.log(err)
     })
 
 
@@ -278,15 +283,34 @@ function deleteMember(member_id) {
     console.log(obj_delete_member)
 
     // console.log(serverUrl+'/projects/'+project_id)
-    axios
-    .patch(serverUrl+'/projects/'+project_id, obj_delete_member, {headers: {token:localStorage.fancy_token}})
-    .then(({ data }) => {
-        console.log(data)
-        showProjectDetail(data._id)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+            axios
+            .patch(serverUrl+'/projects/'+project_id, obj_delete_member, {headers: {token:localStorage.fancy_token}})
+            .then(({ data }) => {
+                console.log(data)
+                showProjectDetail(data._id)
+                Swal.fire(
+                    'Deleted!',
+                    'Member has been removed.',
+                    'success'
+                  )
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+      })
+    
 
 }
 
@@ -324,37 +348,74 @@ function deleteTodoProject(id) {
     console.log(id)
     const project_id = $('#project-todo-id').val()
 
-    axios
-    .delete(serverUrl+'/todos/' + id, {headers:{token:localStorage.fancy_token}})
-    .then(({ data }) => {
-        console.log(data)
-        console.log('----------------------------')
-        showProjectDetail(project_id)
-        if(data.inProject) {
-            axios.patch(serverUrl+'/projects/' + project_id, {deleteTodo: data._id}, {headers: {token:localStorage.fancy_token}})
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+            axios
+            .delete(serverUrl+'/todos/' + id, {headers:{token:localStorage.fancy_token}})
             .then(({ data }) => {
-                console.log('sucess removing todo from projects db')
+                console.log(data)
+                console.log('----------------------------')
+                showProjectDetail(project_id)
+                if(data.inProject) {
+                    axios.patch(serverUrl+'/projects/' + project_id, {deleteTodo: data._id}, {headers: {token:localStorage.fancy_token}})
+                    .then(({ data }) => {
+                        console.log('sucess removing todo from projects db')
+                        Swal.fire(
+                            'Deleted!',
+                            'Your todo has been deleted.',
+                            'success'
+                          )
+                    })
+                    .catch(err => {
+                        console.log('err')
+                    })
+                }
             })
             .catch(err => {
-                console.log('err')
+                console.log(err)
             })
         }
-        
-    })
-    .catch(err => {
-        console.log(err)
-    })
+      })
+
+    
 }
 
 function deleteTodo(id) {
-    axios
-    .delete(serverUrl+'/todos/' + id, {headers:{token:localStorage.fancy_token}})
-    .then(({ data }) => {
-        getMyTodo()
-    })
-    .catch(err => {
-        console.log(err)
-    })
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+            axios
+            .delete(serverUrl+'/todos/' + id, {headers:{token:localStorage.fancy_token}})
+            .then(({ data }) => {
+                getMyTodo()
+                Swal.fire(
+                    'Deleted!',
+                    'Your project todo has been deleted.',
+                    'success'
+                  )
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+      })
+    
 }
 
 // -------
@@ -457,13 +518,33 @@ function deleteThisProject() {
     const project_id = $('#project-todo-id').val()
     console.log(project_id)
 
-    axios
-    .delete(serverUrl+'/projects/' + project_id, {headers: {token:localStorage.fancy_token}})
-    .then(({ data }) => {
-        console.log(data)
-        getAllUserProject()
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+            axios
+            .delete(serverUrl+'/projects/' + project_id, {headers: {token:localStorage.fancy_token}})
+            .then(({ data }) => {
+                console.log(data)
+                getAllUserProject()
+                getMyTodo()
+                Swal.fire(
+                    'Deleted!',
+                    'Your project has been deleted.',
+                    'success'
+                  )
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+      })
+
+    
 }

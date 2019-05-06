@@ -51,10 +51,10 @@
 
 <body>
     <div id="fancy-todo">
-        <div class="container-fluid px-0" style="background-color: #09BD49">
+        <div class="container-fluid px-0 font-theme" style="background-color: #09BD49;">
             <div class="container px-0">
                 <nav class="navbar navbar-light" style="background-color: #09BD49; color:white;">
-                    <a class="navbar-brand">Fancy Todo</a>
+                    <a class="navbar-brand" style="font-size: 25px;"><i class="fas fa-th-list">&nbsp;</i>Fancy Todo</a>
                     <form class="form-inline">
                         <!-- <button type="button" class="mr-2 btn btn-primary login-modal-button" data-toggle="modal"
                                     data-target="#registerModal">
@@ -65,8 +65,9 @@
                                     data-target="#loginModal">
                                     Login
                                 </button> -->
-    
-                        <a href="#" onclick="handleClickLogout()" class="sign-out mr-2" style="color:white;">Sign out</a>
+
+                        <a href="#" onclick="handleClickLogout()" class="sign-out mr-2" style="color:white;">Sign
+                            out</a>
                     </form>
                 </nav>
             </div>
@@ -83,7 +84,7 @@
                             </div>
                             <div class="card-header p-0" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    <button class="btn btn-link font-theme" type="button" data-toggle="collapse"
                                         data-target="#collapseTodo" aria-expanded="true" aria-controls="collapseTodo"
                                         onclick="getMyTodo()">
                                         <i class="far fa-list-alt">&nbsp;</i>My Todo
@@ -112,7 +113,7 @@
 
                         <!-- accordion2 -->
                         <div class="card">
-                            <div class="card-header p-0" id="headingOne">
+                            <div class="card-header p-0 font-theme" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link" type="button" data-toggle="collapse"
                                         data-target="#collapseProject" aria-expanded="true"
@@ -132,8 +133,9 @@
                                         <!-- getprojectlist here -->
                                     </div>
                                     <div class="row justify-content-end my-2 justify-content-center">
-                                        <button type="button" class="btn btn-primary py-0" data-toggle="modal"
-                                            data-target="#createProjectModal"><i class="fas fa-plus"></i> New
+                                        <button type="button" class="btn btn-primary py-0 font-theme font-13"
+                                            data-toggle="modal" data-target="#createProjectModal"><i
+                                                class="fas fa-plus"></i> New
                                             Project</button>
                                     </div>
 
@@ -142,41 +144,42 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-7 px-4 border" id="main-content-content-wrapper" style="height:88vh;">
                     <div class="container-fluid " id="simple-todo-wrapper">
-                        <div class="row todo-project-title my-2">
+                        <div class="row todo-project-title mt-3 font-bold"
+                            style="text-decoration:underline;">
                             My Todo List
                         </div>
                         <div class="row justify-content-end my-2">
-                            <button type="button" class="btn btn-primary py-0" data-toggle="modal"
+                            <button type="button" class="btn btn-primary py-0 font-theme" data-toggle="modal"
                                 data-target="#todoModal"><i class="fas fa-plus"></i> Add Todo</button>
                         </div>
                         <!-- header -->
-                        <div class="row d-flex justify-content-between py-2">
-                                <div class="todo-left">
-                                    <div class="container-fuid px-3">
-                                        <div class="row align-items-center">
-                                            Project Todo List
-                                        </div>
+                        <div class="row d-flex justify-content-between py-2 font-theme">
+                            <div class="todo-left d-flex align-items-center">
+                                <div class="container-fuid px-3 d-flex align-items-center">
+                                    <div class="row align-items-center" style="font-size: 20px;">
+                                        Todo List
                                     </div>
                                 </div>
-                                <div class="todo-right">
-                                    <div class="container-fluid px-3">
-                                        <div class="row align-items-center">
-                                                <div class="action m-2 text-center" style="width: 100px;">
-                                                        Elapsed
-                                                    </div>|
-                                                <div class="action mx-2 text-center" style="width: 50px;">
-                                                        Due
-                                                    </div>|
-                                            <div class="action mr-2 text-center" style="width: 85px;">
-                                                Action
-                                            </div>
+                            </div>
+                            <div class="todo-right">
+                                <div class="container-fluid px-3">
+                                    <div class="row align-items-center">
+                                        <div class="action m-2 text-center" style="width: 100px;">
+                                            Elapsed
+                                        </div>|
+                                        <div class="action mx-2 text-center" style="width: 50px;">
+                                            Due
+                                        </div>|
+                                        <div class="action mr-2 text-center" style="width: 85px;">
+                                            Action
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         <!-- divider -->
                         <hr style="width:100%;">
                         <div id="simple-todo-container">
@@ -233,11 +236,7 @@
                         <div class="row my-2 todo-project-members d-flex">
                             Members :
                             <div class="d-flex" id="project-detail-members">
-                                <button type="button" class="btn btn-primary py-0 px-1">
-                                    Profile <a href="#" onclick="console.log('hai')"><span class="badge badge-light"><i
-                                                class="fas fa-times"></i></span></a>
-                                    <span class="sr-only">unread messages</span>
-                                </button>
+                                <!-- members here -->
                             </div>
                             <div id="project-detail-members" class="px-2">
                                 <a href="#" onclik="addMember()" data-toggle="modal"
@@ -246,38 +245,39 @@
                                             class="fas fa-plus-circle"></i></span></a>
                             </div>
 
+
                         </div>
                         <div class="row justify-content-end my-2">
                             <button type="button" class="btn btn-primary py-0" data-toggle="modal"
                                 data-target="#projectModal"><i class="fas fa-plus"></i> Add Project Todo</button>
                         </div>
                         <!-- header -->
-                        <div class="row d-flex justify-content-between py-2">
-                                <div class="todo-left">
-                                    <div class="container-fuid px-3">
-                                        <div class="row align-items-center">
-                                            Project Todo List
-                                        </div>
+                        <div class="row d-flex justify-content-between py-2 font-theme">
+                            <div class="todo-left d-flex align-items-center">
+                                <div class="container-fuid px-3">
+                                    <div class="row align-items-center" style="font-size:20px;">
+                                        Project Todo List
                                     </div>
                                 </div>
-                                <div class="todo-right">
-                                    <div class="container-fluid px-3">
-                                        <div class="row align-items-center">
-                                                <div class="action m-2 text-center" style="width: 100px;">
-                                                        Elapsed
-                                                    </div>|
-                                                <div class="action mx-2 text-center" style="width: 50px;">
-                                                        Due
-                                                    </div>|
-                                            <div class="action mr-2 text-center" style="width: 85px;">
-                                                Action
-                                            </div>
+                            </div>
+                            <div class="todo-right">
+                                <div class="container-fluid px-3">
+                                    <div class="row align-items-center">
+                                        <div class="action m-2 text-center" style="width: 100px;">
+                                            Elapsed
+                                        </div>|
+                                        <div class="action mx-2 text-center" style="width: 50px;">
+                                            Due
+                                        </div>|
+                                        <div class="action mr-2 text-center" style="width: 85px;">
+                                            Action
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- divider -->
-                            <hr style="width:100%;">
+                        </div>
+                        <!-- divider -->
+                        <hr style="width:100%;">
                         <!-- divider -->
                         <hr style="width:100%;">
                         <div id="project-todo-container">
@@ -369,8 +369,8 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid border" style="background-color:#09BD49;" >
-            <div class="container" >
+        <div class="container-fluid border" style="background-color:#09BD49;">
+            <div class="container">
                 <div class="row" style="color:white; height: 5.4vh;">
                     Portofolio - Michael Ryan Saputra
                 </div>

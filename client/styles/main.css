@@ -2,6 +2,10 @@
     border: 1px solid lightgrey;
 }
 
+body {
+    /* font-family: "Courier New", Courier, monospace; */
+}
+
 .todo-project-title {
     font-size: 30px;
 }
@@ -12,4 +16,16 @@
 
 .font-theme {
     font-family: "Courier New", Courier, monospace;
+}
+
+.font-13 {
+    font-size: 13px;
+}
+
+.font-bold {
+    font-style: bold;
+}
+
+.font-no-underline:hover {
+    text-decoration: none;
 }

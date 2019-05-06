@@ -38,8 +38,8 @@ module.exports = {
             if(found.inProject) {
                 return Project.findOne({_id: found.project, members: req.decoded._id})
                 .then(found => {
-                    console.log(found)
-                    console.log('masuk ke authorize todo project')
+                    // console.log(found)
+                    // console.log('masuk ke authorize todo project')
                     next()
                 }) 
             } else if(found.user.toString() === req.decoded._id) {
@@ -63,7 +63,7 @@ module.exports = {
             if(found.members.includes(req.decoded._id)) {
                 next()
             } else if (req.decoded._id == found.createdBy) {
-                console.log('masuk lhooo ke else if auth')
+                // console.log('masuk lhooo ke else if auth')
                 next()
             } else {
                 res.status(400).json({message:'not authorized'})

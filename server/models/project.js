@@ -20,7 +20,7 @@ const projectSchema = new Schema({
 });
 
 projectSchema.pre('findOneAndUpdate', function(next) {
-    console.log('masuk pre')
+    // console.log('masuk pre')
     const update = this._update
     if(update.$push) {
         //double if --> deep object if else js handle?
