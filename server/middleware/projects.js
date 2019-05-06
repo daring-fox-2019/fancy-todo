@@ -3,22 +3,6 @@ const projectModel = require('../model/project')
 const userModel = require('../model/user')
 
 module.exports = {
-
-    updateUserProjectList(req, res, next){
-        const _id = req.headers.id
-        const project_id = req.headers.data._id
-
-        userModel.findOneAndUpdate({_id},{"$push": { "project_list":  project_id }}, { "new": true, "upsert": true },)
-        .then( (data) => {
-            req.headers.data = data
-            res.status(200).json(req.headers.data)
-        })
-        .catch(err => {
-            next(err)
-        }) 
-        
-    },
-
     addTask : function(req, res, next){
         const {task, description } = req.body
         const project_id = req.params.id
@@ -39,17 +23,6 @@ module.exports = {
         }
     },
 
-    removeTaskAllTask : function(req, res, next){
-        const project_id = req.params.id
-
-        todoModel.deleteMany({project_id})
-        .then((data) => {
-            next()
-        })
-        .catch( err => {
-            next(err)
-        })
-    },
 
     removeTask : function(req, res, next){
         const task_id = req.params.id

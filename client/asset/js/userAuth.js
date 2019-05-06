@@ -16,7 +16,7 @@ function register() {
        $("#password").val('');
     })
     .catch( err => {
-        console.log(err)
+      console.log(err)
       Swal.fire({
           type: "error",
           title: "Login Failed",
@@ -34,15 +34,12 @@ function login() {
     localStorage.setItem('token', data.token)
     localStorage.setItem('email', data.email)
     token = data.token
-    Swal.fire({
-        type: "success",
-        title: "Login Successfully",
-        showConfirmButton: false,
-    });
+
     $("#login").hide();
     $("#home").show();
     $('footer').show()
     $('#project').hide()
+    getAllTaskUser()
   })
   .catch( err => {
     Swal.fire({
@@ -75,34 +72,3 @@ function signOut() {
 }
 
 
-function onSignIn(googleUser) {
-  let id_token = googleUser.getAuthResponse().id_token;
-  
-  $.ajax({ 
-    url :`${url}/oauth/google-sign-in`,
-    method : "POST",
-    data : { id_token }
-  })
-  .done(data => {
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('email', data.email)
-    token = data.token
-    Swal.fire({
-        type: "success",
-        title: "Login Successfully",
-        showConfirmButton: false,
-    });
-    $("#login").hide();
-    $("#home").show();
-    $('footer').show()
-    $('#project').hide()
-  })
-  .fail((xjhr, textStatus) =>{
-    
-    Swal.fire({
-      type: "error",
-      title: "Check username/password",
-      showConfirmButton: false,
-  });
-  })
-}

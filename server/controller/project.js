@@ -7,15 +7,11 @@ class Project{
         const user_id = req.headers.id
         const task = []
 
-        console.log(req.headers)
         projectModel.create({name, task, user_id})
         .then(data => {
-            req.headers.data = data
             res.status(201).json(data)
-            next()
         })
         .catch(err => {
-            console.log(err)
             next(err)
         })
     }
@@ -36,7 +32,7 @@ class Project{
     static deleteProject(req, res, next){
         const _id = req.params.id
 
-        projectModel.deleteOne({_id})
+        projectModel.findOneAndDelete({_id})
         .then( () =>{
             res.status(204).json()
         })

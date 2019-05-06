@@ -67,7 +67,6 @@
 
     <!-- momentum -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-
   
     <style>
      
@@ -136,7 +135,7 @@
 
           <button type="submit" class="btn btn-primary" style="width:100%" onclick="login()"> Sign in </button>
           <hr>
-          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          <button type="button" class="btn btn-light" style="width:100%" id='google-sign-in'> <i class="fab fa-google"></i>  Google Sign In </button>
           <hr>
           <p>don't have an account ?</p>
           <button type="button" class="btn btn-outline-success btn-sm" style="width:100%" onclick="changeForm(true)"> <i class="fas fa-arrow-left"></i> Register </button>
@@ -219,6 +218,8 @@
             <form>
               <input id='project-id' type="hidden">
               <input id="task-id" type="hidden">
+              <input id='task-project-id' type="hidden">
+              
               <div class="form-group">
                 <label for="task-title" class="col-form-label">Task Title :</label>
                 <input type="text" class="form-control" id="task-title">
@@ -428,12 +429,13 @@
         </div>
 
       </div>
-
   </body>
 
   
   <script src="./asset/js/googleCalendar.js"></script>
 
+
+  
   
   <!-- google-calendar script -->
   <script async defer src="https://apis.google.com/js/api.js"
@@ -441,12 +443,8 @@
     onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
 
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-
   <script src="./asset/js/userAuth.js" ></script>
   <script src="./asset/js/main.js"></script>
   <script src="./asset/js/project.js"></script>
-
-
 
 </html>

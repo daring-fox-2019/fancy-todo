@@ -13,7 +13,6 @@ var signoutButton = document.getElementById('signout_button');
 
 function handleClientLoad() {
   gapi.load('client:auth2', initClient);
-  
 }
 
 function initClient() {
@@ -28,7 +27,41 @@ function initClient() {
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     authorizeButton.onclick = handleAuthClick;
     signoutButton.onclick = handleSignoutClick;
-    
+
+  gapi.auth2.getAuthInstance().attachClickHandler(document.getElementById('google-sign-in'), {},
+  function(googleUser) {
+    id_token = googleUser.getAuthResponse().id_token;
+    console.log(id_token,'========================')
+    $.ajax({ 
+      url :`${url}/oauth/google-sign-in`,
+      method : "POST",
+      data : { id_token }
+    })
+    .done(data => {
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('email', data.email)
+      token = data.token
+  
+      $("#login").hide();
+      $("#home").show();
+      $('footer').show()
+      $('#project').hide()
+      getAllTaskUser()
+    })
+    .fail((xjhr, textStatus) =>{
+      
+      Swal.fire({
+        type: "error",
+        title: "Check username/password",
+        showConfirmButton: false,
+    });
+    })
+
+  }, function(error) {
+    console.log(error)
+  });
+  
+
   }, function(error) {
     appendPre(JSON.stringify(error, null, 2));
   });

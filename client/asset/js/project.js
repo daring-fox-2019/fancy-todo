@@ -170,7 +170,7 @@ function getAllTodoProject(id){
     
                     <div class="col-2 row py-1">  
                         <button class="btn btn-outline-dark btn-sm col" data-toggle="modal" data-target="#detail-modal" onclick="showDetail('${element.task}','${element.description}','${element.status}','${element.due_date}','${element.createdAt}','${element.user_id.email}')"> <i class="fas fa-info"></i> </button>
-                        <button class="btn btn-outline-dark btn-sm ml-1 col"  data-toggle="modal" data-target="#addTaskModal" onclick="fillEdit('${element.task}','${element.description}', '${element._id}', '${element.due_date}')"> <i class="fas fa-cog"></i> </button>
+                        <button class="btn btn-outline-dark btn-sm ml-1 col"  data-toggle="modal" data-target="#addTaskModal" onclick="fillEdit('${element.task}','${element.description}', '${element._id}', '${element.due_date}','${element.project_id}')"> <i class="fas fa-cog"></i> </button>
                         <button class="btn btn-outline-dark btn-sm ml-1 col"  onclick="deleteTask('${element._id}','${data._id}')"> <i class="fas fa-trash"></i> </button>
                     </div>
                 </div>
