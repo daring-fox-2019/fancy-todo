@@ -93,8 +93,9 @@ class ControllerTodo{
           todo.status = req.body.status
         }
         if(req.body.due_date != "" && req.body.due_date){
-          todo.due_date = req.body.due_date
+          todo.due_date = new Date(req.body.due_date)
         }
+        console.log(req.body)
         console.log("todo === ",todo)
         return todo.save()
       } else {
