@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Fancy Todos</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id"
+    content="924679132669-oc3fhklka5uhmknsh4puo513ell2jup9.apps.googleusercontent.com">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+  <div id="formulir-masuk" class="jumbotron container" >
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="form-group col-md-3">
+        <h3>Login</h3>
+        <form method="POST" id="form-login-regular">
+          <p>Username:</p>
+          <input type="text" class="form-control" name="email">
+          <p>Password:</p>
+          <input type="password" class="form-control" name="password">
+          <br>
+          <input type="submit" class="btn btn-primary">
+        </form>
+        <br>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="form-group col-md-3">
+        <h3>Register</h3>
+        <form method="POST" id="form-signup">
+          <p>Name:</p>
+          <input type="text" name="name" class="form-control" placeholder="E.g. Muhammad Yusuf">
+          <p>Email:</p>
+          <input type="text" name="email" class="form-control" placeholder="E.g. ucup@mail.com">
+          <p>Password:</p>
+          <input type="password" name="password" class="form-control">
+          <br>
+          <input type="submit" class="btn btn-primary" value="Create">
+        </form>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+  <div id="main" style="background-color: #e9ecef">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">Fancy Todo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        </ul>
+        <span class="navbar-text mr-5">
+          <div id="name"></div>
+        </span>
+        <span class="navbar-text">
+          <a href="/" onclick="signOut()"><button class="btn btn-primary">Sign out</button></a>
+        </span>
+      </div>
+    </nav>
+    <div class="jumbotron" style="margin: 0; padding: 32px;">
+      <div class="row">
+        <div class="col-3">
+          <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Create Todo
+            </a>
+            <a class="btn btn-secondary" data-toggle="collapse" href="#collapse-project" role="button" aria-expanded="false" aria-controls="collapse-project">
+              Create a project
+            </a>
+            <!-- <button class="btn btn-secondary">Create a project</button> -->
+          </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              <form method="post" id="form-add-task">
+                <p>Task name:</p>
+                <input type="text" name="name" class="form-control">
+                <p>Description:</p>
+                <input type="text" name="description" class="form-control">
+                <p>Due Date:</p>
+                <input type="date" name="dueDate" class="form-control" placeholder="📅 yyyy-mm-dd">
+                <br>
+                <input type="submit" value="Create" class="btn btn-primary">
+              </form>
+            </div>
+          </div>
+          <div class="collapse" id="collapse-project">
+            <div class="card card-body">
+              <form method="post" id="form-create-project">
+                <p>Project name:</p>
+                <input type="text" name="name" class="form-control">
+                <!-- <br> -->
+                <label class="my-1 mr-2" for="user-list">Add first member:</label>
+                <select class="custom-select my-1 mr-sm-2" id="user-list" name="user"></select>
+                <br><br>
+                <input type="submit" value="Create" class="btn btn-primary">
+              </form>
+            </div>
+          </div>
+          <div id="projects">
+            <div id="project-list" class="list-group">
+              <!-- <button type="button" class="list-group-item list-group-item-action">My Todos</button> -->
+              <!-- <button type="button" class="list-group-item list-group-item-action">Project</button> -->
+            </div>
+            <img src="./resources/empty-project.png" alt="emptyProject" id="empty-project" style="display: none">
+          </div>
+        </div>
+        <div class="col-9" style="text-align:center">
+          <h1>My Todos</h1>
+            <div id="form-project">
+              <form method="post" id="form-add-member" class="col-6">
+                  <label class="my-1 mr-2" for="user-list">Add member:</label>
+                  <select class="custom-select my-1 mr-sm-2 col-4" id="user-list-2" name="user"></select>
+                  <input type="submit" value="Add" class="btn btn-primary">
+                  <!-- <button class="btn btn-primary" type="button">Add</button> -->
+              </form>
+              <button class="btn btn-primary" data-toggle="modal" data-target="#modal-project">Create Todo</button>
+            </div>
+          <br>
+          <table class="table table-dark">
+            <thead id="taskHead" class="thead-dark">
+              <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Checked</th>
+                <th>Due Date</th>
+                <th style="width: 23%;">Edit</th>
+              </tr>
+            </thead>
+            <tbody id="task-body"></tbody>
+          </table>
+          <img src="./resources/empty.png" alt="empty" id="empty" style="display: none">
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!-- Modal Edit -->
+  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalEditLabel">Edit task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" id="form-edit-task">
+          <div class="modal-body">
+            <p>Task name:</p>
+            <input id="nameEdit" type="text" name="name" class="form-control">
+            <p>Description:</p>
+            <input id="descriptionEdit" type="text" name="description" class="form-control">
+            <p>Due Date:</p>
+            <input id="dateEdit" type="date" name="dueDate" class="form-control" placeholder="📅 yyyy-mm-dd">
+            <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input id="edit-button" type="submit" value="Save changes" class="btn btn-primary">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Project -->
+  <div class="modal fade" id="modal-project" tabindex="-1" role="dialog" aria-labelledby="modal-projectLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-projectLabel">Create Todo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" id="form-project-todo">
+          <div class="modal-body">
+            <p>Task name:</p>
+            <input id="nameProject" type="text" name="name" class="form-control">
+            <p>Description:</p>
+            <input id="descriptionProject" type="text" name="description" class="form-control">
+            <p>Due Date:</p>
+            <input id="dateProject" type="date" name="dueDate" class="form-control" placeholder="📅 yyyy-mm-dd">
+            <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" value="Create" class="btn btn-primary"> <!-- onclick="createProjectTodo()" -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script  src="projects.js"></script>
+  <script  src="user.js"></script>
+  <script  src="index.js"></script>
+</body>
+
+</html>
