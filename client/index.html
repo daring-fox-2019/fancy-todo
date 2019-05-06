@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.css">
+  <script
+  src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="185847040149-0re1q2uummjcthbcu5htv101qs7k9ula.apps.googleusercontent.com">
+  <style type="text/css">
+    body {
+      background-color: #DADADA;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .login-false, #logform{
+      max-width: 450px;
+      margin: auto;
+      margin-top: 10%
+    }
+  </style>
+  <title>Fancy Todo</title>
+</head>
+<body>
+
+<div class="login-true">
+  <div class="ui menu">
+    <p class="header item"><i class="pencil alternate icon"></i>Fancy Todo</p>
+    <div class="right menu">
+      <div class="ui dropdown item" tabindex="0">
+        Menu
+        <i class="dropdown icon"></i>
+        <div class="menu transition hidden" tabindex="-1">
+          <a class="item nav-log-out" onclick="signOut()">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="ui segment" id="content-view">
+    <div class="ui container">
+      <div class="ui stackable divided grid">
+        <div class="five wide column">
+            <h4 id="user-data"></h4>
+            <div class="ui divider"></div>
+            <div id="todo-list"></div>
+        </div>
+        <div class="ten wide column">
+          <div class="add-form">
+            <h4 class="ui header">Add New Todo</h4>
+            <form class="ui form">
+              <input type="text" name="name"  data-content="title of task" id="name-field" placeholder="title"><br><br>
+              <input type="date" name="due_date"  data-content="date must be later than today" id="due_date-field"><br><br>
+              <textarea name="description"  data-content="description of task" id="description-field" placeholder="description"></textarea><br><br>
+              <button class="ui large teal button" type="submit" onclick="newTodo()">Submit</button>
+            </form>
+          </div>
+          <div id="edit-form">
+            <h4 class="ui header" id=detail-title></h4>
+            <div class="ui divider"></div>
+            <form class="ui form" method="GET">
+              <div id=detail-name></div>
+              <div id=detail-description></div>
+              <div id=detail-due_date></div>
+              <div id="detail-action"></div>
+            </form>
+          </div>
+              <h4 class="ui header">Quote of the Day</h4>
+              <div id="quote-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="login-false" id="logform">
+  <div class="ui middle aligned center aligned grid">
+    <div class="column">
+      <h2 class="ui teal image header">
+          <div class="content">
+            <i class="large pencil alternate icon"></i>Fancy Todos
+          </div>
+      </h2><br>
+      <div class="ui huge teal button g-signin2" data-onsuccess="onSignIn" id="google-login-button"> Log In with Google</div>  
+    </div>
+  </div>
+</div>
+
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+  <script
+  src="javascript/event-handle.js"></script>
+</body>
+</html>
