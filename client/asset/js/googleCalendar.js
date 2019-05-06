@@ -6,12 +6,14 @@ var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 
 var SCOPES = "https://www.googleapis.com/auth/calendar";
 
+
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 
 
 function handleClientLoad() {
   gapi.load('client:auth2', initClient);
+  
 }
 
 function initClient() {
@@ -22,6 +24,7 @@ function initClient() {
     scope: SCOPES
   }).then(function () {
     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     authorizeButton.onclick = handleAuthClick;
     signoutButton.onclick = handleSignoutClick;
@@ -48,6 +51,7 @@ function updateSigninStatus(isSignedIn) {
 
 function handleAuthClick(event) {
   gapi.auth2.getAuthInstance().signIn();
+  
 }
 
 
