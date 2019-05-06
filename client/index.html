@@ -222,22 +222,23 @@
               
               <div class="form-group">
                 <label for="task-title" class="col-form-label">Task Title :</label>
-                <input type="text" class="form-control" id="task-title">
+                <input type="text" class="form-control" id="task-title" required>
               </div>
               <div class="form-group">
                   <label for="datepicker" class="col-form-label">Due Date :</label>
-                  <input id="datepicker" class="form-control">
+                  <input id="datepicker" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="task-description" class="col-form-label"> Description:</label>
-                <textarea class="form-control" id="task-description"></textarea>
+                <textarea class="form-control" id="task-description" required></textarea>
               </div>
-            </form>
+           
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-add">Close</button>
-            <button type="button" class="btn btn-success" onclick="addTask()">Submit</button>
+            <button type="submit" class="btn btn-success" onclick="addTask()">Submit</button>
           </div>
+        </form>
         </div>
       </div>
     </div>
@@ -255,14 +256,15 @@
             <form>
               <div class="form-group">
                 <label for="project-name" class="col-form-label">Project Name :</label>
-                <input type="text" class="form-control" id="project-name">
+                <input type="text" class="form-control" id="project-name" required>
               </div>
-            </form>
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-project">Close</button>
-            <button type="button" class="btn btn-success" onclick="addProject()">Submit</button>
+            <button type="submit" class="btn btn-success" onclick="addProject()">Submit</button>
           </div>
+        </form>
         </div>
       </div>
     </div>
@@ -302,12 +304,13 @@
                     <label for="datepicker-google-end" class="col-form-label">End Date :</label>
                     <input type="text" id='datepicker-google-end' class="form-control" required>
                 </div>
-              </form>
+              
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-google-add-event">Close</button>
-              <button type="button" class="btn btn-success" onclick="addEvent()">Submit</button>
+              <button type="submit" class="btn btn-success" onclick="addEvent()">Submit</button>
             </div>
+          </form>
           </div>
         </div>
       </div>
@@ -328,14 +331,15 @@
                     <label for="user-name" class="col-form-label">Collaboration With :</label>
                     <input type="text" class="form-control" id="user-name">
                   </div>
-                </form>
+                
                 <div id='list-member-project'>
 
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-userlist">Close</button>
-                <button type="button" class="btn btn-success" onclick="addUserList()">Submit</button>
+                <button type="submit" class="btn btn-success" onclick="addUserList()">Submit</button>
+              </form>
               </div>
             </div>
           </div>
@@ -434,9 +438,6 @@
   
   <script src="./asset/js/googleCalendar.js"></script>
 
-
-  
-  
   <!-- google-calendar script -->
   <script async defer src="https://apis.google.com/js/api.js"
     onload="this.onload=function(){};handleClientLoad()"

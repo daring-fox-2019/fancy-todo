@@ -161,6 +161,7 @@ function editTask(){
 function addTask(){
     projectId = $('#project-id').val()
     let id = $("#task-id").val()
+    event.preventDefault()
     if(id){
         editTask()
     } else {
