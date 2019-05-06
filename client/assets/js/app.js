@@ -7,6 +7,14 @@ function showAlert(message) {
     }, 5000);
 }
 
+function initiateLoading() {
+    $(".lds-ellipsis").show()
+}
+
+function stopLoading() {
+    $(".lds-ellipsis").hide()
+}
+
 function login(email, password) {
     $.ajax({
         url: `http://localhost:3000/api/users/signin`,
@@ -246,7 +254,28 @@ function changeStatus(id, status) {
     })
 }
 
-$(document).ready(function() {  
+function generateRandomActivity() {
+    initiateLoading()
+
+    $.ajax({
+        url: `http://localhost:3000/api/opens/bored`,
+        method: `GET`,
+        headers: {
+            token: localStorage.token
+        }
+    })
+    .done(function(response) {
+        $("#todo__name").val(response)
+        stopLoading()
+    })
+    .fail(function(jqXHR, textStatus) {
+        stopLoading()
+        showAlert(jqXHR.responseJSON.msg)
+    })
+}
+
+$(document).ready(function() {
+    initiateLoading() 
     renderLoggedInPage()
 
     $("#landing__login-btn").on('click', function() {
@@ -337,6 +366,7 @@ $(document).ready(function() {
 
     $("#searchTodo").submit(function(e) {
         e.preventDefault()
+        initiateLoading()
 
         const searchTodo = $("#todoSearchValue").val()
 
@@ -394,6 +424,7 @@ $(document).ready(function() {
         .fail(function(jqXHR, textStatus) {
             showAlert(jqXHR.responseJSON.msg)
         })
+        stopLoading()
     })
 
     $("#login__form").submit(function(e) {
@@ -433,4 +464,6 @@ $(document).ready(function() {
         $("#login__page").show()
         $("#register__page").hide()
     })
+
+    stopLoading()
 })

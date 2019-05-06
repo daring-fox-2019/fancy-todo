@@ -2,9 +2,11 @@ const express = require('express');
 const routes = express.Router();
 const todos = require('./todoRoute')
 const users = require('./userRoute')
+const openApiRoute = require('./openApiRoute')
 const authentication = require('../middlewares/authentication')
 const authorize = require('../middlewares/authorize')
 
+routes.use('/opens', openApiRoute)
 routes.use('/users', users)
 routes.use('/todos', authentication, authorize, todos)
 

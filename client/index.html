@@ -163,7 +163,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                            <div class="form-group">
+                            <div class="form-group" style="display: flex;">
                                 <input 
                                     type="text" 
                                     id="todo__name" 
@@ -172,6 +172,7 @@
                                     placeholder="Title"
                                     autocomplete="off"
                                 >
+                                <div onclick="generateRandomActivity()" class="btn btn-link cursor-pointer">Random</div>
                             </div>
                             <div class="form-group">
                                 <textarea 
@@ -261,6 +262,8 @@
             </div>
         </div>
     </section>
+
+    <section class="lds-ellipsis"><div></div><div></div><div></div><div></div></section>
 
     <script
         src="https://code.jquery.com/jquery-3.4.0.js"
