@@ -115,9 +115,9 @@ function detailTodo(todoId){
       }
       $('#detail-description').html(`<br><h5>Description</h5><textarea id="upd-description" type='text'name='upd-description'>${response.description}</textarea>`)
       $('#detail-due_date').html(`<br><h5>Due Date</h5><input type='date' value='${date}' id="upd-due_date" name='upd-due_date'>`)
-      $('#detail-action').html("<br>Action : <label class='ui mini orange label' onclick='markDone\("+ id +")\'>mark as done</label><label class='ui mini red label' onclick='deleteTodo\("+ id +")\'>delete this</label><div class='ui divider'></div>")
+      $('#detail-action').html("<br>Action : <label class='ui mini orange label' onclick='markDone("+ id +")>mark as done</label><label class='ui mini red label' onclick='deleteTodo\("+ id +")\'>delete this</label><div class='ui divider'></div>")
       $('#detail-action').append("<button class='ui large grey button' onclick='changeToAdd()'>I want to Add new Todos</button>")
-      $('#detail-action').append("<button class='ui large teal button' type='submit' onclick='updateMyData\("+ id +")\'>Update Data Above</button>")
+      $('#detail-action').append("<button class='ui large teal button' type='submit' onclick='updateMyData("+ id +")'>Update Data Above</button>")
     })
     .fail(err=>{
       console.log("error find one", err)
@@ -127,6 +127,8 @@ function detailTodo(todoId){
 
 function updateMyData(todoId){
   console.log(todoId)
+  console.log($("#upd-description").val())
+  console.log($("#upd-name").val())
     $.ajax( {
       method :'PUT',
       url: `http://localhost:3000/todos/${todoId}`,
@@ -194,6 +196,7 @@ function markDone(todoId){
     .done(response=>{
       if(response == "success"){
         getUserData()
+        location.reload()
       } else {
         location.reload()
       }
