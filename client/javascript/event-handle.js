@@ -169,6 +169,7 @@ function deleteTodo(todoId){
     .done(response=>{
       if(response == "success"){
         getUserData()
+        location.reload()
       } else {
         location.reload()
         console.log("error delete")
