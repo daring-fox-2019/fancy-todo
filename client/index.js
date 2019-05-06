@@ -208,7 +208,7 @@ function signIn() {
     username = $('#usernameSignIn').val()
     passowrd = $('#passwordSignIn').val()
     $.ajax({
-        url: `${baseURL}`,
+        url: `${baseURL}/signin`,
         type: 'GET',
         data: {
             username: username,
@@ -216,13 +216,14 @@ function signIn() {
         }
     })
         .done(function (response) {
+            console.log('hello')
             localStorage.setItem('token', JSON.stringify(response.token))
             console.log(response)
         })
         .fail(function (jqXHR, textStatus) {
             console.log('request failed', textStatus)
         })
-}
+}s
 
 $(document).ready(function () {
     if (localStorage.getItem('token')) {
