@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="908159989913-0hpf1rg25eme01n7hq44f44cjhs9r8g3.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <title>Fancy Todo</title>
+</head>
+<body class="relative">
+    <nav id="navbar" class="navbar-light bg-white">
+        <div class="navbar my-navbar">
+            <a class="navbar-brand color-red" href="#">Fancy Todo</a> 
+            <div>
+                <button id="navbar__logout-btn" type="button" class="btn btn-danger" onclick="signOut();">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <section id="landing__page" class="abs-center text-center hide">
+            <div class="row card card--my">
+                <div class="col-md-12">
+                    <h3>Welcome, please login to continue</h3>
+                </div>
+
+                <div class="col-md-12">
+                    <button id="landing__login-btn" class="btn btn-success">Login</button>
+                    <button id="landing__register-btn" class="btn btn-primary">Register</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="login__page" class="abs-center text-center hide">
+            <div class="row card card--my" style="padding: 2em 4em;">
+                <form id="login__form" method="POST">
+                    <div style="margin-bottom: 10px">
+                        <h3 class="color-red">Login</h3>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="login__email" 
+                            class="form-control"
+                            placeholder="Email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <input 
+                            type="password" 
+                            id="login__password" 
+                            class="form-control"                        
+                            placeholder="Password"
+                        >
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+
+                    <div id="login__register-btn" class="color-red cursor-pointer mt-20">
+                        Create account
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <section id="register__page" class="abs-center text-center hide">
+            <div class="row card card--my" style="padding: 2em 4em;">
+                <form id="register__form" method="POST">
+                    <div style="margin-bottom: 10px">
+                        <h3 class="color-red">Register</h3>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="register__name" 
+                            class="form-control"
+                            placeholder="Name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            id="register__email" 
+                            class="form-control"
+                            placeholder="Email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <input 
+                            type="password" 
+                            id="register__password" 
+                            class="form-control"                        
+                            placeholder="Password"
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Register</button>
+
+                    <div id="register__login-btn" class="color-red cursor-pointer mt-20">
+                        I have account
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <div id="member__page" >
+            <div>
+                <h1 id="member__welcome" class="text-center"></h1>
+                
+                <section id="todo-create">
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <button id="init-create" class="btn btn-primary" data-toggle="modal" data-target="#createTodoModal" onclick="clearTodoInputForm()">New Todo</button>
+                        </div>
+                    </div> 
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="searchTodo" class="form-inline">
+                                <input class="form-control" id="todoSearchValue" type="search" placeholder="Search your todo" aria-label="Search" style="width: 84%;">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- todo item -->
+                    <div class="row">
+                        <div class="col-md-12" id="member__card-container">
+                            
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Modal Create Todo-->
+    <section class="modal fade" id="createTodoModal" tabindex="-1" role="dialog" aria-labelledby="createTodoModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="createTodoForm" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Create New Todo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="form-group" style="display: flex;">
+                                <input 
+                                    type="text" 
+                                    id="todo__name" 
+                                    class="form-control"
+                                    name="name"
+                                    placeholder="Title"
+                                    autocomplete="off"
+                                >
+                                <div onclick="generateRandomActivity()" class="btn btn-link cursor-pointer">Random</div>
+                            </div>
+                            <div class="form-group">
+                                <textarea 
+                                    class="form-control" 
+                                    id="todo__description" 
+                                    rows="5"
+                                    cols="5"
+                                    placeholder="Description"
+                                    autocomplete="off"
+                                ></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                    type="date" 
+                                    id="todo__due_date"
+                                    class="form-control"
+                                    name="due_date"
+                                    autocomplete="off"
+                                >
+                            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="todo__create-btn" type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="modal fade" id="editTodoModal" tabindex="-1" role="dialog" aria-labelledby="editTodoModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="editTodoForm" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">EditTodo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input 
+                                type="text" 
+                                id="edit-todo__name" 
+                                class="form-control"
+                                name="name"
+                                placeholder="Title"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <textarea 
+                                class="form-control" 
+                                id="edit-todo__description" 
+                                rows="5"
+                                cols="5"
+                                placeholder="Description"
+                                autocomplete="off"
+                            ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input 
+                                type="date" 
+                                id="edit-todo__due_date"
+                                class="form-control"
+                                name="due_date"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <input id="edit-todo__id" type="hidden">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="edit-todo__btn" type="submit" class="btn btn-success">Edit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section id="notification" class="relative hide">
+        <div id="notification__container" class="abs-bottom">
+            <div id="notification__content" class="container text-center">
+            </div>
+        </div>
+    </section>
+
+    <section class="lds-ellipsis"><div></div><div></div><div></div><div></div></section>
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+        crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
