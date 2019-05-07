@@ -74,14 +74,28 @@ function readTodo(owner){
         let index = data.todo.length - 1
         let id = data.todo[index]._id
         $('#content-todo').append(`
-        <div style="display:flex;width:120px; margin:0 auto;">
+        <div id = "${id}" style="display:flex;width:120px; margin:0 auto;">
         <p>${data.todo[index].description}</p>
         <tab>
-        <button id="${id}" type="submit" class="btn-outline-danger" onclick="deleteData()">delete</button>
+        <button id="${id}" type="submit" class="btn-outline-danger" onclick="deleteData('${id}')">delete</button>
         </div>`)
     })
     .fail(function(err) {
         console.log(err);
+    })
+}
+
+function deleteData(input){
+    $(`#${input}`).remove()
+    $.ajax({
+        method:'DELETE',
+        url:`http://localhost:3000/todo/${input}`
+    })
+    .done(function(data){
+        console.log('sucess')
+    })
+    .fail((jqXHR, textStatus) => {
+        console.log(jqXHR, textStatus);
     })
 }
 
