@@ -31,7 +31,6 @@ function initClient() {
   gapi.auth2.getAuthInstance().attachClickHandler(document.getElementById('google-sign-in'), {},
   function(googleUser) {
     id_token = googleUser.getAuthResponse().id_token;
-    console.log(id_token,'========================')
     $.ajax({ 
       url :`${url}/oauth/google-sign-in`,
       method : "POST",

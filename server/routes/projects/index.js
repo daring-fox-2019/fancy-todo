@@ -2,7 +2,6 @@ const router = require('express').Router()
 const projectController = require('../../controller/project')
 const Auth = require('../../middleware/auth')
 const addTask = require('../../middleware/projects').addTask
-const removeAllTask = require('../../middleware/projects').removeTaskAllTask
 const Authorization = require('../../middleware/authorization')
 
 
