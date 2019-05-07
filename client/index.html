@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+    <meta name="google-signin-client_id" content="1047288130299-lsjk68qelel7gh634ggf6spr6b5927fj.apps.googleusercontent.com">
+  
+  
+    <!-- boostrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.min.js"
+      integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- jquery-ui -->
+    <script
+			  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+			  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+        crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" integrity="sha256-p6xU9YulB7E2Ic62/PX+h59ayb3PBJ0WFTEQxq0EjHw=" crossorigin="anonymous" />
+        
+    <!-- animate-css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css"
+      integrity="sha256-gVCm5mRCmW9kVgsSjQ7/5TLtXqvfCoxhdsjE6O1QLm8="
+      crossorigin="anonymous"
+    />
+
+    <!-- sweet-alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    <!-- google-font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"> 
+
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" href="./asset/css/main.css"/>
+
+    <!-- momentum -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  
+    <style>
+     
+    </style>
+
+    <title>todos</title>
+  </head>
+  <body>
+    <!-- register -->
+    <div id="register" class="container justify-content-center animated bounce" style="margin-top:10%;width: 30%">
+      <div class="row container">
+        <h3>register form todozzz...</h3>
+      </div>
+
+      <hr />
+
+      <div class="row justify-content-center">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="first_name">First name : </label>
+              <input type="text" class="form-control" id="first_name" placeholder="First Name" required />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="last_name">Last name :</label>
+              <input type="text" class="form-control" id="last_name" placeholder="Last Name" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email : </label>
+            <input type="email" class="form-control" id="email" placeholder="Email" required="true" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password : </label>
+            <input type="password" class="form-control" id="password" placeholder="Password" required />
+          </div>
+          <button type="submit" class="btn btn-success" style="width:100%" onclick="register()" >
+            Sign Up
+          </button>
+          <hr>
+          <p>have an account ?</p>
+          <button type="button" class="btn btn-outline-success btn-sm" style="width:100%" onclick="changeForm(false)"> Login <i class="fas fa-arrow-right"></i> </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- login -->
+    <div id="login" class="container justify-content-center animated bounce" style="margin-top:10%;width: 30%" >
+      <div class="row container">
+        <h3>login form todozzz...</h3>
+      </div>
+
+      <hr />
+
+      <div class="row container justify-content-center">
+        <form class="block col-12">
+          <div class="form-group block">
+            <label for="email-login">Email : </label>
+            <input type="email" class="form-control" id="email-login" placeholder="Email" required/>
+          </div>
+
+          <div class="form-group block">
+            <label for="password-login">Password : </label>
+            <input type="password" class="form-control" id="password-login" placeholder="Password" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%" onclick="login()"> Sign in </button>
+          <hr>
+          <button type="button" class="btn btn-light" style="width:100%" id='google-sign-in'> <i class="fab fa-google"></i>  Google Sign In </button>
+          <hr>
+          <p>don't have an account ?</p>
+          <button type="button" class="btn btn-outline-success btn-sm" style="width:100%" onclick="changeForm(true)"> <i class="fas fa-arrow-left"></i> Register </button>
+        </form>
+        
+      </div>
+    </div>
+
+    <!-- home -->
+    <div id="home" class="container-fluid" style="padding-bottom:200px">
+      <div class="container-fluid" style="padding:0">
+
+        <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top justify-content-between" id="header">
+            <a class="navbar-brand ml-5" onclick="toHome()"><b>Todozzz...</b></a>
+  
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="mr-5">
+              <button class="btn btn-success my-2 my-sm-0 mr-2" type="button" id="button-google-calendar"><i class="fab fa-google"></i> Google Calendar </button>
+              <button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="toProject()"> <i class="fas fa-project-diagram"></i> Project </button>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="button"  onclick="logout()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+  
+        </nav>
+      </div>
+  
+      <div class="container" style="background:white;width:50%;padding-top:80px;margin-top:100px">
+          <div class="row container"> 
+            <div class="col-10">
+                <h1 style="color:#49beb7"><b>Todo List</b></h1>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <button class="btn btn-success float-right" type="button" data-toggle="modal" data-target="#addTaskModal" > <i class="fas fa-plus-square"></i> Add Task</button>
+            </div>  
+          </div>
+          <hr>
+          
+          <!-- filled-by-jquery -->
+          <div id="container-task-user">
+
+          </div>
+
+      </div>
+  
+      <div class="container" style="background:white;width:50%;padding-top:80px">
+          
+          <div class="row container"> 
+            <div class="col-8">
+                <h1 style="color:#49beb7"><b>Event From Google Calendar</b></h1>
+            </div>
+            <div class="col-4 d-flex align-items-center justify-content-end">
+                <button   data-toggle="modal" data-target="#addEventGoogleCalendar" class="btn btn-outline-success mr-1" id='add-event-calendar'> <i class="fas fa-calendar-plus"></i> add Event</button>
+                <button id="authorize_button" style="display: none;" class="btn btn-success"> <i class="fas fa-sync-alt"></i> Authorize</button>
+                <button id="signout_button" style="display: none;" class="btn btn-secondary"> <i class="fas fa-walking"></i> Disconnect</button>
+                
+            </div>  
+          </div>
+
+          <hr>
+  
+          <div class="container flex-column" id='container-google-calendar'>
+          </div>
+
+      </div>
+    </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Task </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input id='project-id' type="hidden">
+              <input id="task-id" type="hidden">
+              <input id='task-project-id' type="hidden">
+              
+              <div class="form-group">
+                <label for="task-title" class="col-form-label">Task Title :</label>
+                <input type="text" class="form-control" id="task-title" required>
+              </div>
+              <div class="form-group">
+                  <label for="datepicker" class="col-form-label">Due Date :</label>
+                  <input id="datepicker" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="task-description" class="col-form-label"> Description:</label>
+                <textarea class="form-control" id="task-description" required></textarea>
+              </div>
+           
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-add">Close</button>
+            <button type="submit" class="btn btn-success" onclick="addTask()">Submit</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Project </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="project-name" class="col-form-label">Project Name :</label>
+                <input type="text" class="form-control" id="project-name" required>
+              </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-project">Close</button>
+            <button type="submit" class="btn btn-success" onclick="addProject()">Submit</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addEventGoogleCalendar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"> Google Calendar </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="summary-google" class="col-form-label">Summary :</label>
+                  <input type="text" class="form-control" id="summary-google" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location-google" class="col-form-label">Location :</label>
+                    <input type="text" class="form-control" id="location-google" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description-google" class="col-form-label">Description :</label>
+                    <input type="text" class="form-control" id="description-google" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="datepicker-google-start" class="col-form-label">Start Date :</label>
+                    <input type="text" id='datepicker-google-start' class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="datepicker-google-end" class="col-form-label">End Date :</label>
+                    <input type="text" id='datepicker-google-end' class="form-control" required>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-google-add-event">Close</button>
+              <button type="submit" class="btn btn-success" onclick="addEvent()">Submit</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addUserListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Project </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <input id="project-id-user-list" type="hidden">
+                  <div class="form-group">
+                    <label for="user-name" class="col-form-label">Collaboration With :</label>
+                    <input type="text" class="form-control" id="user-name">
+                  </div>
+                
+                <div id='list-member-project'>
+
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="hide-modal-userlist">Close</button>
+                <button type="submit" class="btn btn-success" onclick="addUserList()">Submit</button>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Project </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <input type="hidden" id="delete-project-id">
+                    <h5>Are you sure want to delete ?</h5>
+                    <button class="btn btn-outline-danger" style="width:100%"  onclick="deleteProject()"> YES</button>
+                    <button class="btn btn-outline-success mt-1" style="width:100%"  data-dismiss="modal" id="hide-modal-deleteproject"> NO</button>
+                  </div>
+                </form>
+                <div id='list-member-project'>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="detail-modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Task Detail</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h3 id="detail-title"> </h3>
+              <p id="detail-description"></p>
+              <p id="detail-date"></p>
+              <p id="detail-status"></p>
+              <p id="detail-createdat"></p>
+              <p id="detail-createdby"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- project -->
+      <div id="project">
+        <div class="container-fluid" style="padding:0">
+
+          <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top justify-content-between" id="header">
+              <a class="navbar-brand ml-5" onclick="toHome()"><b>Todozzz...</b></a>
+    
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              
+              <div class="mr-5">
+                <button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="toHome()"> <i class="fas fa-arrow-left"></i> </button>
+                <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addProjectModal"><i class="fas fa-plus-square"></i> Add New Project </button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button"  onclick="logout()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+              </div>
+    
+          </nav>
+        </div>
+    
+        <div class="row container-fluid">
+    
+        <div  class="flex-column-reverse text-center" style="height:900px; width:20%;padding-top:100px;overflow-y:scroll;">
+            <h2> Project List </h2>
+            <hr>
+            <div id='container-project-list'>
+
+            </div>
+
+        </div>
+    
+          <div id="content-project-todo" style="min-height:800px; width:80%">
+          
+          </div>
+        </div>
+
+      </div>
+  </body>
+
+  
+  <script src="./asset/js/googleCalendar.js"></script>
+
+  <!-- google-calendar script -->
+  <script async defer src="https://apis.google.com/js/api.js"
+    onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  </script>
+
+  <script src="./asset/js/userAuth.js" ></script>
+  <script src="./asset/js/main.js"></script>
+  <script src="./asset/js/project.js"></script>
+
+</html>
