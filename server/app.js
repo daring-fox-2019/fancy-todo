@@ -3,10 +3,10 @@ const express = require('express')
 const app = express()
 const router = require('./router/index.js')
 const cors = require('cors')
-const PORT = 4500
+const PORT = process.env.PORT || 3000
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/mytodoList', {useNewUrlParser: true})
+mongoose.connect(process.env,DB, {useNewUrlParser: true})
 const db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'connection error:'))

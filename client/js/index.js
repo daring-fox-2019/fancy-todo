@@ -19,7 +19,9 @@ $(document).ready(function () {
     }
 })
 
-const url = "http://localhost:4500"
+
+// const url = "http://localhost:4500"
+const url = process.env.SERVER_URL
 
 function logIn() {
     $.ajax({
