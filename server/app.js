@@ -4,7 +4,7 @@ const app = express();
 
 const router = require('./routes')
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/fancy-todo-1', {useNewUrlParser: true})
+mongoose.connect(process.env.ATLAS_URL || 'mongodb://localhost:27017/fancy-todo-1', {useNewUrlParser: true})
 
 const cors = require('cors')
 
@@ -14,7 +14,7 @@ app.use(cors())
 
 app.use('/', router)
 
-const port = 3000
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`)
 })

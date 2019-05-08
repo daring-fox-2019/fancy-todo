@@ -15,7 +15,6 @@ class TodoController {
     
 
     static findOne(req,res) {
-        console.log('masuk ke findone')
         Todo.findOne({_id:req.params.id})
         .then(found => {
             res.status(200).json(found)
