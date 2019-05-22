@@ -63,6 +63,11 @@ function getTodo(id) {
     })
         .done(({ data }) => {
             let check = ''
+            if(data.due_date){
+                var date = data.due_date.slice(0,10)
+            }else{
+                var date = null
+            }
             if (data.status === true) {
                 check = 'checked="checked"'
             }
@@ -77,7 +82,7 @@ function getTodo(id) {
                 </label>
             </p>
             <br>
-            <div>Due date:</div> <input id= "due_date" type="date" class="datepicker">
+            <div>Due date:</div> <input id= "due_date" value="${date}" type="date" class="datepicker">
             <br>
             <div>Reminder:</div>   
             <br>
@@ -85,7 +90,7 @@ function getTodo(id) {
             <label class ="reminder2">
                 Off
                 <input type="checkbox" class ="reminder">
-                <span class="lever"></span>
+                <span class="lever" ></span>
                 On
             </label>
             </div>
@@ -95,6 +100,12 @@ function getTodo(id) {
             </i>
         </button>    
         </form>`)
+        $('.update-todo').click(function () {
+            event.preventDefault();
+            // console.log('updateTodo');
+            let id = this.id.slice(3)
+            updateTodo(id)
+        })
             console.log(data)
         })
         .fail(function (jqXHR, textStatus) {
@@ -181,24 +192,28 @@ function updateTodo(id) {
         })
 }
 function showSignIn() {
+    event.preventDefault()
     $('#landing-page').hide()
     $('#signup-page').hide()
     $('#signin-page').show()
     $('#main-page').hide()
 }
 function showSignUp() {
+    event.preventDefault()
     $('#landing-page').hide()
     $('#signup-page').show()
     $('#signin-page').hide()
     $('#main-page').hide()
 }
 function signedIn() {
+    event.preventDefault()
     $('#landing-page').hide()
     $('#signup-page').hide()
     $('#signin-page').hide()
     $('#main-page').show()
 }
 function signOut() {
+    event.preventDefault()
     $('#landing-page').show()
     $('#signup-page').hide()
     $('#signin-page').hide()
@@ -206,24 +221,28 @@ function signOut() {
 }
 function signIn() {
     username = $('#usernameSignIn').val()
-    passowrd = $('#passwordSignIn').val()
+    password = $('#passwordSignIn').val()
+    console.log(username, "usernameSignIn")
+    console.log(password,"password")
     $.ajax({
         url: `${baseURL}/signin`,
-        type: 'GET',
+        type: 'POST',
         data: {
             username: username,
-            password: password
+            password: password,
         }
     })
-        .done(function (response) {
-            console.log('hello')
-            localStorage.setItem('token', JSON.stringify(response.token))
-            console.log(response)
+        .done((response)=> {
+            console.log('hello, berhasil signin')
+            console.log(response.data)
+            console.log(response.token)
+            localStorage.setItem('token', response.token)
+            signedIn()
         })
         .fail(function (jqXHR, textStatus) {
             console.log('request failed', textStatus)
         })
-}s
+}
 
 $(document).ready(function () {
     if (localStorage.getItem('token')) {
@@ -247,14 +266,11 @@ $(document).ready(function () {
         getTodo(this.id)
     });
 
-    $('#todo-details').on('click', '.update-todo', function () {
-
-        let id = this.id.slice(3)
-        updateTodo(id)
-    })
+    
     $('#signinpage').click(function () {
         showSignIn()
     })
+
     $('#signuppage').click(function () {
         showSignUp()
     })

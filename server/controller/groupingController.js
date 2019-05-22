@@ -20,10 +20,14 @@ class groupingController{
             .findById ( groupingId )
             .populate('Todo')
             .then( grouping =>{
-                res.status(200).json( {data:grouping} )
+                if(grouping){
+                    res.status(200).json( {data:grouping} )
+                }else{
+                    res.status(404).json({message:'not found'})
+                }
             })
             .catch( err => {
-                res.status(404).json( { error: err } )
+                res.status(500).json( { error: err } )
             })
     }
     static delete(req,res){
@@ -31,7 +35,11 @@ class groupingController{
         grouping
             .findByIdAndDelete(groupingId)
             .then( deleted=>{
-                res.status(200).json({data:deleted})
+                if(deleted){
+                    res.status(200).json({data:deleted})
+                }else{
+                    res.status(404).json({message:'not found'})
+                }
             })
             .catch( err => {
                 res.status(404).json( {error: err} )

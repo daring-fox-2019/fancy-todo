@@ -59,7 +59,9 @@ class userController{
     }
 
     static signin(req, res){
-        let username= req.body.username
+        let username = req.body.username
+        console.log('lagi signin')
+        console.log(username, "<-------")
         User
             .findOne({username:username})
             .then((oneUser)=>{
@@ -69,7 +71,8 @@ class userController{
                             id : oneUser.id,
                             username : oneUser.username
                         }
-                        let token = jwt.sign(payload, kalduayam)//process.env.SECRET_SAUCE) //don't forget to use .env
+                        let token = jwt.sign(payload, process.env.SECRET_SAUCE) //don't forget to use .env
+                        
                         res.json({
                             data: oneUser,
                             token: token

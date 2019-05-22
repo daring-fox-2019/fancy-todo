@@ -6,7 +6,7 @@ const groupingRouter = require('./groupingRouter')
 const userController = require('../controller/userController')
 const authenticatoin = require('../middlewares/authentication')
 
-router.get('/signin', userController.signin)
+router.post('/signin', userController.signin)
 router.post('/signup', userController.signup)
 
 router.use(authenticatoin)
