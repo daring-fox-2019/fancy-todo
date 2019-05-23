@@ -39,7 +39,6 @@ function signOut(){
     $('#login-form').show()
     $("#dateForm").empty()
     $("#userName").empty()
-    
 }
 
 function showTodos(){
@@ -75,7 +74,7 @@ function showTodos(){
             if(todo.urgency == "false" || todo.urgency == false){
                 if(todo.status == false){
                     $(`#todoList`).append(
-                        `<div class="card col s4 offset-s1 lime darken-4 ">
+                        `<div id="${todo._id}" class="card col s4 offset-s1 lime darken-4 ">
                         <h5> Unfinished </h5>
                         <p>${todo.title}</p>
                         <p>${todo.description}</p>
@@ -98,7 +97,7 @@ function showTodos(){
                     )
                 }else{
                     $(`#todoList`).append(
-                        `<div class="card col s4 offset-s1 blue light-3 ">
+                        `<div id="${todo._id}" class="card col s4 offset-s1 blue light-3 ">
                         <h5> Done </h5>
                         <p>${todo.title}</p>
                         <p>${todo.description}</p>
@@ -114,7 +113,7 @@ function showTodos(){
             }
             else{
                 $(`#urgentTodos`).append(
-                    `<div class="card col s10 offset-s1 red darken-1 ">
+                    `<div id="${todo._id}" class="card col s10 offset-s1 red darken-1 ">
                     <h5> URGENT </h5>                    
                     <p>${todo.title}</p>
                     <p>${todo.description}</p>
@@ -192,6 +191,7 @@ function resetFormTodo(){
 }
 
 function editTodo(id,title,desc,dueDate,urgency){
+    event.preventDefault()
     $("#todo-submit").hide()
     $("#todo-edit").show();
     // console.log(dateFix);
@@ -230,6 +230,8 @@ function editTodo(id,title,desc,dueDate,urgency){
 
 function deleteTodo(id){
     console.log(id);
+    event.preventDefault()
+    $(`#${id}`).hide()
     $.ajax({
         url: `http://localhost:3000/todos/${id}`,
         method: 'delete',
@@ -238,8 +240,8 @@ function deleteTodo(id){
         }
     })
     .done(response =>{
-        // console.log(response);
-        loggedIn()
+        console.log(response);
+        // loggedIn()
     }) 
     .fail((jqHXR,status,err)=>{
         console.log(status,err);  
@@ -247,6 +249,9 @@ function deleteTodo(id){
 }
 
 function doneTodo(id){
+    event.preventDefault()
+    $(`#${id}`).hide()
+
     // console.log(id);
     $.ajax({
         url: `http://localhost:3000/todos/${id}/done`,
@@ -265,6 +270,7 @@ function doneTodo(id){
 }
 
 function todoUrgent(id){
+    event.preventDefault()
     // console.log(id);
     $.ajax({
         url: `http://localhost:3000/todos/${id}/urgent`,
@@ -314,7 +320,6 @@ $(document).ready(function(){
         $('#signoutButtonNavbar').hide()
         $('#login-form').show()
         randomQuotes()
-        
     }else{
     loggedIn()
     }
@@ -449,3 +454,4 @@ $(document).ready(function(){
 
 
 })
+
