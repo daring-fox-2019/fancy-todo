@@ -7,16 +7,6 @@ const { mailOptions, transporter } = require('../helpers/nodemailer')
 const kue = require('kue')
 const queue = kue.createQueue()
 
-queue.process('email', function (val, done) {
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      return console.log(error);
-    } else {
-      done()
-    }
-  })
-})
-
 class User {
   static findAll(req, res) {
     user.find({})
@@ -112,5 +102,15 @@ class User {
       })
   }
 }
+
+queue.process('email', function (val, done) {
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      return console.log(error);
+    } else {
+      done()
+    }
+  })
+})
 
 module.exports = User

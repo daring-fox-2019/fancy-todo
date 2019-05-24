@@ -14,8 +14,14 @@ app.use(cors())
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
-mongoose.connect(process.env.DB, {useNewUrlParser:true})
-
+// mongoose.connect(process.env.DB, {useNewUrlParser:true})
+mongoose.connect(process.env.MONGODB_ATLAS, {useNewUrlParser: true}, function(err){
+    if(err){
+        console.log('Databases connection failed!');
+    }else{
+        console.log('Databases connected!');
+    }
+})
 app.use('/', routes)
 
 app.listen(port, ()=>{
