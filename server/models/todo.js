@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-mongoose.connect('mongodb://localhost/fancy-todos',{ useNewUrlParser: true } );
+mongoose.connect(process.env.DB_URL,{ useNewUrlParser: true } );
+// console.log('======',process.env.DB_URL);
 
 let todoSchema = new Schema({
     title : String,
