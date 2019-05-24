@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 const cors = require('cors');
 
 const mongoose = require('mongoose');
-mongoose.connect(`mongodb://localhost/${process.env.DB_URL}`, {useNewUrlParser: true});
+mongoose.connect(`${process.env.DB_URL}`, {useNewUrlParser: true});
 
 const userRoute = require('./routes/userRoute')
 const todoRoute = require('./routes/todoRoute')
