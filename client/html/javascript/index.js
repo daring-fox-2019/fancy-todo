@@ -4,7 +4,7 @@ function onSignIn(googleUser){
     
     let id_token = googleUser.getAuthResponse().id_token
     $.ajax({
-        url: 'http://localhost:3000/users/login/google',
+        url: 'http://35.240.172.169/users/login/google',
         type: 'post',
         headers: {
             id_token
@@ -44,7 +44,7 @@ function signOut(){
 function showTodos(){
     
     $.ajax({
-        url: `http://localhost:3000/users/${localStorage.id}`,
+        url: `http://35.240.172.169/users/${localStorage.id}`,
         method: 'get',
         headers : {
             token : localStorage.token
@@ -233,7 +233,7 @@ function deleteTodo(id){
     event.preventDefault()
     $(`#${id}`).hide()
     $.ajax({
-        url: `http://localhost:3000/todos/${id}`,
+        url: `http://35.240.172.169/todos/${id}`,
         method: 'delete',
         headers : {
             token : localStorage.token
@@ -254,7 +254,7 @@ function doneTodo(id){
 
     // console.log(id);
     $.ajax({
-        url: `http://localhost:3000/todos/${id}/done`,
+        url: `http://35.240.172.169/todos/${id}/done`,
         method: 'patch',
         headers : {
             token : localStorage.token
@@ -273,7 +273,7 @@ function todoUrgent(id){
     event.preventDefault()
     // console.log(id);
     $.ajax({
-        url: `http://localhost:3000/todos/${id}/urgent`,
+        url: `http://35.240.172.169/todos/${id}/urgent`,
         method: 'patch',
         headers : {
             token : localStorage.token
@@ -334,7 +334,7 @@ $(document).ready(function(){
         let password = $('#password-login').val()
         // console.log(email,password),'------------';
         $.ajax({
-            url: 'http://localhost:3000/users/login',
+            url: 'http://35.240.172.169/users/login',
             method: 'post',
             data: {
                 email,
@@ -369,7 +369,7 @@ $(document).ready(function(){
             console.log('form cannot be empty');
         }else{
             $.ajax({
-                url: 'http://localhost:3000/users/register',
+                url: 'http://35.240.172.169/users/register',
                 method: 'post',
                 data:{
                     firstName,
@@ -408,7 +408,7 @@ $(document).ready(function(){
             console.log('form cannot be empty')
         }else{
             $.ajax({
-                url:'http://localhost:3000/todos',
+                url:'http://35.240.172.169/todos',
                 method: 'post',
                 data : {
                     title : todoTitle,
@@ -423,7 +423,7 @@ $(document).ready(function(){
             .done(function(response){
                 // console.log(response,'ppppp');
                 $.ajax({
-                    url:`http://localhost:3000/users/${response._id}`,
+                    url:`http://35.240.172.169/users/${response._id}`,
                     method: 'get',
                     headers: {
                         token : localStorage.token
