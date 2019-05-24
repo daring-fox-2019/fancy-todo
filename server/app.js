@@ -7,13 +7,11 @@ const app      = express();
 const port     = process.env.PORT || 3000;
 const routes   = require('./routes');
 const mongoose = require('mongoose');
-const DB       = process.env.DB_NAME || 'fancy-todo-1'
 
-mongoose.connect('mongodb://localhost/' + DB , { useNewUrlParser: true });
+mongoose.connect(process.env.DB_URI , { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 
-morgan('tiny');
-
+app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

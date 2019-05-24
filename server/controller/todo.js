@@ -22,6 +22,31 @@ class TodoController {
             })
     }
 
+    static oneTodo(req, res) {
+        Todo
+            .findById(req.params.id)
+            .then(todo => {
+                if (!todo) {
+                    res
+                        .status(404)
+                        .json({
+                            message: 'Todo not found'
+                        })
+                } else {
+                    res
+                        .status(200)
+                        .json(todo)
+                }
+            })
+            .catch(err => {
+                res
+                    .status(500)
+                    .json({
+                        message: err.message
+                    })
+            })
+    }
+
 
     static addTodo(req, res) {
         

@@ -6,13 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta
       name="google-signin-client_id"
-      content="563252494522-hccd5ve2teth35uns0s1hckah9dqr0nb.apps.googleusercontent.com"
+      content="895279030526-nton5q2jrathdttqo1dfiqsl9c3agm6k.apps.googleusercontent.com"
     />
     <link
       rel="stylesheet"
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.css"
     />
+    <link href="https://fonts.googleapis.com/css?family=Mandali&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/animation.css" />
     <link rel="stylesheet" href="./css/style.css" />
 
@@ -20,6 +21,14 @@
   </head>
 
   <body>
+    <style>
+    html, h1, h2, h3, h4, h5, p {
+      font-family: 'Mandali', sans-serif;
+    }
+    body {
+      background: url('lilypads.png');
+    }
+    </style>
     <nav>
       <div class="ui secondary menu container">
         <div class="header item" id="view-mytodos">
@@ -110,9 +119,9 @@
         </div>
       </div>
     </div>
-    <!-- 
+    
     <div class="ui four column grid container" style="margin-top: 2rem;" id="project-page">
-      <h1>Project Name</h1>
+      <h1 id="project-name">Project Name</h1>
       <div class="ui top attached tabular menu">
         <a class="item blue active" data-tab="first">Incomplete</a>
         <a class="item green" data-tab="second">Complete</a>
@@ -124,7 +133,7 @@
               data-tooltip="add new todo"
               data-inverted=""
               data-position="left center"
-              id="add-todo-button"
+              id="add-todo-project-button"
             >
               <i class="add icon"></i>
             </div>
@@ -148,14 +157,14 @@
                   <th>Name</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="project-members">
                 <tr class="center aligned">
                   <td>John</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="actions">
+          <div class="actions" >
               <div
               class="ui primary labeled icon button"
               id="add-member-button"
@@ -171,11 +180,11 @@
             <div class="ui form">
               <div class="field">
                 <label>Email</label>
-                <input type="email" placeholder="budi@email.com" />
+                <input type="email" placeholder="budi@email.com" id="newMember"/>
               </div>
             </div>
           </div>
-          <div class="actions">
+          <div class="actions" id="add-member-form">
             <div class="ui red cancel button">
               <i class="remove icon"></i>
               Cancel
@@ -187,8 +196,8 @@
           </div>
         </div>
 
-        <div class="ui tiny modal todo">
-          <div class="ui icon header">Add New Todo</div>
+        <div class="ui tiny modal todo" id="project-todo-form">
+          <!-- <div class="ui icon header">Add New Todo</div>
           <div class="content">
             <form class="ui form">
               <div class="field">
@@ -197,7 +206,7 @@
                   type="text"
                   name="name"
                   placeholder="Name"
-                  id="new-todo-name"
+                  id="new-todo-name-project"
                 />
               </div>
               <div class="field">
@@ -205,7 +214,7 @@
                 <textarea
                   type="text"
                   name="last-name"
-                  id="new-todo-desc"
+                  id="new-todo-desc-project"
                   rows="3"
                 ></textarea>
               </div>
@@ -217,7 +226,7 @@
                     <input
                       type="text"
                       placeholder="Date"
-                      id="new-todo-due-date"
+                      id="new-todo-due-date-project"
                     />
                   </div>
                 </div>
@@ -233,12 +242,12 @@
               <i class="checkmark icon"></i>
               Create Todo
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="ui bottom attached tab segment active" data-tab="first">
-        <div class="ui grid">
-          <div class="four wide column">
+        <div class="ui grid" id="todos-incomplete-project">
+          <!-- <div class="four wide column">
             <div class="ui link card animated flipInX">
               <div class="content">
                 <i class="right floated check large grey icon"></i>
@@ -261,16 +270,18 @@
                 </span>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="ui bottom attached tab segment" data-tab="second">
-        Second
+          <div class="ui grid" id="todos-complete-project">
+          </div>
       </div>
       <div class="ui bottom attached tab segment" data-tab="third">
-        Third
+          <div class="ui grid" id="todos-all-project">
+          </div>        
       </div>
-    </div> -->
+    </div>
     
     <div class="ui four column grid container animated fadeIn" style="margin-top: 2rem;" id="mytodos">
       <div class="ui top attached tabular menu">
@@ -290,15 +301,15 @@
             </div>
           </div>
         </div>
-        <div class="ui tiny modal todo">
+        <div class="ui tiny modal todo" id="todo-form">
           <div class="ui icon header">Add New Todo</div>
           <div class="content">
-            <form class="ui form">
+            <form class="ui form" >
               <div class="field">
                 <label>Name</label>
                 <input
                   type="text"
-                  name="name"
+                  name="title"
                   placeholder="Name"
                   id="new-todo-name"
                 />
@@ -307,7 +318,7 @@
                 <label>Description</label>
                 <textarea
                   type="text"
-                  name="last-name"
+                  name="description"
                   id="new-todo-desc"
                   rows="3"
                 ></textarea>
@@ -320,7 +331,10 @@
                     <input
                       type="text"
                       placeholder="Date"
+                      name="due-date"
                       id="new-todo-due-date"
+                      readonly="readonly"
+                      required
                     />
                   </div>
                 </div>

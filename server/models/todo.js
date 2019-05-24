@@ -21,7 +21,11 @@ const todoSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    due_date: Date,
+    due_date: {
+        type: Date,
+        required: [true, 'Due date required'],
+        min: Date.now
+    },
     status: {
         type: Boolean,
         default: false

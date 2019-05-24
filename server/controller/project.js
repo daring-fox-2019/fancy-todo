@@ -76,8 +76,8 @@ class ProjectController {
                         })
                 } else {
                     return Project.updateOne(
-                        { _id: ObjectId(req.params.id) },
-                        { $addToSet: { members: user._id } }
+                        { _id: req.params.id },
+                        { $addToSet: { members: ObjectId(user._id) } }
                     )
                 }
             })
@@ -202,15 +202,26 @@ class ProjectController {
     }
 
     static removeTodo(req, res) {
-        Todo
-            .deleteOne(
-                { _id: ObjectId(req.params.todoId) }
-            )
-            .then(result => {
-                if (result.n && result.ok) {
+        let arr = [
+            Project
+                .updateOne(
+                    { _id: req.params.id},
+                    { $pull: { todos: req.params.todoId } }
+                ),
+            Todo
+                .deleteOne(
+                    { _id: ObjectId(req.params.todoId) }
+                )
+            ]
+
+        Promise
+            .all(arr)
+            .then(([resultProject, resultTodo]) => {
+                console.log(resultProject, resultTodo)
+                if (resultTodo.n && resultTodo.ok) {
                     res
                         .status(200)
-                        .json(result)
+                        .json(resultTodo)
                 } else {
                     res
                         .status(404)
