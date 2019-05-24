@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="794107542667-chbefj7vhs7e41q4nscncmp7o9s386a6.apps.googleusercontent.com">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
+    <style>
+    .g-signin2{
+        width: 100%;
+        }   
+
+    .g-signin2 > div{
+        margin: 0 auto;
+        }
+    </style>
+</head>
+<body style="background-image: url(https://source.unsplash.com/1900x1600/?nature,mountain)">
+    
+    <nav>
+        <div class="nav-wrapper blue lighten-4">
+            <a href="#" style="color:black" class="brand-logo center">Todo-Master</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><div id="userName" style="color:black"></div></li>
+                <li><a id="signoutButtonNavbar" style=" color:black" href="#" onclick="signOut();">Sign out</a></li>
+            <!-- <headingli><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">JavaScript</a></li> -->
+            </ul>
+        </div>
+    </nav>
+    <div><br></div>
+    <div class="container">
+        <div class="center">
+            <div class="row">
+                    <h3 style="background-color:rgba(34, 0, 168, 0.3) ; margin: 0 auto; padding: 10px ; border-radius: 10%; width: 800px; opacity: 0,5;color: white "> we help you to complete every task</h3>
+                <!-- <div class="col s12" ></div> -->
+            </div>
+            <div class="row" >
+                <div class="col s6 offset-s3" id="heading">
+                    <div class="card-panel blue lighten-4">
+                        <h5 id="quote"></h5>
+                        <h6 id="author"></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col s6 offset-s3" id="register-form">
+                    <br><br>
+                    <div class="input-field col s6 offset-s3">
+                        <input type="text" id="firstName" required>
+                        <label for="firstName">First Name</label>
+                    </div>
+                    <div class="input-field col s6 offset-s3">
+                        <input type="text" id="lastName" required>
+                        <label for="lastName">Last Name</label>
+                    </div>
+                    <div class="input-field col s6 offset-s3">
+                        <input type="text" id="email" required>
+                        <label for="email">email</label>
+                    </div>
+                    <div class="input-field col s6 offset-s3">
+                        <input type="password" id="password" required>
+                        <label for="password">password</label>
+                    </div>
+                    <div class="row">
+                    </div>
+                        <button class="btn waves-effect waves-light" type="submit" id="register" name="action">Register</button>           
+                        <br><br>
+                        <div class="row">
+                                <p class="center">atau masuk dengan akun Google</p>
+                            <div>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                                <br>
+                                </script>
+                            </div>
+                        </div>
+                        
+                    <div><br></div>
+                </div>
+                <div class="row" id="login-form">
+                    <div class="card col s6 offset-s3 blue lighten-4">
+                        <h4>Login to your account</h4>
+                    </div>
+                    <br>
+                    <div class="card col s6 offset-s3 blue lighten-4">
+                        <div class="input-field col s6 offset-s3">
+                            <input type="text" id="email-login" required>
+                            <label for="email">email</label>
+                        </div>
+                        <div class="input-field col s6 offset-s3">
+                            <input type="password" id="password-login" required>
+                            <label for="password">password</label>
+                        </div>
+                        <br>
+                        <div class="row"></div>
+                        <button class="btn waves-effect waves-light" type="submit" id="Login" name="action">Login</button>
+                        <br>
+                        <div class="row">
+                                <p class="center">atau masuk dengan akun Google</p>
+                            <div >
+                                <div class="g-signin2" data-onsuccess="onSignIn" >button</div>
+                                <br>
+                                </script>
+                            </div>
+                        </div>
+                        <p>don't have an account? click sign up button below!</p>  
+                        <button class="btn waves-effect waves-light" id="signup" name="action">Sign Up</button>           
+                        <br><br>
+                    </div>
+                </div>
+                <div class="row" id="todos-pages">
+                    <div class="card col s12" style="background-color:rgba(34, 0, 168, 0.3 ); color: white">
+                        <h3>welcome to your todos Page!</h3>
+                        <h4>any new todos? </h4>
+                        <div class="input-field col s6 offset-s3">
+                                <input type="text" id="new-todo-title" required>
+                                <label for="todo">new Todo</label>
+                        </div>
+                        <div class="input-field col s6 offset-s3">
+                                <input type="text" id="new-todo-description" required>
+                                <label for="todo">new todo description</label>
+                        </div>
+                        <div class="input-field col s6 offset-s3" required>
+                            <div id="dateForm">
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <button class="btn waves-effect waves-light" type="submit" id="todo-submit" name="action">insert</button>
+                        <div></div>
+                        <button class="btn waves-effect waves-light" type="submit" id="todo-edit" name="action">edit</button>
+                        <!-- <a id="signoutButton" style="margin-left: -250px" href="#" onclick="signOut();">Sign out</a> -->
+                        <br><br>
+                    </div>
+                    <div class="card col s8 blue lighten-4"> 
+                        <h6><b>Your Todo list</b></h6>
+                        <div class="row">
+                                <div id="todoList"></div>
+                        </div>
+                    </div>
+                    <div class="card col s4 blue lighten-4">
+                        <h6><b>Your Urgent Todo</b></h6>
+                        <div class="row">
+                            <div id="urgentTodos"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script
+    src="http://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous">
+</script>
+<script src="./html/javascript/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+</html>
