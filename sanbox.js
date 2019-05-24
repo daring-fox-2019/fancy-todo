@@ -8,7 +8,6 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 class UserController {
 
   static registrasi(req, res) {
-    console.log(req.body);
     let input = {
       email: req.body.email,
       password: generateHash(req.body.password),
