@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/';
+const url = 'http://todo-server.emrido.site';
 
 $('#project-list-page').hide();
 
