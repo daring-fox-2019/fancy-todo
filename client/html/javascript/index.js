@@ -205,7 +205,7 @@ function editTodo(id,title,desc,dueDate,urgency){
         let descriptionEdit = $("#new-todo-description").val()
         let dueDateEdit = $("#dueDate").val()
         $.ajax({
-            url: `http://localhost:3000/todos/${id}`,
+            url: `http://35.240.172.169/todos/${id}`,
             method: 'put',
             data: {
                 title : titleEdit,
