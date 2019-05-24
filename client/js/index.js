@@ -8,7 +8,7 @@ var idProject =''
 function onSignIn(googleUser) {
   const idToken = googleUser.getAuthResponse().id_token;
   $.ajax({
-    url: `http://localhost:3000/users/googlesignin`,
+    url: `http://35.187.238.131/users/googlesignin`,
     method: `POST`,
     headers: {
       token: idToken
@@ -42,7 +42,7 @@ function signOut() {
 
 function signUpUser(email, password) {
   $.ajax({
-    url: `http://localhost:3000/users/register`,
+    url: `http://35.187.238.131/users/register`,
     method: `POST`,
     data: { email, password }
   })
@@ -59,7 +59,7 @@ function signUpUser(email, password) {
 
 function signin(email, password) {
   $.ajax({
-    url: `http://localhost:3000/users/signin`,
+    url: `http://35.187.238.131/users/signin`,
     method: `POST`,
     data: { email, password }
   })
@@ -82,7 +82,7 @@ function signin(email, password) {
 
 function todoList() {
   $.ajax({
-    url: `http://localhost:3000/todos`,
+    url: `http://35.187.238.131/todos`,
     method: `GET`,
     headers: { token: localStorage.getItem('token') }
   })
@@ -175,7 +175,7 @@ function todoList() {
 
 function addTodo(nameTodo, descriptionTodo, deadlineTodo, ) {
   $.ajax({
-    url: `http://localhost:3000/todos`,
+    url: `http://35.187.238.131/todos`,
     method: 'POST',
     data: { name: nameTodo, description: descriptionTodo, dueDate: deadlineTodo },
     headers: { token: localStorage.getItem('token') }
@@ -192,7 +192,7 @@ function addTodo(nameTodo, descriptionTodo, deadlineTodo, ) {
 
 function editTodo(nameTodo, descriptionTodo, deadlineTodo) {
   $.ajax({
-    url: `http://localhost:3000/todos/${editTodoId}`,
+    url: `http://35.187.238.131/todos/${editTodoId}`,
     method: 'PATCH',
     data: { name: nameTodo, description: descriptionTodo, dueDate: deadlineTodo },
     headers: { token: localStorage.getItem('token') }
@@ -216,7 +216,7 @@ function editstatusTodo(data) {
     newStatus = 'true'
   }
   $.ajax({
-    url: `http://localhost:3000/todos/${statusTodo}`,
+    url: `http://35.187.238.131/todos/${statusTodo}`,
     method: 'PATCH',
     data: { status: newStatus },
     headers: { token: localStorage.getItem('token') }
@@ -232,7 +232,7 @@ function editstatusTodo(data) {
 
 function deleteTodo() {
   $.ajax({
-    url: `http://localhost:3000/todos/${deleteTodoId}`,
+    url: `http://35.187.238.131/todos/${deleteTodoId}`,
     method: 'DELETE',
     headers: { token: localStorage.getItem('token') }
   })
@@ -248,7 +248,7 @@ function deleteTodo() {
 //!show Tips
 function showTips() {
   $.ajax({
-    url: `http://localhost:3000/todos/showTips?title=${showTipsYoutube}`,
+    url: `http://35.187.238.131/todos/showTips?title=${showTipsYoutube}`,
     method: 'GET',
     headers: { token: localStorage.getItem('token') }
   })
@@ -277,7 +277,7 @@ function clearForm() {
 
 function projectTodo() {
   $.ajax({
-    url: `http://localhost:3000/todoproject`,
+    url: `http://35.187.238.131/todoproject`,
     method: `GET`,
     headers: { token: localStorage.getItem('token') }
   })
@@ -321,7 +321,7 @@ function projectTodo() {
 function addProjectTodo(nameProject){
   
   $.ajax({
-    url: `http://localhost:3000/todoproject/new`,
+    url: `http://35.187.238.131/todoproject/new`,
     method: `POST`,
     data : {name : nameProject},
     headers: { token: localStorage.getItem('token') }
@@ -338,7 +338,7 @@ function addProjectTodo(nameProject){
 
 function invitUserProject(user){
   $.ajax({
-    url: `http://localhost:3000/todoproject/invite`,
+    url: `http://35.187.238.131/todoproject/invite`,
     method: `POST`,
     data : {email : user, projectId : idProject},
     headers: { token: localStorage.getItem('token') }
