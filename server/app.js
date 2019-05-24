@@ -2,7 +2,7 @@ const express = require('express')
 require('dotenv').config()
 const app = express()
 const cors = require('cors')
-const port = 3000
+const port = process.env.port
 const route = require('./routes/index')
 
 app.use(express.urlencoded({extended:false}))
