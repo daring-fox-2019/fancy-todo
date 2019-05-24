@@ -138,8 +138,6 @@ class ProjectController {
     }
 
     static showPendingMember(req, res) {
-       console.log('masukkkkkk');
-       
         Project
             .find({
                 pendingMembers : { $in : req.authenticatedUser.id}
