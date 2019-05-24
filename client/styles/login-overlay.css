@@ -1,0 +1,43 @@
+ .login-overlay {
+    /* background-image: url('../assets/pen.png'); */
+  
+    background-image: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg'); 
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 25px;
+    z-index: 5;
+  }
+
+  .top-left {
+    position: absolute;
+    top: 0;
+    left: 16px;
+  }
+
+  .bottom-left {
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+  }
+
+  .middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  hr {
+    margin: auto;
+    width: 40%;
+  }
+
+  .login-modal-button, .register-modal-button {
+
+    margin-top: 20px;
+  }
