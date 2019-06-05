@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
+    <meta name="google-signin-client_id" content="459947494611-o9grnuba71c8mt0c5p3rr9nt5tq99qpd.apps.googleusercontent.com">
+    <title>Fancy Todos</title>
+</head>
+<body>
+        <div id="navbar">
+                <nav class="navbar navbar-light bg-light">
+                        <a class="navbar-brand" href="#">
+                          <img src="./asset/list.png" width="30" height="30" alt="">
+                          <span id='title' style="font-family: 'Gugi', cursive; color:rgb(147, 147, 147); padding: 13%">t.d.list</span>
+                        </a>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="signOut" onclick="signout()">SignOut</button>
+                </nav>
+        </div>
+        <br>
+        <div class="container" id=todo style="text-align:center">
+                <h2>Create Todo</h2>
+                <form id="todoForm" style="color:white">
+                                <div class="form-group">
+                                        <label for="todo">Todo list</label>
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        required
+                                        id="mytodo"
+                                        aria-describedby="todoHelp"
+                                        placeholder="Enter Todo"
+                                        />
+                                </div>
+                                <div class="form-group mt-3">
+                                        <div class="row align-items-center">
+                                        <div class="col d-flex justify-content-center submitDiv">
+                                        <button type="submit" class="btn-outline-success">Create</button>
+                                        </div>
+                                        </div>
+                                </div>
+                </form>
+        </div>
+        <div id ='content-todo'>
+
+        </div>
+        <div class="container mt-5" id="loginPage">
+                <form id="loginForm" style="color:white">
+                        <div class="form-group mb-5">
+                                <h2>Login</h2>
+                        </div>
+                        <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input
+                                type="email"
+                                class="form-control"
+                                required
+                                id="email"
+                                aria-describedby="emailHelp"
+                                placeholder="Enter email"
+                                />
+                        </div>
+                        <div class="form-group">
+                                <label for="password">Password</label>
+                                <input
+                                type="password"
+                                class="form-control"
+                                required
+                                id="password"
+                                placeholder="Password"
+                                />
+                        </div>
+                        <div class="form-group mt-3">
+                                <div class="row align-items-center">
+                                <div class="col d-flex justify-content-center submitDiv">
+                                <button type="submit" class="btn ghost-button">Login</button>
+                                </div>
+                                </div>
+                                <div class="row align-items-center mt-3">
+                                <div class="col d-flex justify-content-center">
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                                </div>
+                                </div>
+                        </div>
+                </form>
+
+
+                <form id="signForm" style="color:white">
+                        <div class="form-group mb-5">
+                                <h2>Register</h2>
+                        </div>
+                        <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input
+                                type="email"
+                                class="form-control"
+                                required
+                                id="email-sign"
+                                aria-describedby="emailHelp"
+                                placeholder="Enter email"
+                                />
+                        </div>
+                        <div class="form-group">
+                                <label for="password">Password</label>
+                                <input
+                                type="password"
+                                class="form-control"
+                                required
+                                id="password-sign"
+                                placeholder="Password"
+                                />
+                        </div>
+                        <div class="form-group mt-3">
+                                <div class="row align-items-center">
+                                <div class="col d-flex justify-content-center submitDiv">
+                                <button type="submit" class="btn ghost-button">Register</button>
+                                </div>
+                                </div>
+                                <div class="row align-items-center mt-3">
+                                <div class="col d-flex justify-content-center">
+                                </div>
+                                </div>
+                        </div>
+                </form>
+        </div>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./js/ajax.js"></script>
+</body>
+</html>
