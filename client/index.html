@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="google-signin-client_id"
+      content="895279030526-nton5q2jrathdttqo1dfiqsl9c3agm6k.apps.googleusercontent.com"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Mandali&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/animation.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel=icon href=/arrows_square_check.png>
+    <title>Todo</title>
+  </head>
+
+  <body>
+    <style>
+    html, h1, h2, h3, h4, h5, p {
+      font-family: 'Mandali', sans-serif;
+    }
+    body {
+      background: url('lilypads.png');
+    }
+    </style>
+    <nav>
+      <div class="ui secondary menu container">
+        <div class="header item" id="view-mytodos">
+          Todo
+        </div>
+        <a class="item" id="view-project-list">
+          Project
+        </a>
+
+        <div class="right menu">
+          <a class="item" onclick="logout()">
+            Sign out
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="ui container animated fadeIn" id="project-list-page">
+      <div
+        class="ui icon right floated button"
+        data-tooltip="create new project"
+        data-inverted=""
+        data-position="left center"
+        id="add-project-button"
+      >
+        <i class="add icon"></i>
+      </div>
+      <div class="ui tiny modal project">
+        <div class="ui icon header">Create New Project</div>
+        <div class="content">
+          <form class="ui form">
+            <div class="field">
+              <label>Name</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                id="new-project-name"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="actions">
+          <div class="ui red cancel button">
+            <i class="remove icon"></i>
+            Cancel
+          </div>
+          <div class="ui green ok button" onclick="addNewProject()">
+            <i class="checkmark icon" ></i>
+            Create Project
+          </div>
+        </div>
+      </div>
+      <h1 class="ui center aligned header huge" style="margin-top: 2rem;">Project List</h1>
+      <div class="ui grid" style="margin-top: 2rem" id="project-list">
+        <div class="four wide column">
+          <div class="ui card piled segment">
+            <div class="content">
+              <div class="header">
+                Project Name
+                <i class="right floated trash small grey icon"></i>
+              </div>
+            </div>
+            <div class="content">
+              <h4 class="ui sub header">Detail</h4>
+              <div class="ui feed">
+                <div class="event">
+                  <div class="content">
+                    <div class="summary"><a>Master:</a> You</div>
+                  </div>
+                </div>
+                <div class="event">
+                  <div class="content">
+                    <div class="summary"><a>Members: </a> 5</div>
+                  </div>
+                </div>
+                <div class="event">
+                  <div class="content">
+                    <div class="summary"><a>Todos: </a> 5</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="extra content">
+              <button class="ui button">Go to Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ui four column grid container" style="margin-top: 2rem;" id="project-page">
+      <h1 id="project-name">Project Name</h1>
+      <div class="ui top attached tabular menu">
+        <a class="item blue active" data-tab="first">Incomplete</a>
+        <a class="item green" data-tab="second">Complete</a>
+        <a class="item teal" data-tab="third">All</a>
+        <div class="right menu">
+          <div class="item">
+            <div
+              class="ui left attached icon button"
+              data-tooltip="add new todo"
+              data-inverted=""
+              data-position="left center"
+              id="add-todo-project-button"
+            >
+              <i class="add icon"></i>
+            </div>
+            <div
+              class="ui right attached icon button"
+              data-tooltip="view project members"
+              data-inverted=""
+              data-position="right center"
+              id="view-members-button"
+            >
+              <i class="user icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="ui tiny modal members">
+          <div class="ui icon header">Members</div>
+          <div class="content">
+            <table class="ui compact table">
+              <thead>
+                <tr class="center aligned">
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody id="project-members">
+                <tr class="center aligned">
+                  <td>John</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="actions" >
+              <div
+              class="ui primary labeled icon button"
+              id="add-member-button"
+            >
+              <i class="user icon"></i> Add Member
+            </div>
+          </div>
+        </div>
+
+        <div class="ui tiny modal addmember">
+          <div class="ui icon header">Add New Member</div>
+          <div class="content">
+            <div class="ui form">
+              <div class="field">
+                <label>Email</label>
+                <input type="email" placeholder="budi@email.com" id="newMember"/>
+              </div>
+            </div>
+          </div>
+          <div class="actions" id="add-member-form">
+            <div class="ui red cancel button">
+              <i class="remove icon"></i>
+              Cancel
+            </div>
+            <div class="ui blue ok button">
+              <i class="checkmark icon"></i>
+              Add Member
+            </div>
+          </div>
+        </div>
+
+        <div class="ui tiny modal todo" id="project-todo-form">
+          <!-- <div class="ui icon header">Add New Todo</div>
+          <div class="content">
+            <form class="ui form">
+              <div class="field">
+                <label>Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  id="new-todo-name-project"
+                />
+              </div>
+              <div class="field">
+                <label>Description</label>
+                <textarea
+                  type="text"
+                  name="last-name"
+                  id="new-todo-desc-project"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="field">
+                <label>Due Date</label>
+                <div class="ui calendar" id="date_calendar">
+                  <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input
+                      type="text"
+                      placeholder="Date"
+                      id="new-todo-due-date-project"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="actions">
+            <div class="ui red cancel button">
+              <i class="remove icon"></i>
+              Cancel
+            </div>
+            <div class="ui green ok button">
+              <i class="checkmark icon"></i>
+              Create Todo
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="ui bottom attached tab segment active" data-tab="first">
+        <div class="ui grid" id="todos-incomplete-project">
+          <!-- <div class="four wide column">
+            <div class="ui link card animated flipInX">
+              <div class="content">
+                <i class="right floated check large grey icon"></i>
+                <div class="header">Cute Dog</div>
+                <div class="description">
+                  <p>description</p>
+                </div>
+              </div>
+              <div class="extra content">
+                <span class="left floated trash">
+                  <i class="trash icon"></i>
+                </span>
+                <span class="left floated edit">
+                  <i class="edit icon"></i>
+                </span>
+
+                <span class="right floated clock outline">
+                  <i class="clock_outline icon"></i>
+                  Due-date
+                </span>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="second">
+          <div class="ui grid" id="todos-complete-project">
+          </div>
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="third">
+          <div class="ui grid" id="todos-all-project">
+          </div>        
+      </div>
+    </div>
+    
+    <div class="ui four column grid container animated fadeIn" style="margin-top: 2rem;" id="mytodos">
+      <div class="ui top attached tabular menu">
+        <a class="item blue active" data-tab="first">Incomplete</a>
+        <a class="item green" data-tab="second">Complete</a>
+        <a class="item teal" data-tab="third">All</a>
+        <div class="right menu">
+          <div class="item">
+            <div
+              class="ui icon button"
+              data-tooltip="add new todo"
+              data-inverted=""
+              data-position="left center"
+              id="add-todo-button"
+            >
+              <i class="add icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="ui tiny modal todo" id="todo-form">
+          <div class="ui icon header">Add New Todo</div>
+          <div class="content">
+            <form class="ui form" >
+              <div class="field">
+                <label>Name</label>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Name"
+                  id="new-todo-name"
+                />
+              </div>
+              <div class="field">
+                <label>Description</label>
+                <textarea
+                  type="text"
+                  name="description"
+                  id="new-todo-desc"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="field">
+                <label>Due Date</label>
+                <div class="ui calendar" id="date_calendar">
+                  <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input
+                      type="text"
+                      placeholder="Date"
+                      name="due-date"
+                      id="new-todo-due-date"
+                      readonly="readonly"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="actions">
+            <div class="ui red cancel button">
+              <i class="remove icon"></i>
+              Cancel
+            </div>
+            <div class="ui green ok button" onclick="addTodo()">
+              <i class="checkmark icon"></i>
+              Create Todo
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui bottom attached tab segment active" data-tab="first">
+        <div class="ui grid" id="mytodos-incomplete">
+          <!-- <div class="four wide column">
+            <div class="ui link card animated flipInX">
+              <div class="content">
+                <i class="right floated check large grey icon"></i>
+                <div class="header">Cute Dog</div>
+                <div class="description">
+                  <p>description</p>
+                </div>
+              </div>
+              <div class="extra content">
+                <span class="left floated trash">
+                  <i class="trash icon"></i>
+                </span>
+                <span class="left floated edit">
+                  <i class="edit icon"></i>
+                </span>
+
+                <span class="right floated clock outline">
+                  <i class="clock_outline icon"></i>
+                  Due-date
+                </span>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="second">
+          <div class="ui grid" id="mytodos-complete">
+            </div>
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="third">
+          <div class="ui grid" id="mytodos-all">
+            </div>
+      </div>
+    </div>
+
+    <div
+      class="ui container middle aligned center aligned grid"
+      style="margin-top: 17rem;"
+    >
+      <div class="six wide column">
+        <div id="sign-in-form">
+          <h2 class="ui blue image header">
+            <div class="content">
+              Log-in to your account
+            </div>
+          </h2>
+          <form class="ui large form">
+            <div class="ui raised segment">
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="mail icon"></i>
+                  <input
+                    type="text"
+                    name="email"
+                    placeholder="E-mail address"
+                    id="email-login"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="lock icon"></i>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    id="password-login"
+                  />
+                </div>
+              </div>
+              <div class="ui fluid large blue submit button" onclick="login()">Login</div>
+            </div>
+
+            <div class="ui error message"></div>
+          </form>
+          <br />
+          <div
+            class="g-signin2"
+            data-width="405"
+            data-height="40"
+            data-longtitle="false"
+            data-onsuccess="onSignIn"
+          ></div>
+
+          <div class="ui message">
+            New to us? <a id="sign-up-show">Sign Up</a>
+          </div>
+        </div>
+
+        <div id="sign-up-form">
+          <h2 class="ui blue image header">
+            <div class="content">
+              Create new account
+            </div>
+          </h2>
+          <form class="ui large form">
+            <div class="ui raised segment">
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="user icon"></i>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    id="name-register"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="mail icon"></i>
+                  <input
+                    type="text"
+                    name="email"
+                    placeholder="E-mail address"
+                    id="email-register"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="lock icon"></i>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    id="password-register"
+                  />
+                </div>
+              </div>
+              <div class="ui fluid large blue submit button" onclick="register()">Sign Up</div>
+            </div>
+
+            <div class="ui error message"></div>
+          </form>
+          <div class="ui message">
+            Already have account? <a id="sign-in-show">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
